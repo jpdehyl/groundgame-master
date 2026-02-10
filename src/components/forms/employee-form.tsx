@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Save, X, Plus } from 'lucide-react';
+import { Save, X } from 'lucide-react';
 
 interface Client {
   id: string;
@@ -16,25 +16,25 @@ interface Role {
 }
 
 interface EmployeeFormProps {
-  employee?: any;
-  onSave: (data: any) => void;
+  employee?: Record<string, string | number | null | undefined> | null;
+  onSave: (data: Record<string, string | number | null>) => void;
   onCancel: () => void;
   isOpen: boolean;
 }
 
 export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Record<string, string>>({
     first_name: '',
     last_name: '',
     email: '',
     phone: '',
     client_id: '',
     role_id: '',
-    employment_type: 'contractor' as const,
+    employment_type: 'contractor',
     start_date: '',
     salary_compensation: '',
-    pay_frequency: 'biweekly' as const,
-    status: 'active' as const,
+    pay_frequency: 'biweekly',
+    status: 'active',
     internet_speed_up: '',
     internet_speed_down: '',
     computer_specs: '',
@@ -76,23 +76,23 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
   useEffect(() => {
     if (employee) {
       setFormData({
-        first_name: employee.first_name || '',
-        last_name: employee.last_name || '',
-        email: employee.email || '',
-        phone: employee.phone || '',
-        client_id: employee.client_id || '',
-        role_id: employee.role_id || '',
-        employment_type: employee.employment_type || 'contractor',
-        start_date: employee.start_date || '',
-        salary_compensation: employee.salary_compensation?.toString() || '',
-        pay_frequency: employee.pay_frequency || 'biweekly',
-        status: employee.status || 'active',
-        internet_speed_up: employee.internet_speed_up?.toString() || '',
-        internet_speed_down: employee.internet_speed_down?.toString() || '',
-        computer_specs: employee.computer_specs || '',
-        work_location: employee.work_location || '',
-        time_zone: employee.time_zone || '',
-        preferred_work_hours: employee.preferred_work_hours || ''
+        first_name: String(employee.first_name ?? ''),
+        last_name: String(employee.last_name ?? ''),
+        email: String(employee.email ?? ''),
+        phone: String(employee.phone ?? ''),
+        client_id: String(employee.client_id ?? ''),
+        role_id: String(employee.role_id ?? ''),
+        employment_type: String(employee.employment_type ?? 'contractor'),
+        start_date: String(employee.start_date ?? ''),
+        salary_compensation: employee.salary_compensation != null ? String(employee.salary_compensation) : '',
+        pay_frequency: String(employee.pay_frequency ?? 'biweekly'),
+        status: String(employee.status ?? 'active'),
+        internet_speed_up: employee.internet_speed_up != null ? String(employee.internet_speed_up) : '',
+        internet_speed_down: employee.internet_speed_down != null ? String(employee.internet_speed_down) : '',
+        computer_specs: String(employee.computer_specs ?? ''),
+        work_location: String(employee.work_location ?? ''),
+        time_zone: String(employee.time_zone ?? ''),
+        preferred_work_hours: String(employee.preferred_work_hours ?? '')
       });
     }
   }, [employee]);

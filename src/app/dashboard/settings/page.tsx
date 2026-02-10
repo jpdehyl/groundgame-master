@@ -1,7 +1,9 @@
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Save,
-  Settings,
   Users,
   DollarSign,
   Bell,
@@ -52,6 +54,41 @@ const settingsSections = [
 ];
 
 export default function SettingsPage() {
+  const [companySettings, setCompanySettings] = useState({
+    companyName: 'GroundGame Master',
+    timeZone: 'Pacific Time (PT)',
+    currency: 'USD ($)',
+    payPeriod: 'Bi-weekly',
+  });
+
+  const [notifications, setNotifications] = useState({
+    payrollReminders: true,
+    documentExpiry: true,
+    timeOffRequests: true,
+    weeklyReports: false,
+  });
+
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleCompanyChange = (field: string, value: string) => {
+    setCompanySettings(prev => ({ ...prev, [field]: value }));
+    setSaved(false);
+  };
+
+  const handleNotificationToggle = (field: string) => {
+    setNotifications(prev => ({ ...prev, [field]: !prev[field as keyof typeof prev] }));
+    setSaved(false);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    // Simulate save - would connect to API in production
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setSaving(false);
+    setSaved(true);
+  };
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -60,9 +97,13 @@ export default function SettingsPage() {
           <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
           <p className="text-gray-600">Configure your GroundGame system</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Save className="h-4 w-4 mr-2" />
-          Save All Changes
+          {saving ? 'Saving...' : saved ? 'Saved' : 'Save All Changes'}
         </Button>
       </div>
 
@@ -92,7 +133,7 @@ export default function SettingsPage() {
           <Globe className="h-5 w-5 text-gray-600 mr-2" />
           <h3 className="text-lg font-semibold text-gray-900">Company Information</h3>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -100,39 +141,52 @@ export default function SettingsPage() {
             </label>
             <input
               type="text"
+              value={companySettings.companyName}
+              onChange={(e) => handleCompanyChange('companyName', e.target.value)}
               className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              defaultValue="GroundGame Master"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Time Zone
             </label>
-            <select className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select
+              value={companySettings.timeZone}
+              onChange={(e) => handleCompanyChange('timeZone', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option>Pacific Time (PT)</option>
               <option>Eastern Time (ET)</option>
               <option>Central Time (CT)</option>
               <option>Mountain Time (MT)</option>
             </select>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Default Currency
             </label>
-            <select className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select
+              value={companySettings.currency}
+              onChange={(e) => handleCompanyChange('currency', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option>USD ($)</option>
               <option>CAD (CA$)</option>
               <option>EUR (€)</option>
             </select>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Pay Period
             </label>
-            <select className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select
+              value={companySettings.payPeriod}
+              onChange={(e) => handleCompanyChange('payPeriod', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option>Bi-weekly</option>
               <option>Weekly</option>
               <option>Monthly</option>
@@ -147,7 +201,7 @@ export default function SettingsPage() {
           <Bell className="h-5 w-5 text-gray-600 mr-2" />
           <h3 className="text-lg font-semibold text-gray-900">Notification Preferences</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
@@ -156,11 +210,12 @@ export default function SettingsPage() {
             </div>
             <input
               type="checkbox"
+              checked={notifications.payrollReminders}
+              onChange={() => handleNotificationToggle('payrollReminders')}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              defaultChecked
             />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium text-gray-900">Document Expiry</div>
@@ -168,11 +223,12 @@ export default function SettingsPage() {
             </div>
             <input
               type="checkbox"
+              checked={notifications.documentExpiry}
+              onChange={() => handleNotificationToggle('documentExpiry')}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              defaultChecked
             />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium text-gray-900">Time-off Requests</div>
@@ -180,11 +236,12 @@ export default function SettingsPage() {
             </div>
             <input
               type="checkbox"
+              checked={notifications.timeOffRequests}
+              onChange={() => handleNotificationToggle('timeOffRequests')}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              defaultChecked
             />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium text-gray-900">Weekly Reports</div>
@@ -192,6 +249,8 @@ export default function SettingsPage() {
             </div>
             <input
               type="checkbox"
+              checked={notifications.weeklyReports}
+              onChange={() => handleNotificationToggle('weeklyReports')}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
           </div>
@@ -204,7 +263,7 @@ export default function SettingsPage() {
           <Database className="h-5 w-5 text-gray-600 mr-2" />
           <h3 className="text-lg font-semibold text-gray-900">Integration Status</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div className="flex items-center space-x-3">
@@ -218,7 +277,7 @@ export default function SettingsPage() {
               Not Connected
             </span>
           </div>
-          
+
           <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div className="flex items-center space-x-3">
               <Calendar className="h-5 w-5 text-gray-600" />
@@ -231,7 +290,7 @@ export default function SettingsPage() {
               Not Connected
             </span>
           </div>
-          
+
           <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div className="flex items-center space-x-3">
               <DollarSign className="h-5 w-5 text-gray-600" />
@@ -249,9 +308,13 @@ export default function SettingsPage() {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Save className="h-4 w-4 mr-2" />
-          Save All Settings
+          {saving ? 'Saving...' : saved ? 'Saved' : 'Save All Settings'}
         </Button>
       </div>
     </div>

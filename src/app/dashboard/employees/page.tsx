@@ -34,7 +34,7 @@ export default function EmployeesPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingEmployee, setEditingEmployee] = useState<any>(null);
+  const [editingEmployee, setEditingEmployee] = useState<Record<string, string | number | null | undefined> | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [deleting, setDeleting] = useState<string | null>(null);
 
@@ -99,7 +99,7 @@ export default function EmployeesPage() {
     }
   };
 
-  const handleSaveEmployee = async (formData: any) => {
+  const handleSaveEmployee = async (formData: Record<string, string | number | null>) => {
     try {
       const url = editingEmployee 
         ? `/api/employees/${editingEmployee.id}`
