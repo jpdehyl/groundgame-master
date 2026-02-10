@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { 
   Users,
   Building2,
@@ -7,66 +10,100 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-const stats = [
-  {
-    name: 'Total Employees',
-    value: '24',
-    change: '+3 this month',
-    changeType: 'increase',
-    icon: Users,
-    color: 'bg-blue-500'
-  },
-  {
-    name: 'Active Clients',
-    value: '8',
-    change: '+1 this month', 
-    changeType: 'increase',
-    icon: Building2,
-    color: 'bg-green-500'
-  },
-  {
-    name: 'Monthly Payroll',
-    value: '$48,250',
-    change: '+12% from last month',
-    changeType: 'increase', 
-    icon: DollarSign,
-    color: 'bg-yellow-500'
-  },
-  {
-    name: 'Pending Documents',
-    value: '3',
-    change: 'W-8BEN renewals due',
-    changeType: 'neutral',
-    icon: FileCheck,
-    color: 'bg-red-500'
-  }
-];
-
-const recentActivities = [
-  {
-    id: 1,
-    type: 'employee_added',
-    description: 'Maria Rodriguez added to AppFolio role',
-    time: '2 hours ago',
-    user: 'Admin'
-  },
-  {
-    id: 2,
-    type: 'payroll_processed',
-    description: 'Bi-weekly payroll processed for 24 employees',
-    time: '1 day ago',
-    user: 'System'
-  },
-  {
-    id: 3,
-    type: 'document_expiring',
-    description: 'W-8BEN document expiring for John Smith',
-    time: '2 days ago',
-    user: 'System'
-  }
-];
+interface DashboardStats {
+  totalEmployees: number;
+  activeEmployees: number;
+  totalClients: number;
+  activeClients: number;
+  monthlyPayroll: number;
+  pendingDocuments: number;
+  recentActivities: Array<{
+    id: number;
+    type: string;
+    description: string;
+    time: string;
+    user: string;
+  }>;
+}
 
 export default function Dashboard() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch('/api/dashboard/stats');
+        const result = await response.json();
+        if (result.success) {
+          setStats(result.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600">Loading dashboard data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600">Failed to load dashboard data</p>
+        </div>
+      </div>
+    );
+  }
+
+  const dashboardStats = [
+    {
+      name: 'Total Employees',
+      value: stats.totalEmployees.toString(),
+      change: '+3 this month',
+      changeType: 'increase',
+      icon: Users,
+      color: 'bg-blue-500'
+    },
+    {
+      name: 'Active Clients',
+      value: stats.activeClients.toString(),
+      change: '+1 this month', 
+      changeType: 'increase',
+      icon: Building2,
+      color: 'bg-green-500'
+    },
+    {
+      name: 'Monthly Payroll',
+      value: `$${stats.monthlyPayroll.toLocaleString()}`,
+      change: '+12% from last month',
+      changeType: 'increase', 
+      icon: DollarSign,
+      color: 'bg-yellow-500'
+    },
+    {
+      name: 'Pending Documents',
+      value: stats.pendingDocuments.toString(),
+      change: 'W-8BEN renewals due',
+      changeType: 'neutral',
+      icon: FileCheck,
+      color: 'bg-red-500'
+    }
+  ];
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -77,7 +114,7 @@ export default function Dashboard() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
+        {dashboardStats.map((stat) => (
           <div key={stat.name} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <div className="flex items-center">
               <div className={`p-2 rounded-md ${stat.color}`}>
@@ -107,7 +144,7 @@ export default function Dashboard() {
             <a href="#" className="text-sm text-blue-600 hover:text-blue-800">View all</a>
           </div>
           <div className="space-y-4">
-            {recentActivities.map((activity) => (
+            {stats.recentActivities.map((activity) => (
               <div key={activity.id} className="flex items-start space-x-3">
                 <div className="flex-shrink-0 h-2 w-2 bg-blue-500 rounded-full mt-2"></div>
                 <div className="flex-1 min-w-0">
