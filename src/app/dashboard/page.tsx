@@ -74,32 +74,32 @@ export default function Dashboard() {
     {
       name: 'Total Employees',
       value: stats.totalEmployees.toString(),
-      change: '+3 this month',
-      changeType: 'increase',
+      change: `${stats.activeEmployees} active`,
+      changeType: 'neutral' as const,
       icon: Users,
       color: 'bg-blue-500'
     },
     {
       name: 'Active Clients',
       value: stats.activeClients.toString(),
-      change: '+1 this month', 
-      changeType: 'increase',
+      change: `${stats.totalClients} total`,
+      changeType: 'neutral' as const,
       icon: Building2,
       color: 'bg-green-500'
     },
     {
       name: 'Monthly Payroll',
       value: `$${stats.monthlyPayroll.toLocaleString()}`,
-      change: '+12% from last month',
-      changeType: 'increase', 
+      change: `${stats.activeEmployees} employees`,
+      changeType: 'neutral' as const,
       icon: DollarSign,
       color: 'bg-yellow-500'
     },
     {
       name: 'Pending Documents',
       value: stats.pendingDocuments.toString(),
-      change: 'W-8BEN renewals due',
-      changeType: 'neutral',
+      change: stats.pendingDocuments > 0 ? 'Expiring within 30 days' : 'All up to date',
+      changeType: stats.pendingDocuments > 0 ? 'decrease' as const : 'increase' as const,
       icon: FileCheck,
       color: 'bg-red-500'
     }
@@ -201,15 +201,17 @@ export default function Dashboard() {
           <h3 className="text-lg font-semibold text-gray-900">Attention Required</h3>
         </div>
         <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-md">
-            <div>
-              <p className="text-sm font-medium text-amber-800">3 W-8BEN documents expiring soon</p>
-              <p className="text-xs text-amber-600">Review and renew before tax season</p>
+          {stats.pendingDocuments > 0 && (
+            <div className="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-md">
+              <div>
+                <p className="text-sm font-medium text-amber-800">{stats.pendingDocuments} W-8BEN document{stats.pendingDocuments !== 1 ? 's' : ''} expiring soon</p>
+                <p className="text-xs text-amber-600">Review and renew before tax season</p>
+              </div>
+              <a href="/dashboard/documents" className="text-sm font-medium text-amber-700 hover:text-amber-800">
+                Review →
+              </a>
             </div>
-            <a href="/dashboard/documents" className="text-sm font-medium text-amber-700 hover:text-amber-800">
-              Review →
-            </a>
-          </div>
+          )}
           <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-md">
             <div>
               <p className="text-sm font-medium text-blue-800">Payroll due in 3 days</p>
