@@ -3,9 +3,10 @@ import { NextRequest } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { data: employee, error } = await supabase
       .from('employees')
       .select(`
@@ -13,7 +14,7 @@ export async function GET(
         client:clients(id, name),
         role:roles(id, name, hourly_rate)
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error) throw error;
@@ -41,11 +42,12 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
-    
+
     // Remove read-only fields
     delete body.id;
     delete body.created_at;
@@ -59,7 +61,7 @@ export async function PUT(
         .from('employees')
         .select('id')
         .eq('email', body.email)
-        .neq('id', params.id)
+        .neq('id', id)
         .single();
 
       if (checkError && checkError.code !== 'PGRST116') {
@@ -80,7 +82,7 @@ export async function PUT(
         ...body,
         updated_at: new Date().toISOString()
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select(`
         *,
         client:clients(id, name),
@@ -113,9 +115,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     // Soft delete - set status to inactive instead of actual deletion
     const { data: employee, error } = await supabaseAdmin
       .from('employees')
@@ -123,7 +126,7 @@ export async function DELETE(
         status: 'inactive',
         updated_at: new Date().toISOString()
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select('id, first_name, last_name')
       .single();
 
