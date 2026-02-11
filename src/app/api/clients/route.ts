@@ -1,7 +1,11 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: true, data: [] });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const includeInactive = searchParams.get('include_inactive') === 'true';
@@ -20,7 +24,10 @@ export async function GET(request: NextRequest) {
 
     const { data: clients, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error('Clients API error:', error);
+      return Response.json({ success: true, data: [], dbError: error.message });
+    }
 
     const enriched = (clients ?? []).map(client => ({
       id: client.id,
@@ -49,44 +56,8 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    if (!body.name) {
-      return Response.json({ success: false, error: 'Client name is required' }, { status: 400 });
-    }
-
-    const { data: client, error } = await supabaseAdmin
-      .from('clients')
-      .insert({
-        name: body.name,
-        email: body.email || null,
-        contact_person: body.contact_person || null,
-        billing_address: body.billing_address || null,
-        status: 'active'
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    return Response.json({ success: true, data: client });
-
-  } catch (error) {
-    console.error('Create client error:', error);
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-
     if (!body.name?.trim()) {
-      return Response.json({
-        success: false,
-        error: 'Client name is required'
-      }, { status: 400 });
+      return Response.json({ success: false, error: 'Client name is required' }, { status: 400 });
     }
 
     const { data: client, error } = await supabaseAdmin
@@ -103,13 +74,10 @@ export async function POST(request: NextRequest) {
 
     if (error) throw error;
 
-    return Response.json({
-      success: true,
-      data: client
-    });
+    return Response.json({ success: true, data: client });
 
   } catch (error) {
-    console.error('Client POST error:', error);
+    console.error('Create client error:', error);
     return Response.json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error'
