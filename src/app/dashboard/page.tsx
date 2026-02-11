@@ -17,6 +17,8 @@ interface DashboardStats {
   activeClients: number;
   monthlyPayroll: number;
   pendingDocuments: number;
+  dbConnected?: boolean;
+  dbError?: string | null;
   recentActivities: Array<{
     id: number;
     type: string;
@@ -64,7 +66,19 @@ export default function Dashboard() {
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Failed to load dashboard data</p>
+          <p className="text-gray-600">Welcome to GroundGame Master</p>
+        </div>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-medium text-amber-800">Could not load dashboard data</h3>
+              <p className="text-sm text-amber-700 mt-1">Check your Supabase connection and make sure the database schema has been applied.</p>
+              <a href="/dashboard/import" className="inline-block mt-3 text-sm font-medium text-amber-800 underline hover:text-amber-900">
+                Import your data from Google Sheets →
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -109,8 +123,37 @@ export default function Dashboard() {
       {/* Page Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening with your team.</p>
+        <p className="text-gray-600">Welcome back! Here&apos;s what&apos;s happening with your team.</p>
       </div>
+
+      {/* DB Error Banner */}
+      {stats.dbError && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-medium text-amber-800">Database Issue</h3>
+              <p className="text-sm text-amber-700 mt-1">{stats.dbError}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Getting Started - show when no data */}
+      {stats.totalEmployees === 0 && stats.totalClients === 0 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-2">Get Started</h3>
+          <p className="text-sm text-blue-700 mb-4">Your system is ready. Import your existing data from Google Sheets or start adding employees manually.</p>
+          <div className="flex gap-3">
+            <a href="/dashboard/import" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700">
+              Import from Google Sheets
+            </a>
+            <a href="/dashboard/employees" className="inline-flex items-center px-4 py-2 border border-blue-300 text-blue-700 text-sm font-medium rounded-md hover:bg-blue-100">
+              Add Employees Manually
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -181,14 +224,14 @@ export default function Dashboard() {
               <span className="text-xs text-gray-500">→</span>
             </a>
             <a
-              href="/dashboard/reports"
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
+              href="/dashboard/import"
+              className="flex items-center justify-between p-3 bg-green-50 rounded-md hover:bg-green-100 transition-colors border border-green-200"
             >
               <div className="flex items-center">
-                <TrendingUp className="h-5 w-5 text-gray-600 mr-3" />
-                <span className="text-sm font-medium text-gray-900">Generate Reports</span>
+                <TrendingUp className="h-5 w-5 text-green-600 mr-3" />
+                <span className="text-sm font-medium text-green-900">Import from Google Sheets</span>
               </div>
-              <span className="text-xs text-gray-500">→</span>
+              <span className="text-xs text-green-500">→</span>
             </a>
           </div>
         </div>

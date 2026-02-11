@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { 
+import {
   Users,
   Building2,
   DollarSign,
@@ -11,7 +11,8 @@ import {
   Calendar,
   Settings,
   BarChart3,
-  Home
+  Home,
+  Upload
 } from 'lucide-react';
 
 const navigation = [
@@ -21,6 +22,7 @@ const navigation = [
   { name: 'Payroll', href: '/dashboard/payroll', icon: DollarSign },
   { name: 'Documents', href: '/dashboard/documents', icon: FileText },
   { name: 'Time Off', href: '/dashboard/time-off', icon: Calendar },
+  { name: 'Import Data', href: '/dashboard/import', icon: Upload },
   { name: 'Reports', href: '/dashboard/reports', icon: BarChart3 },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

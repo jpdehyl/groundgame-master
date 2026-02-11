@@ -1,6 +1,8 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { 
-  Plus,
+import {
   Download,
   Calculator,
   Calendar,
@@ -8,65 +10,64 @@ import {
   Users,
   FileText,
   Clock,
-  CheckCircle,
-  AlertCircle
+  CheckCircle
 } from 'lucide-react';
 
-const payPeriods = [
-  {
-    id: 1,
-    period: 'Jan 29 - Feb 11, 2024',
-    status: 'Processing',
-    employees: 24,
-    totalAmount: '$24,125.50',
-    dueDate: '2024-02-14',
-    processed: false
-  },
-  {
-    id: 2,
-    period: 'Jan 15 - Jan 28, 2024', 
-    status: 'Completed',
-    employees: 23,
-    totalAmount: '$22,890.75',
-    dueDate: '2024-01-31',
-    processed: true
-  },
-  {
-    id: 3,
-    period: 'Jan 1 - Jan 14, 2024',
-    status: 'Completed', 
-    employees: 22,
-    totalAmount: '$21,456.25',
-    dueDate: '2024-01-17',
-    processed: true
-  }
-];
+interface PayPeriod {
+  id: string;
+  period: string;
+  status: string;
+  employees: number;
+  totalAmount: string;
+  dueDate: string;
+  processed: boolean;
+}
 
-const pendingItems = [
-  {
-    id: 1,
-    type: 'timesheet_missing',
-    employee: 'Maria Rodriguez',
-    description: 'Missing timesheet for current pay period',
-    priority: 'high'
-  },
-  {
-    id: 2,
-    type: 'bonus_pending',
-    employee: 'John Smith',
-    description: 'Lead bonus for AppFolio campaign ($250)',
-    priority: 'medium'
-  },
-  {
-    id: 3,
-    type: 'document_required',
-    employee: 'Ana Garcia',
-    description: 'W-8BEN renewal required for payment',
-    priority: 'high'
-  }
-];
+interface PayrollData {
+  payPeriods: PayPeriod[];
+  stats: {
+    totalEmployees: number;
+    totalHours: number;
+    basePay: number;
+    bonuses: number;
+  };
+}
 
 export default function PayrollPage() {
+  const [data, setData] = useState<PayrollData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPayroll() {
+      try {
+        const response = await fetch('/api/payroll');
+        const result = await response.json();
+        if (result.success) {
+          setData(result.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch payroll:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPayroll();
+  }, []);
+
+  const payPeriods = data?.payPeriods ?? [];
+  const stats = data?.stats ?? { totalEmployees: 0, totalHours: 0, basePay: 0, bonuses: 0 };
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Payroll</h1>
+          <p className="text-gray-600">Loading payroll data...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -87,21 +88,15 @@ export default function PayrollPage() {
         </div>
       </div>
 
-      {/* Current Pay Period Status */}
+      {/* Current Stats */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Calendar className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">Current Pay Period</h3>
-              <p className="text-sm text-gray-600">January 29 - February 11, 2024</p>
-            </div>
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
+            <Calendar className="h-5 w-5 text-blue-600" />
           </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-600">Payment Due</div>
-            <div className="text-lg font-semibold text-red-600">February 14, 2024</div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">Payroll Overview</h3>
+            <p className="text-sm text-gray-600">{stats.totalEmployees} active employees</p>
           </div>
         </div>
 
@@ -110,7 +105,7 @@ export default function PayrollPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-gray-600">Employees</div>
-                <div className="text-2xl font-bold text-gray-900">24</div>
+                <div className="text-2xl font-bold text-gray-900">{stats.totalEmployees}</div>
               </div>
               <Users className="h-8 w-8 text-gray-400" />
             </div>
@@ -119,7 +114,7 @@ export default function PayrollPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-gray-600">Total Hours</div>
-                <div className="text-2xl font-bold text-gray-900">832</div>
+                <div className="text-2xl font-bold text-gray-900">{stats.totalHours || '-'}</div>
               </div>
               <Clock className="h-8 w-8 text-gray-400" />
             </div>
@@ -128,7 +123,7 @@ export default function PayrollPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-gray-600">Base Pay</div>
-                <div className="text-2xl font-bold text-gray-900">$22,400</div>
+                <div className="text-2xl font-bold text-gray-900">${stats.basePay.toLocaleString() || '0'}</div>
               </div>
               <DollarSign className="h-8 w-8 text-gray-400" />
             </div>
@@ -137,51 +132,13 @@ export default function PayrollPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-gray-600">Bonuses/SPIF</div>
-                <div className="text-2xl font-bold text-green-600">$1,725</div>
+                <div className="text-2xl font-bold text-green-600">${stats.bonuses.toLocaleString() || '0'}</div>
               </div>
-              <Plus className="h-8 w-8 text-green-400" />
+              <DollarSign className="h-8 w-8 text-green-400" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Pending Items */}
-      {pendingItems.length > 0 && (
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center mb-4">
-            <AlertCircle className="h-5 w-5 text-amber-500 mr-2" />
-            <h3 className="text-lg font-semibold text-gray-900">Items Requiring Attention</h3>
-          </div>
-          <div className="space-y-3">
-            {pendingItems.map((item) => (
-              <div key={item.id} className={`p-4 rounded-lg border ${
-                item.priority === 'high' 
-                  ? 'bg-red-50 border-red-200' 
-                  : 'bg-yellow-50 border-yellow-200'
-              }`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium text-gray-900">{item.employee}</div>
-                    <div className="text-sm text-gray-600">{item.description}</div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      item.priority === 'high' 
-                        ? 'bg-red-100 text-red-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {item.priority}
-                    </span>
-                    <Button variant="outline" size="sm">
-                      Resolve
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Pay Period History */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
@@ -237,36 +194,13 @@ export default function PayrollPage() {
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm text-gray-600">YTD Total Payroll</div>
-              <div className="text-2xl font-bold text-gray-900">$68,472.50</div>
-            </div>
-            <DollarSign className="h-8 w-8 text-green-500" />
-          </div>
+      {payPeriods.length === 0 && (
+        <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
+          <DollarSign className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No pay periods yet</h3>
+          <p className="text-gray-600">Pay period data will appear here once payroll is processed.</p>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm text-gray-600">Average per Employee</div>
-              <div className="text-2xl font-bold text-gray-900">$1,005</div>
-            </div>
-            <Users className="h-8 w-8 text-blue-500" />
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm text-gray-600">Bonus Payments</div>
-              <div className="text-2xl font-bold text-gray-900">$4,875</div>
-            </div>
-            <Plus className="h-8 w-8 text-yellow-500" />
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
