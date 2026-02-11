@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { EmployeeForm } from '@/components/forms/employee-form';
-import { 
+import {
   Plus,
   Search,
   Filter,
@@ -85,7 +85,7 @@ export default function EmployeesPage() {
         method: 'DELETE'
       });
       const result = await response.json();
-      
+
       if (result.success) {
         await fetchEmployees(); // Refresh the list
       } else {
@@ -101,10 +101,10 @@ export default function EmployeesPage() {
 
   const handleSaveEmployee = async (formData: Record<string, string | number | null>) => {
     try {
-      const url = editingEmployee 
+      const url = editingEmployee
         ? `/api/employees/${editingEmployee.id}`
         : '/api/employees';
-      
+
       const method = editingEmployee ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -116,7 +116,7 @@ export default function EmployeesPage() {
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         setShowForm(false);
         setEditingEmployee(null);
@@ -146,8 +146,8 @@ export default function EmployeesPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Employees</h1>
-          <p className="text-gray-600">Loading employees...</p>
+          <h1 className="text-2xl font-bold text-white">Employees</h1>
+          <p className="text-muted-foreground">Loading employees...</p>
         </div>
       </div>
     );
@@ -157,12 +157,12 @@ export default function EmployeesPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Employees</h1>
-          <p className="text-gray-600">Manage your team members and contractors</p>
+          <h1 className="text-2xl font-bold text-white">Employees</h1>
+          <p className="text-muted-foreground">Manage your team members and contractors</p>
         </div>
-        <Button 
+        <Button
           onClick={handleAddEmployee}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-accent-blue hover:bg-accent-blue/90"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Employee
@@ -170,16 +170,16 @@ export default function EmployeesPage() {
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-4 rounded-xl border border-border">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search employees..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex gap-2">
@@ -198,26 +198,26 @@ export default function EmployeesPage() {
       {/* Employee Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredEmployees.map((employee) => (
-          <div key={employee.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+          <div key={employee.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg hover:shadow-black/20 transition-shadow card-hover">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <User className="h-6 w-6 text-blue-600" />
+              <div className="h-12 w-12 bg-accent-blue/15 rounded-full flex items-center justify-center">
+                <User className="h-6 w-6 text-accent-blue" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900">{employee.name}</h3>
-                <p className="text-sm text-gray-600">{employee.role}</p>
+                <h3 className="text-lg font-semibold text-white">{employee.name}</h3>
+                <p className="text-sm text-muted-foreground">{employee.role}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  employee.status === 'active' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-gray-100 text-gray-800'
+                  employee.status === 'active'
+                    ? 'bg-accent-green/15 text-accent-green'
+                    : 'bg-white/10 text-muted-foreground'
                 }`}>
                   {employee.status}
                 </div>
                 <div className="relative">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     className="p-1 h-8 w-8"
                     onClick={(e) => {
@@ -232,51 +232,51 @@ export default function EmployeesPage() {
             </div>
 
             <div className="space-y-2 text-sm">
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-muted-foreground">
                 <Mail className="h-4 w-4 mr-2" />
                 {employee.email}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-muted-foreground">
                 <Phone className="h-4 w-4 mr-2" />
                 {employee.phone}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-muted-foreground">
                 <Building2 className="h-4 w-4 mr-2" />
                 {employee.client}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-muted-foreground">
                 <Calendar className="h-4 w-4 mr-2" />
                 Started {new Date(employee.startDate).toLocaleDateString()}
               </div>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="mt-4 pt-4 border-t border-border">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-gray-600">Documents:</span>
+                <span className="text-sm text-muted-foreground">Documents:</span>
                 <span className={`text-xs font-medium px-2 py-1 rounded ${
-                  employee.documentsStatus === 'Complete' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
+                  employee.documentsStatus === 'Complete'
+                    ? 'bg-accent-green/15 text-accent-green'
+                    : 'bg-accent-yellow/15 text-accent-yellow'
                 }`}>
                   {employee.documentsStatus}
                 </span>
               </div>
               <div className="flex space-x-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleEditEmployee(employee.id)}
                   className="flex-1"
                 >
                   <Edit className="h-4 w-4 mr-1" />
                   Edit
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleDeleteEmployee(employee.id)}
                   disabled={deleting === employee.id}
-                  className="text-red-600 border-red-300 hover:bg-red-50"
+                  className="text-accent-red border-accent-red/30 hover:bg-accent-red/10"
                 >
                   {deleting === employee.id ? (
                     'Deleting...'
@@ -296,18 +296,18 @@ export default function EmployeesPage() {
       {/* Empty State */}
       {filteredEmployees.length === 0 && !loading && (
         <div className="text-center py-12">
-          <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <User className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-white mb-2">
             {searchTerm ? 'No employees found' : 'No employees yet'}
           </h3>
-          <p className="text-gray-600 mb-4">
-            {searchTerm 
+          <p className="text-muted-foreground mb-4">
+            {searchTerm
               ? `No employees match "${searchTerm}". Try adjusting your search.`
               : 'Get started by adding your first employee.'
             }
           </p>
           {!searchTerm && (
-            <Button onClick={handleAddEmployee} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={handleAddEmployee} className="bg-accent-blue hover:bg-accent-blue/90">
               <Plus className="h-4 w-4 mr-2" />
               Add First Employee
             </Button>
@@ -324,26 +324,26 @@ export default function EmployeesPage() {
       />
 
       {/* Stats Footer */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-4 rounded-xl border border-border">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
-            <div className="text-2xl font-bold text-gray-900">{employees.length}</div>
-            <div className="text-sm text-gray-600">Total Employees</div>
+            <div className="text-2xl font-bold text-white">{employees.length}</div>
+            <div className="text-sm text-muted-foreground">Total Employees</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-accent-green">
               {employees.filter(e => e.status === 'active').length}
             </div>
-            <div className="text-sm text-gray-600">Active</div>
+            <div className="text-sm text-muted-foreground">Active</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-yellow-600">
+            <div className="text-2xl font-bold text-accent-yellow">
               {employees.filter(e => e.documentsStatus !== 'Complete').length}
             </div>
-            <div className="text-sm text-gray-600">Documents Due</div>
+            <div className="text-sm text-muted-foreground">Documents Due</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-accent-blue">
               {employees.filter(e => {
                 const startDate = new Date(e.startDate);
                 const oneMonthAgo = new Date();
@@ -351,7 +351,7 @@ export default function EmployeesPage() {
                 return startDate >= oneMonthAgo;
               }).length}
             </div>
-            <div className="text-sm text-gray-600">New This Month</div>
+            <div className="text-sm text-muted-foreground">New This Month</div>
           </div>
         </div>
       </div>

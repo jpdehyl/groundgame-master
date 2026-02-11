@@ -94,13 +94,13 @@ export default function SettingsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600">Configure your GroundGame system</p>
+          <h1 className="text-2xl font-bold text-white">Settings</h1>
+          <p className="text-muted-foreground">Configure your GroundGame system</p>
         </div>
         <Button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-accent-blue hover:bg-accent-blue/90"
         >
           <Save className="h-4 w-4 mr-2" />
           {saving ? 'Saving...' : saved ? 'Saved' : 'Save All Changes'}
@@ -110,16 +110,16 @@ export default function SettingsPage() {
       {/* Settings Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {settingsSections.map((section) => (
-          <div key={section.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer">
+          <div key={section.id} className="bg-card p-6 rounded-xl border border-border card-hover hover:shadow-lg hover:shadow-black/20 transition-shadow cursor-pointer">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <section.icon className="h-5 w-5 text-blue-600" />
+              <div className="h-10 w-10 bg-accent-blue/15 rounded-lg flex items-center justify-center">
+                <section.icon className="h-5 w-5 text-accent-blue" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
+                <h3 className="text-lg font-semibold text-white">{section.title}</h3>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-4">{section.description}</p>
+            <p className="text-sm text-muted-foreground mb-4">{section.description}</p>
             <Button variant="outline" size="sm" className="w-full">
               Configure
             </Button>
@@ -128,33 +128,33 @@ export default function SettingsPage() {
       </div>
 
       {/* Company Info Section */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <Globe className="h-5 w-5 text-gray-600 mr-2" />
-          <h3 className="text-lg font-semibold text-gray-900">Company Information</h3>
+          <Globe className="h-5 w-5 text-muted-foreground mr-2" />
+          <h3 className="text-lg font-semibold text-white">Company Information</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Company Name
             </label>
             <input
               type="text"
               value={companySettings.companyName}
               onChange={(e) => handleCompanyChange('companyName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Time Zone
             </label>
             <select
               value={companySettings.timeZone}
               onChange={(e) => handleCompanyChange('timeZone', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
             >
               <option>Pacific Time (PT)</option>
               <option>Eastern Time (ET)</option>
@@ -164,13 +164,13 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Default Currency
             </label>
             <select
               value={companySettings.currency}
               onChange={(e) => handleCompanyChange('currency', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
             >
               <option>USD ($)</option>
               <option>CAD (CA$)</option>
@@ -179,13 +179,13 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Pay Period
             </label>
             <select
               value={companySettings.payPeriod}
               onChange={(e) => handleCompanyChange('payPeriod', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
             >
               <option>Bi-weekly</option>
               <option>Weekly</option>
@@ -196,110 +196,110 @@ export default function SettingsPage() {
       </div>
 
       {/* Notification Settings */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <Bell className="h-5 w-5 text-gray-600 mr-2" />
-          <h3 className="text-lg font-semibold text-gray-900">Notification Preferences</h3>
+          <Bell className="h-5 w-5 text-muted-foreground mr-2" />
+          <h3 className="text-lg font-semibold text-white">Notification Preferences</h3>
         </div>
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium text-gray-900">Payroll Reminders</div>
-              <div className="text-sm text-gray-600">Get notified when payroll is due</div>
+              <div className="text-sm font-medium text-white">Payroll Reminders</div>
+              <div className="text-sm text-muted-foreground">Get notified when payroll is due</div>
             </div>
             <input
               type="checkbox"
               checked={notifications.payrollReminders}
               onChange={() => handleNotificationToggle('payrollReminders')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent-blue focus:ring-accent-blue/50 border-border rounded"
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium text-gray-900">Document Expiry</div>
-              <div className="text-sm text-gray-600">Alerts for expiring W-8BEN documents</div>
+              <div className="text-sm font-medium text-white">Document Expiry</div>
+              <div className="text-sm text-muted-foreground">Alerts for expiring W-8BEN documents</div>
             </div>
             <input
               type="checkbox"
               checked={notifications.documentExpiry}
               onChange={() => handleNotificationToggle('documentExpiry')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent-blue focus:ring-accent-blue/50 border-border rounded"
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium text-gray-900">Time-off Requests</div>
-              <div className="text-sm text-gray-600">New employee time-off requests</div>
+              <div className="text-sm font-medium text-white">Time-off Requests</div>
+              <div className="text-sm text-muted-foreground">New employee time-off requests</div>
             </div>
             <input
               type="checkbox"
               checked={notifications.timeOffRequests}
               onChange={() => handleNotificationToggle('timeOffRequests')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent-blue focus:ring-accent-blue/50 border-border rounded"
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium text-gray-900">Weekly Reports</div>
-              <div className="text-sm text-gray-600">Automated weekly summary emails</div>
+              <div className="text-sm font-medium text-white">Weekly Reports</div>
+              <div className="text-sm text-muted-foreground">Automated weekly summary emails</div>
             </div>
             <input
               type="checkbox"
               checked={notifications.weeklyReports}
               onChange={() => handleNotificationToggle('weeklyReports')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-accent-blue focus:ring-accent-blue/50 border-border rounded"
             />
           </div>
         </div>
       </div>
 
       {/* Integration Status */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <Database className="h-5 w-5 text-gray-600 mr-2" />
-          <h3 className="text-lg font-semibold text-gray-900">Integration Status</h3>
+          <Database className="h-5 w-5 text-muted-foreground mr-2" />
+          <h3 className="text-lg font-semibold text-white">Integration Status</h3>
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
             <div className="flex items-center space-x-3">
-              <Mail className="h-5 w-5 text-gray-600" />
+              <Mail className="h-5 w-5 text-muted-foreground" />
               <div>
-                <div className="text-sm font-medium text-gray-900">Email Service</div>
-                <div className="text-sm text-gray-600">Send automated notifications</div>
+                <div className="text-sm font-medium text-white">Email Service</div>
+                <div className="text-sm text-muted-foreground">Send automated notifications</div>
               </div>
             </div>
-            <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+            <span className="px-2 py-1 bg-accent-yellow/15 text-accent-yellow text-xs rounded">
               Not Connected
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
             <div className="flex items-center space-x-3">
-              <Calendar className="h-5 w-5 text-gray-600" />
+              <Calendar className="h-5 w-5 text-muted-foreground" />
               <div>
-                <div className="text-sm font-medium text-gray-900">Calendar Integration</div>
-                <div className="text-sm text-gray-600">Sync time-off with calendars</div>
+                <div className="text-sm font-medium text-white">Calendar Integration</div>
+                <div className="text-sm text-muted-foreground">Sync time-off with calendars</div>
               </div>
             </div>
-            <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+            <span className="px-2 py-1 bg-accent-yellow/15 text-accent-yellow text-xs rounded">
               Not Connected
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
             <div className="flex items-center space-x-3">
-              <DollarSign className="h-5 w-5 text-gray-600" />
+              <DollarSign className="h-5 w-5 text-muted-foreground" />
               <div>
-                <div className="text-sm font-medium text-gray-900">Payment Provider</div>
-                <div className="text-sm text-gray-600">Process employee payments</div>
+                <div className="text-sm font-medium text-white">Payment Provider</div>
+                <div className="text-sm text-muted-foreground">Process employee payments</div>
               </div>
             </div>
-            <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+            <span className="px-2 py-1 bg-accent-yellow/15 text-accent-yellow text-xs rounded">
               Not Connected
             </span>
           </div>
@@ -311,7 +311,7 @@ export default function SettingsPage() {
         <Button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-accent-blue hover:bg-accent-blue/90"
         >
           <Save className="h-4 w-4 mr-2" />
           {saving ? 'Saving...' : saved ? 'Saved' : 'Save All Settings'}

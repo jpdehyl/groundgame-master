@@ -1,7 +1,11 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 import { NextRequest } from 'next/server';
 
 export async function GET() {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: true, data: [] });
+  }
+
   try {
     const { data: employees, error } = await supabase
       .from('employees')
@@ -13,9 +17,11 @@ export async function GET() {
       .eq('status', 'active')
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Employees API error:', error);
+      return Response.json({ success: true, data: [], dbError: error.message });
+    }
 
-    // Transform the data to match the frontend expectations
     const transformedEmployees = employees?.map(emp => ({
       id: emp.id,
       name: `${emp.first_name} ${emp.last_name}`,
@@ -25,7 +31,7 @@ export async function GET() {
       client: emp.client?.name || 'Not assigned',
       status: emp.status,
       startDate: emp.start_date,
-      documentsStatus: 'Complete' // This would come from a documents relationship
+      documentsStatus: 'Complete'
     })) || [];
 
     return Response.json({
@@ -35,18 +41,18 @@ export async function GET() {
 
   } catch (error) {
     console.error('Employees API error:', error);
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return Response.json({ success: true, data: [], dbError: error instanceof Error ? error.message : 'Unknown error' });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: false, error: 'Database not configured' }, { status: 503 });
+  }
+
   try {
     const body = await request.json();
-    
-    // Validate required fields
+
     const requiredFields = ['first_name', 'last_name', 'email', 'start_date', 'client_id', 'role_id'];
     for (const field of requiredFields) {
       if (!body[field]) {
@@ -57,7 +63,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Check for email uniqueness
     const { data: existingEmployee, error: checkError } = await supabase
       .from('employees')
       .select('id')
@@ -75,9 +80,23 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // Clean body - only send fields that exist in the DB schema
+    const allowedFields = [
+      'first_name', 'last_name', 'email', 'phone', 'client_id', 'role_id',
+      'employment_type', 'start_date', 'end_date', 'salary_compensation',
+      'pay_frequency', 'internet_speed_up', 'internet_speed_down',
+      'computer_serial', 'status'
+    ];
+    const cleanBody: Record<string, unknown> = {};
+    for (const field of allowedFields) {
+      if (body[field] !== undefined && body[field] !== '') {
+        cleanBody[field] = body[field];
+      }
+    }
+
     const { data: employee, error } = await supabaseAdmin
       .from('employees')
-      .insert(body)
+      .insert(cleanBody)
       .select(`
         *,
         client:clients(name),

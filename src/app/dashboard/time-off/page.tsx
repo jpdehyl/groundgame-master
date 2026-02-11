@@ -258,6 +258,23 @@ export default function TimeOffPage() {
                       </div>
                     )}
                   </div>
+                  {request.reason && (
+                    <div className="text-sm text-muted-foreground mb-3">
+                      <strong>Reason:</strong> {request.reason}
+                    </div>
+                  )}
+                  {request.status === 'Pending' && (
+                    <div className="flex space-x-2">
+                      <Button variant="outline" size="sm" className="text-accent-green border-accent-green/30" onClick={() => handleApprove(request.id)}>
+                        <CheckCircle className="h-4 w-4 mr-1" />
+                        Approve
+                      </Button>
+                      <Button variant="outline" size="sm" className="text-accent-red border-accent-red/30" onClick={() => handleDeny(request.id)}>
+                        <XCircle className="h-4 w-4 mr-1" />
+                        Decline
+                      </Button>
+                    </div>
+                  )}
                 </div>
               );
             })}

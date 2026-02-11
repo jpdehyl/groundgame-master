@@ -33,13 +33,44 @@ export async function GET(request: NextRequest) {
       employee_count: Array.isArray(client.employees) ? client.employees.length : 0,
     }));
 
-    return Response.json({
-      success: true,
-      data: enriched
-    });
+    return Response.json({ success: true, data: enriched });
 
   } catch (error) {
     console.error('Clients API error:', error);
+    return Response.json({ success: true, data: [], dbError: error instanceof Error ? error.message : 'Unknown error' });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: false, error: 'Database not configured' }, { status: 503 });
+  }
+
+  try {
+    const body = await request.json();
+
+    if (!body.name) {
+      return Response.json({ success: false, error: 'Client name is required' }, { status: 400 });
+    }
+
+    const { data: client, error } = await supabaseAdmin
+      .from('clients')
+      .insert({
+        name: body.name,
+        email: body.email || null,
+        contact_person: body.contact_person || null,
+        billing_address: body.billing_address || null,
+        status: 'active'
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return Response.json({ success: true, data: client });
+
+  } catch (error) {
+    console.error('Create client error:', error);
     return Response.json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error'

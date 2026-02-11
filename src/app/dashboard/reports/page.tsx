@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Download,
   BarChart3,
   TrendingUp,
@@ -82,15 +82,15 @@ export default function ReportsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
-          <p className="text-gray-600">Generate insights and analytics for your business</p>
+          <h1 className="text-2xl font-bold text-white">Reports</h1>
+          <p className="text-muted-foreground">Generate insights and analytics for your business</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline">
             <Settings className="h-4 w-4 mr-2" />
             Configure
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-accent-blue hover:bg-accent-blue/90">
             <FileText className="h-4 w-4 mr-2" />
             Custom Report
           </Button>
@@ -100,49 +100,49 @@ export default function ReportsPage() {
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {quickStats.map((stat, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div key={index} className="bg-card p-6 rounded-xl border border-border">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm text-gray-600">{stat.title}</div>
-                <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.title}</div>
+                <div className="text-2xl font-bold text-white">{stat.value}</div>
                 <div className={`text-sm flex items-center ${
-                  stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                  stat.trend === 'up' ? 'text-accent-green' : 'text-accent-red'
                 }`}>
                   <TrendingUp className="h-4 w-4 mr-1" />
                   {stat.change} from last period
                 </div>
               </div>
-              <BarChart3 className="h-8 w-8 text-gray-400" />
+              <BarChart3 className="h-8 w-8 text-muted-foreground" />
             </div>
           </div>
         ))}
       </div>
 
       {/* Report Templates */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-gray-900">Standard Reports</h3>
+          <h3 className="text-lg font-semibold text-white">Standard Reports</h3>
           <Button variant="outline" size="sm">
             View All Templates
           </Button>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {reportTemplates.map((template) => (
-            <div key={template.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+            <div key={template.id} className="p-4 border border-border rounded-lg card-hover hover:shadow-lg hover:shadow-black/20 transition-shadow">
               <div className="flex items-start space-x-4">
-                <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <template.icon className="h-5 w-5 text-blue-600" />
+                <div className="h-10 w-10 bg-accent-blue/15 rounded-lg flex items-center justify-center">
+                  <template.icon className="h-5 w-5 text-accent-blue" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-semibold text-gray-900">{template.name}</h4>
-                    <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
+                    <h4 className="font-semibold text-white">{template.name}</h4>
+                    <span className="px-2 py-1 bg-white/10 text-muted-foreground text-xs rounded">
                       {template.category}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3">{template.description}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span>Generated {template.frequency.toLowerCase()}</span>
                     <span>Last: {new Date(template.lastGenerated).toLocaleDateString()}</span>
                   </div>
@@ -163,11 +163,11 @@ export default function ReportsPage() {
       </div>
 
       {/* Chart Placeholder */}
-      <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-8 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-gray-900">Revenue Trends</h3>
+          <h3 className="text-lg font-semibold text-white">Revenue Trends</h3>
           <div className="flex space-x-2">
-            <select className="px-3 py-2 border border-gray-200 rounded-md text-sm">
+            <select className="px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm">
               <option>Last 6 months</option>
               <option>Last year</option>
               <option>All time</option>
@@ -178,37 +178,37 @@ export default function ReportsPage() {
             </Button>
           </div>
         </div>
-        
+
         {/* Chart Placeholder */}
-        <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+        <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
           <div className="text-center">
-            <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Revenue chart will be displayed here</p>
-            <p className="text-sm text-gray-500 mt-1">Connect analytics service to view charts</p>
+            <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Revenue chart will be displayed here</p>
+            <p className="text-sm text-muted-foreground mt-1">Connect analytics service to view charts</p>
           </div>
         </div>
       </div>
 
       {/* Export Options */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Export Options</h3>
+      <div className="bg-card p-6 rounded-xl border border-border">
+        <h3 className="text-lg font-semibold text-white mb-4">Export Options</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 border border-gray-200 rounded-lg text-center">
-            <FileText className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-            <h4 className="font-medium text-gray-900 mb-1">CSV Export</h4>
-            <p className="text-sm text-gray-600 mb-3">Export data for Excel/Sheets</p>
+          <div className="p-4 border border-border rounded-lg text-center">
+            <FileText className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <h4 className="font-medium text-white mb-1">CSV Export</h4>
+            <p className="text-sm text-muted-foreground mb-3">Export data for Excel/Sheets</p>
             <Button variant="outline" size="sm">Export CSV</Button>
           </div>
-          <div className="p-4 border border-gray-200 rounded-lg text-center">
-            <FileText className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-            <h4 className="font-medium text-gray-900 mb-1">PDF Reports</h4>
-            <p className="text-sm text-gray-600 mb-3">Formatted reports for sharing</p>
+          <div className="p-4 border border-border rounded-lg text-center">
+            <FileText className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <h4 className="font-medium text-white mb-1">PDF Reports</h4>
+            <p className="text-sm text-muted-foreground mb-3">Formatted reports for sharing</p>
             <Button variant="outline" size="sm">Generate PDF</Button>
           </div>
-          <div className="p-4 border border-gray-200 rounded-lg text-center">
-            <BarChart3 className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-            <h4 className="font-medium text-gray-900 mb-1">Dashboard Export</h4>
-            <p className="text-sm text-gray-600 mb-3">Interactive dashboard view</p>
+          <div className="p-4 border border-border rounded-lg text-center">
+            <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <h4 className="font-medium text-white mb-1">Dashboard Export</h4>
+            <p className="text-sm text-muted-foreground mb-3">Interactive dashboard view</p>
             <Button variant="outline" size="sm">Create Dashboard</Button>
           </div>
         </div>
