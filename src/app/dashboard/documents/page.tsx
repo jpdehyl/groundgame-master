@@ -45,9 +45,9 @@ function daysUntil(dateStr: string): number {
 
 const typeLabels: Record<string, string> = { contract: 'Contract', w8ben: 'W-8BEN', other: 'Other' };
 const typeColors: Record<string, string> = {
-  contract: 'bg-accent-blue/15 text-accent-blue',
-  w8ben: 'bg-purple-100 text-purple-800',
-  other: 'bg-white/10 text-gray-300'
+  contract: 'bg-accent-blue/10 text-primary',
+  w8ben: 'bg-accent-purple/10 text-accent-purple',
+  other: 'bg-muted text-text-secondary'
 };
 
 export default function DocumentsPage() {
@@ -139,30 +139,30 @@ export default function DocumentsPage() {
           <h1 className="text-2xl font-bold text-white">Documents</h1>
           <p className="text-muted-foreground">Manage contracts, W-8BEN forms, and compliance documents</p>
         </div>
-        <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowForm(true)}>
+        <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowForm(true)}>
           <Plus className="h-4 w-4 mr-2" />
           Add Document
         </Button>
       </div>
 
       {error && (
-        <div className="bg-accent-red/15 border border-accent-red/30 rounded-xl p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
           </div>
-          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red/80 text-sm">Dismiss</button>
+          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red text-sm">Dismiss</button>
         </div>
       )}
 
       {(expiredW8.length > 0 || expiringW8.length > 0) && (
         <div className="space-y-3">
           {expiredW8.length > 0 && (
-            <div className="bg-accent-red/15 border border-accent-red/30 rounded-xl p-4 flex items-start">
+            <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start">
               <AlertTriangle className="h-5 w-5 text-accent-red mr-3 mt-0.5" />
               <div>
                 <p className="font-medium text-accent-red">{expiredW8.length} W-8BEN form{expiredW8.length !== 1 ? 's' : ''} expired</p>
-                <p className="text-sm text-accent-red/80 mt-1">
+                <p className="text-sm text-accent-red mt-1">
                   {expiredW8.map(d => {
                     const emp = d.employee;
                     return emp ? `${emp.first_name} ${emp.last_name}` : 'Unknown';
@@ -172,11 +172,11 @@ export default function DocumentsPage() {
             </div>
           )}
           {expiringW8.length > 0 && (
-            <div className="bg-accent-yellow/10 border border-accent-yellow/30 rounded-xl p-4 flex items-start">
+            <div className="bg-accent-yellow/10 border border-accent-yellow/20 rounded-xl p-4 flex items-start">
               <Clock className="h-5 w-5 text-accent-yellow mr-3 mt-0.5" />
               <div>
                 <p className="font-medium text-accent-yellow">{expiringW8.length} W-8BEN form{expiringW8.length !== 1 ? 's' : ''} expiring within 90 days</p>
-                <p className="text-sm text-accent-yellow/80 mt-1">
+                <p className="text-sm text-accent-yellow mt-1">
                   {expiringW8.map(d => {
                     const emp = d.employee;
                     const days = d.expiry_date ? daysUntil(d.expiry_date) : 0;
@@ -196,7 +196,7 @@ export default function DocumentsPage() {
         </div>
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">Contracts</div>
-          <div className="text-2xl font-bold text-accent-blue">{activeDocs.filter(d => d.document_type === 'contract').length}</div>
+          <div className="text-2xl font-bold text-primary">{activeDocs.filter(d => d.document_type === 'contract').length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">W-8BEN Active</div>
@@ -214,13 +214,13 @@ export default function DocumentsPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input type="text" placeholder="Search by employee or file name..." value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground" />
+              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground" />
           </div>
           <div className="flex gap-2">
             {(['all', 'contract', 'w8ben', 'other'] as const).map(t => (
               <button key={t} onClick={() => setFilterType(t)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                  filterType === t ? 'bg-accent-blue text-white' : 'bg-white/10 text-gray-300 hover:bg-white/10'
+                  filterType === t ? 'bg-accent-blue text-white' : 'bg-white/5 text-text-secondary hover:bg-white/10'
                 }`}>
                 {t === 'all' ? 'All' : typeLabels[t]}
               </button>
@@ -249,7 +249,7 @@ export default function DocumentsPage() {
                 <div key={doc.id} className={`p-4 flex items-center justify-between hover:bg-white/5 ${isExpired ? 'bg-accent-red/10' : isExpiring ? 'bg-accent-yellow/10' : ''}`}>
                   <div className="flex items-center space-x-4">
                     <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                      isExpired ? 'bg-accent-red/15' : isExpiring ? 'bg-accent-yellow/15' : 'bg-white/10'
+                      isExpired ? 'bg-accent-red/10' : isExpiring ? 'bg-accent-yellow/10' : 'bg-muted'
                     }`}>
                       {isExpired ? <AlertTriangle className="h-5 w-5 text-accent-red" /> :
                        isExpiring ? <Clock className="h-5 w-5 text-accent-yellow" /> :
@@ -275,15 +275,15 @@ export default function DocumentsPage() {
                       {typeLabels[doc.document_type]}
                     </span>
                     {isExpired ? (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-red/15 text-accent-red">Expired</span>
+                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-red/10 text-accent-red">Expired</span>
                     ) : doc.status === 'active' ? (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-green/15 text-accent-green">
+                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-green/10 text-accent-green">
                         <CheckCircle className="h-3 w-3 inline mr-1" />Active
                       </span>
                     ) : null}
                     {doc.google_drive_url && (
                       <a href={doc.google_drive_url} target="_blank" rel="noopener noreferrer"
-                        className="text-accent-blue hover:text-accent-blue">
+                        className="text-primary hover:text-primary">
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
@@ -297,7 +297,7 @@ export default function DocumentsPage() {
 
       {showForm && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-md w-full p-6">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">Add Document</h2>
               <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-md">
@@ -306,36 +306,36 @@ export default function DocumentsPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Employee *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Employee *</label>
                 <select value={formData.employee_id}
                   onChange={e => setFormData(f => ({ ...f, employee_id: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground">
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground">
                   <option value="">Select employee</option>
                   {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Type *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Type *</label>
                 <select value={formData.document_type}
                   onChange={e => setFormData(f => ({ ...f, document_type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground">
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground">
                   <option value="contract">Contract</option>
                   <option value="w8ben">W-8BEN</option>
                   <option value="other">Other</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">File Name *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">File Name *</label>
                 <input type="text" value={formData.file_name}
                   onChange={e => setFormData(f => ({ ...f, file_name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="contract-john-smith-2026.pdf" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Google Drive URL</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Google Drive URL</label>
                 <input type="url" value={formData.google_drive_url}
                   onChange={e => setFormData(f => ({ ...f, google_drive_url: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="https://drive.google.com/file/d/..." />
               </div>
               {formData.document_type === 'w8ben' && (
@@ -344,7 +344,7 @@ export default function DocumentsPage() {
             </div>
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={addDocument} disabled={formLoading}>
+              <Button className="bg-primary hover:bg-primary-hover" onClick={addDocument} disabled={formLoading}>
                 {formLoading ? 'Adding...' : 'Add Document'}
               </Button>
             </div>

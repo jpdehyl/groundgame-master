@@ -115,7 +115,7 @@ export default function ReportsPage() {
           <h1 className="text-2xl font-bold text-white">Reports</h1>
           <p className="text-muted-foreground">Real-time business analytics from your data</p>
         </div>
-        <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => exportReportCsv(data)}>
+        <Button className="bg-primary hover:bg-primary-hover" onClick={() => exportReportCsv(data)}>
           <Download className="h-4 w-4 mr-2" />
           Export Report CSV
         </Button>
@@ -125,7 +125,7 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
           { title: 'Total Billed', value: formatCurrency(data.totalBilled), icon: DollarSign, color: 'text-accent-green' },
-          { title: 'Employee Costs', value: formatCurrency(data.employeeCosts), icon: Users, color: 'text-accent-blue' },
+          { title: 'Employee Costs', value: formatCurrency(data.employeeCosts), icon: Users, color: 'text-primary' },
           { title: 'Payroll Runs', value: `${data.sentRuns} of ${data.totalRuns}`, icon: FileText, color: 'text-accent-yellow' },
           { title: 'Avg / Employee', value: formatCurrency(data.avgPerEmployee), icon: TrendingUp, color: 'text-accent-green' },
         ].map((stat, idx) => (
@@ -145,7 +145,7 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center mb-3">
-            <Clock className="h-5 w-5 text-accent-blue mr-2" />
+            <Clock className="h-5 w-5 text-primary mr-2" />
             <h4 className="font-semibold text-white">Total Hours Logged</h4>
           </div>
           <div className="text-3xl font-bold text-white">{data.totalHours.toLocaleString()}</div>
@@ -177,7 +177,7 @@ export default function ReportsPage() {
       <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <Building2 className="h-5 w-5 text-accent-blue mr-2" />
+            <Building2 className="h-5 w-5 text-primary mr-2" />
             <h3 className="text-lg font-semibold text-white">Employees by Client</h3>
           </div>
           <span className="text-sm text-muted-foreground">{data.activeClientCount} active clients</span>
@@ -192,7 +192,7 @@ export default function ReportsPage() {
                 <div className="flex-1">
                   <div className="h-6 bg-muted rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-accent-blue rounded-full flex items-center justify-end pr-2"
+                      className="h-full bg-primary rounded-full flex items-center justify-end pr-2"
                       style={{ width: `${Math.max((client.employees / Math.max(...data.clientBreakdown.map(c => c.employees))) * 100, 10)}%` }}
                     >
                       <span className="text-xs font-medium text-white">{client.employees}</span>
@@ -225,7 +225,7 @@ export default function ReportsPage() {
               <div key={idx} className="flex-1 flex flex-col items-center gap-1">
                 <div className="text-xs text-muted-foreground">{formatCurrency(period.amount)}</div>
                 <div
-                  className="w-full bg-accent-blue rounded-t min-h-[4px]"
+                  className="w-full bg-primary rounded-t min-h-[4px]"
                   style={{ height: `${(period.amount / maxBarAmount) * 140}px` }}
                 />
                 <div className="text-xs text-muted-foreground truncate w-full text-center">{period.label}</div>

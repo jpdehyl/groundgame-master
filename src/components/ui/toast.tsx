@@ -43,9 +43,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   };
 
   const colors = {
-    success: 'bg-accent-green/15 border-accent-green/30 text-accent-green',
-    error: 'bg-accent-red/15 border-accent-red/30 text-accent-red',
-    info: 'bg-accent-blue/15 border-accent-blue/30 text-accent-blue',
+    success: 'bg-accent-green/10 border-accent-green/20 text-accent-green',
+    error: 'bg-accent-red/10 border-accent-red/20 text-accent-red',
+    info: 'bg-accent-blue/10 border-accent-blue/20 text-accent-blue',
   };
 
   return (
@@ -57,7 +57,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           return (
             <div
               key={t.id}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg shadow-black/30 animate-in slide-in-from-right ${colors[t.type]}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg shadow-black/40 animate-in slide-in-from-right ${colors[t.type]}`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <p className="text-sm flex-1">{t.message}</p>

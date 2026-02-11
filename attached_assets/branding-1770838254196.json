@@ -1,0 +1,155 @@
+{
+  "colorScheme": "dark",
+  "fonts": [
+    {
+      "family": "ui-sans-serif",
+      "count": 61
+    },
+    {
+      "family": "system-ui",
+      "count": 61
+    },
+    {
+      "family": "sans-serif",
+      "count": 61
+    },
+    {
+      "family": "Apple Color Emoji",
+      "count": 61
+    },
+    {
+      "family": "Segoe UI Emoji",
+      "count": 61
+    },
+    {
+      "family": "Segoe UI Symbol",
+      "count": 61
+    },
+    {
+      "family": "Noto Color Emoji",
+      "count": 61
+    }
+  ],
+  "colors": {
+    "primary": "#FFFFFF",
+    "accent": "#FFFFFF",
+    "background": "#0A0A0A",
+    "textPrimary": "#0A0A0A",
+    "link": "#FFFFFF"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "ui-sans-serif",
+      "heading": "ui-sans-serif"
+    },
+    "fontStacks": {
+      "body": [
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji"
+      ],
+      "heading": [
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji"
+      ],
+      "paragraph": [
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji"
+      ]
+    },
+    "fontSizes": {
+      "h1": "64px",
+      "h2": "40px",
+      "body": "17.6px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "0px"
+  },
+  "components": {
+    "buttonPrimary": {
+      "background": "#0A0A0A",
+      "textColor": "#FFFFFF",
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    },
+    "buttonSecondary": {
+      "background": "#111111",
+      "textColor": "#FFFFFF",
+      "borderColor": "#333333",
+      "borderRadius": "8px",
+      "borderRadiusCorners": {
+        "topLeft": "8px",
+        "topRight": "8px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": null,
+    "favicon": "File saved at: attached_assets/favicon.ico",
+    "ogImage": "File saved at: attached_assets/ogImage.jpg"
+  },
+  "__framework_hints": [],
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 0,
+      "text": "See the Platform",
+      "reasoning": "The button 'See the Platform' is likely the primary CTA due to its action-oriented text, encouraging users to explore the platform. It stands out as a key action for potential users."
+    },
+    "secondary": {
+      "index": 2,
+      "text": "Lead Intel",
+      "reasoning": "The 'Lead Intel' button is selected as secondary because it has a different background color (#111111) and serves as a navigation option within the platform, indicating a secondary action."
+    },
+    "confidence": 0.9
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "sales professionals and teams"
+  },
+  "designSystem": {
+    "framework": "tailwind",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.9,
+    "colors": 0.85,
+    "overall": 0.875
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": false,
+      "llmSucceeded": false,
+      "finalSource": "none"
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}

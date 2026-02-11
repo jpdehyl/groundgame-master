@@ -38,15 +38,15 @@ function formatDate(d: string) {
 }
 
 const leaveColors: Record<string, string> = {
-  pto: 'bg-accent-blue/15 text-accent-blue',
-  sick: 'bg-accent-yellow/15 text-accent-yellow',
-  unpaid: 'bg-white/10 text-muted-foreground'
+  pto: 'bg-accent-blue/10 text-primary',
+  sick: 'bg-accent-yellow/10 text-accent-yellow',
+  unpaid: 'bg-muted text-muted-foreground'
 };
 
 const statusColors: Record<string, string> = {
-  pending: 'bg-accent-yellow/15 text-accent-yellow',
-  approved: 'bg-accent-green/15 text-accent-green',
-  denied: 'bg-accent-red/15 text-accent-red'
+  pending: 'bg-accent-yellow/10 text-accent-yellow',
+  approved: 'bg-accent-green/10 text-accent-green',
+  denied: 'bg-accent-red/10 text-accent-red'
 };
 
 export default function TimeOffPage() {
@@ -144,14 +144,14 @@ export default function TimeOffPage() {
           <h1 className="text-2xl font-bold text-white">Time Off</h1>
           <p className="text-muted-foreground">Manage PTO, sick leave, and unpaid time off requests</p>
         </div>
-        <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowForm(true)}>
+        <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowForm(true)}>
           <Plus className="h-4 w-4 mr-2" />
           New Request
         </Button>
       </div>
 
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/30 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/20 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
@@ -176,7 +176,7 @@ export default function TimeOffPage() {
         </div>
         <div className="bg-card p-5 rounded-xl border border-border">
           <div className="text-sm text-muted-foreground">Total Days Off</div>
-          <div className="text-2xl font-bold text-accent-blue">
+          <div className="text-2xl font-bold text-primary">
             {requests.filter(r => r.status === 'approved').reduce((s, r) => s + Number(r.days_count), 0)}
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function TimeOffPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              filter === f ? 'bg-accent-blue text-white' : 'bg-white/10 text-gray-300 hover:bg-white/10'
+              filter === f ? 'bg-accent-blue text-white' : 'bg-white/5 text-text-secondary hover:bg-white/10'
             }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -217,7 +217,7 @@ export default function TimeOffPage() {
               return (
                 <div key={req.id} className="p-4 flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="h-10 w-10 bg-white/10 rounded-full flex items-center justify-center">
+                    <div className="h-10 w-10 bg-muted rounded-full flex items-center justify-center">
                       <Clock className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <div>
@@ -240,7 +240,7 @@ export default function TimeOffPage() {
                       <div className="flex space-x-1">
                         <Button
                           size="sm"
-                          className="bg-accent-green hover:bg-accent-green/90 h-8"
+                          className="bg-accent-green hover:bg-green-600 h-8"
                           onClick={() => updateStatus(req.id, 'approved')}
                           disabled={actionLoading === `approved-${req.id}`}
                         >
@@ -249,7 +249,7 @@ export default function TimeOffPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-accent-red border-accent-red/30 hover:bg-accent-red/10 h-8"
+                          className="text-accent-red border-accent-red/20 hover:bg-accent-red/20 h-8"
                           onClick={() => updateStatus(req.id, 'denied')}
                           disabled={actionLoading === `denied-${req.id}`}
                         >
@@ -268,7 +268,7 @@ export default function TimeOffPage() {
       {/* New Request Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-md w-full p-6">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">New Time-Off Request</h2>
               <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-md">
@@ -277,22 +277,22 @@ export default function TimeOffPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Employee *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Employee *</label>
                 <select
                   value={formData.employee_id}
                   onChange={e => setFormData(f => ({ ...f, employee_id: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                 >
                   <option value="">Select employee</option>
                   {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Leave Type *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Leave Type *</label>
                 <select
                   value={formData.leave_type}
                   onChange={e => setFormData(f => ({ ...f, leave_type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                 >
                   <option value="pto">PTO</option>
                   <option value="sick">Sick</option>
@@ -301,32 +301,32 @@ export default function TimeOffPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Start Date *</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">Start Date *</label>
                   <input type="date" value={formData.start_date}
                     onChange={e => setFormData(f => ({ ...f, start_date: e.target.value }))}
-                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">End Date *</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">End Date *</label>
                   <input type="date" value={formData.end_date}
                     onChange={e => setFormData(f => ({ ...f, end_date: e.target.value }))}
-                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Reason</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Reason</label>
                 <textarea value={formData.reason} rows={2}
                   onChange={e => setFormData(f => ({ ...f, reason: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="Optional reason..."
                 />
               </div>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={submitRequest}
+              <Button className="bg-primary hover:bg-primary-hover" onClick={submitRequest}
                 disabled={actionLoading === 'submit'}>
                 {actionLoading === 'submit' ? 'Submitting...' : 'Submit Request'}
               </Button>

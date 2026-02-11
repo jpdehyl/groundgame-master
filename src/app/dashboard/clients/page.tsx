@@ -255,7 +255,7 @@ export default function ClientsPage() {
           <h1 className="text-2xl font-bold text-white">Clients</h1>
           <p className="text-muted-foreground">Manage client relationships and pricing</p>
         </div>
-        <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={openAddForm}>
+        <Button className="bg-primary hover:bg-primary-hover" onClick={openAddForm}>
           <Plus className="h-4 w-4 mr-2" />
           Add Client
         </Button>
@@ -263,12 +263,12 @@ export default function ClientsPage() {
 
       {/* Error */}
       {error && (
-        <div className="bg-accent-red/15 border border-accent-red/30 rounded-xl p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
           </div>
-          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red/80 text-sm">Dismiss</button>
+          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red text-sm">Dismiss</button>
         </div>
       )}
 
@@ -282,7 +282,7 @@ export default function ClientsPage() {
               placeholder="Search clients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
             />
           </div>
           <Button variant="outline" size="sm" onClick={exportCsv}>
@@ -295,11 +295,11 @@ export default function ClientsPage() {
       {/* Client Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {filteredClients.map((client) => (
-          <div key={client.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg hover:shadow-black/20 transition-shadow card-hover">
+          <div key={client.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg shadow-black/40 transition-shadow card-hover">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <div className="h-12 w-12 bg-accent-blue/15 rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-accent-blue" />
+                <div className="h-12 w-12 bg-accent-blue/10 rounded-lg flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">{client.name}</h3>
@@ -309,7 +309,7 @@ export default function ClientsPage() {
                 </div>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                client.status === 'active' ? 'bg-accent-green/15 text-accent-green' : 'bg-white/10 text-gray-300'
+                client.status === 'active' ? 'bg-accent-green/10 text-accent-green' : 'bg-muted text-text-secondary'
               }`}>
                 {client.status}
               </span>
@@ -337,14 +337,14 @@ export default function ClientsPage() {
             <div className="space-y-2 mb-4">
               {client.contact_person && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-300">Contact:</span>
+                  <span className="text-sm font-medium text-text-secondary">Contact:</span>
                   <span className="text-sm text-muted-foreground">{client.contact_person}</span>
                 </div>
               )}
               {client.email && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-300">Email:</span>
-                  <span className="text-sm text-accent-blue">{client.email}</span>
+                  <span className="text-sm font-medium text-text-secondary">Email:</span>
+                  <span className="text-sm text-primary">{client.email}</span>
                 </div>
               )}
             </div>
@@ -367,7 +367,7 @@ export default function ClientsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="text-accent-red border-accent-red/30 hover:bg-accent-red/15"
+                className="text-accent-red border-accent-red/20 hover:bg-accent-red/20"
                 onClick={() => deactivateClient(client)}
               >
                 <Trash2 className="h-4 w-4" />
@@ -388,7 +388,7 @@ export default function ClientsPage() {
             {searchTerm ? 'Try adjusting your search.' : 'Get started by adding your first client.'}
           </p>
           {!searchTerm && (
-            <Button onClick={openAddForm} className="bg-accent-blue hover:bg-accent-blue/90">
+            <Button onClick={openAddForm} className="bg-primary hover:bg-primary-hover">
               <Plus className="h-4 w-4 mr-2" />
               Add First Client
             </Button>
@@ -411,7 +411,7 @@ export default function ClientsPage() {
             <div className="text-sm text-muted-foreground">Active</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-accent-blue">{totalEmployees}</div>
+            <div className="text-2xl font-bold text-primary">{totalEmployees}</div>
             <div className="text-sm text-muted-foreground">Assigned Employees</div>
           </div>
         </div>
@@ -420,7 +420,7 @@ export default function ClientsPage() {
       {/* Client Form Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-lg w-full p-6">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">
                 {editingClient ? 'Edit Client' : 'Add Client'}
@@ -431,49 +431,49 @@ export default function ClientsPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Company Name *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Company Name *</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData(f => ({ ...f, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="Acme Corp"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData(f => ({ ...f, email: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="billing@acme.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Contact Person</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Contact Person</label>
                 <input
                   type="text"
                   value={formData.contact_person}
                   onChange={(e) => setFormData(f => ({ ...f, contact_person: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="John Smith"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Billing Address</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Billing Address</label>
                 <textarea
                   value={formData.billing_address}
                   onChange={(e) => setFormData(f => ({ ...f, billing_address: e.target.value }))}
                   rows={2}
-                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="w-full px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                   placeholder="123 Main St, Suite 100"
                 />
               </div>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={saveClient} disabled={formLoading}>
+              <Button className="bg-primary hover:bg-primary-hover" onClick={saveClient} disabled={formLoading}>
                 <Save className="h-4 w-4 mr-2" />
                 {formLoading ? 'Saving...' : editingClient ? 'Update' : 'Create'}
               </Button>
@@ -485,7 +485,7 @@ export default function ClientsPage() {
       {/* Pricing Modal */}
       {pricingClient && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-2xl w-full p-6 max-h-[80vh] overflow-y-auto">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-2xl w-full p-6 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">
                 Pricing — {pricingClient.name}
@@ -520,7 +520,7 @@ export default function ClientsPage() {
                         <td className="py-2 pr-3 text-muted-foreground">{p.effective_from}</td>
                         <td className="py-2 pr-3 text-muted-foreground">{p.effective_to || '—'}</td>
                         <td className="py-2">
-                          <button onClick={() => deletePricing(p.id)} className="text-accent-red hover:text-accent-red/80">
+                          <button onClick={() => deletePricing(p.id)} className="text-accent-red hover:text-accent-red">
                             <Trash2 className="h-4 w-4" />
                           </button>
                         </td>
@@ -532,12 +532,12 @@ export default function ClientsPage() {
             )}
 
             <div className="border-t border-border pt-4">
-              <h4 className="text-sm font-medium text-gray-300 mb-3">Add Rate</h4>
+              <h4 className="text-sm font-medium text-text-secondary mb-3">Add Rate</h4>
               <div className="grid grid-cols-3 gap-3">
                 <select
                   value={newPricing.role_id}
                   onChange={(e) => setNewPricing(p => ({ ...p, role_id: e.target.value }))}
-                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                 >
                   <option value="">Select role</option>
                   {roles.map(r => (
@@ -551,16 +551,16 @@ export default function ClientsPage() {
                   placeholder="Rate ($/hr)"
                   value={newPricing.hourly_rate}
                   onChange={(e) => setNewPricing(p => ({ ...p, hourly_rate: e.target.value }))}
-                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                 />
                 <input
                   type="date"
                   value={newPricing.effective_from}
                   onChange={(e) => setNewPricing(p => ({ ...p, effective_from: e.target.value }))}
-                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+                  className="px-3 py-2 border border-input-border bg-input-bg rounded-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
                 />
               </div>
-              <Button className="mt-3 bg-accent-blue hover:bg-accent-blue/90" size="sm" onClick={addPricing}>
+              <Button className="mt-3 bg-primary hover:bg-primary-hover" size="sm" onClick={addPricing}>
                 <Plus className="h-4 w-4 mr-1" />
                 Add Rate
               </Button>

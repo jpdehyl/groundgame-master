@@ -173,7 +173,7 @@ export default function EmployeesPage() {
         </div>
         <Button
           onClick={handleAddEmployee}
-          className="bg-accent-blue hover:bg-accent-blue/90"
+          className="bg-primary hover:bg-primary-hover"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Employee
@@ -190,7 +190,7 @@ export default function EmployeesPage() {
               placeholder="Search employees..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
+              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex gap-2">
@@ -209,10 +209,10 @@ export default function EmployeesPage() {
       {/* Employee Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredEmployees.map((employee) => (
-          <div key={employee.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg hover:shadow-black/20 transition-shadow card-hover">
+          <div key={employee.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg shadow-black/40 transition-shadow card-hover">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="h-12 w-12 bg-accent-blue/15 rounded-full flex items-center justify-center">
-                <User className="h-6 w-6 text-accent-blue" />
+              <div className="h-12 w-12 bg-accent-blue/10 rounded-full flex items-center justify-center">
+                <User className="h-6 w-6 text-primary" />
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-white">{employee.name}</h3>
@@ -221,8 +221,8 @@ export default function EmployeesPage() {
               <div className="flex items-center space-x-2">
                 <div className={`px-2 py-1 rounded-full text-xs font-medium ${
                   employee.status === 'active'
-                    ? 'bg-accent-green/15 text-accent-green'
-                    : 'bg-white/10 text-muted-foreground'
+                    ? 'bg-accent-green/10 text-accent-green'
+                    : 'bg-muted text-muted-foreground'
                 }`}>
                   {employee.status}
                 </div>
@@ -266,8 +266,8 @@ export default function EmployeesPage() {
                 <span className="text-sm text-muted-foreground">Documents:</span>
                 <span className={`text-xs font-medium px-2 py-1 rounded ${
                   employee.documentsStatus === 'Complete'
-                    ? 'bg-accent-green/15 text-accent-green'
-                    : 'bg-accent-yellow/15 text-accent-yellow'
+                    ? 'bg-accent-green/10 text-accent-green'
+                    : 'bg-accent-yellow/10 text-accent-yellow'
                 }`}>
                   {employee.documentsStatus}
                 </span>
@@ -287,7 +287,7 @@ export default function EmployeesPage() {
                   size="sm"
                   onClick={() => handleDeleteEmployee(employee.id)}
                   disabled={deleting === employee.id}
-                  className="text-accent-red border-accent-red/30 hover:bg-accent-red/10"
+                  className="text-accent-red border-accent-red/20 hover:bg-accent-red/20"
                 >
                   {deleting === employee.id ? (
                     'Deleting...'
@@ -318,7 +318,7 @@ export default function EmployeesPage() {
             }
           </p>
           {!searchTerm && (
-            <Button onClick={handleAddEmployee} className="bg-accent-blue hover:bg-accent-blue/90">
+            <Button onClick={handleAddEmployee} className="bg-primary hover:bg-primary-hover">
               <Plus className="h-4 w-4 mr-2" />
               Add First Employee
             </Button>
@@ -354,7 +354,7 @@ export default function EmployeesPage() {
             <div className="text-sm text-muted-foreground">Documents Due</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-accent-blue">
+            <div className="text-2xl font-bold text-primary">
               {employees.filter(e => {
                 const startDate = new Date(e.startDate);
                 const oneMonthAgo = new Date();

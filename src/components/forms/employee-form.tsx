@@ -162,7 +162,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-xl font-semibold text-white">
@@ -183,7 +183,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
             <h3 className="text-lg font-medium text-white mb-4">Basic Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   First Name *
                 </label>
                 <input
@@ -191,8 +191,8 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.first_name ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.first_name ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                   placeholder="Enter first name"
                 />
@@ -202,7 +202,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Last Name *
                 </label>
                 <input
@@ -210,8 +210,8 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.last_name ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.last_name ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                   placeholder="Enter last name"
                 />
@@ -221,7 +221,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Email *
                 </label>
                 <input
@@ -229,8 +229,8 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.email ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.email ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                   placeholder="email@example.com"
                 />
@@ -240,7 +240,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Phone
                 </label>
                 <input
@@ -248,7 +248,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="+1-555-123-4567"
                 />
               </div>
@@ -260,15 +260,15 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
             <h3 className="text-lg font-medium text-white mb-4">Employment Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Client *
                 </label>
                 <select
                   name="client_id"
                   value={formData.client_id}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.client_id ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.client_id ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                 >
                   <option value="">Select a client</option>
@@ -284,15 +284,15 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Role *
                 </label>
                 <select
                   name="role_id"
                   value={formData.role_id}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.role_id ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.role_id ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                 >
                   <option value="">Select a role</option>
@@ -308,14 +308,14 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Employment Type
                 </label>
                 <select
                   name="employment_type"
                   value={formData.employment_type}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                 >
                   <option value="contractor">Contractor</option>
                   <option value="employee">Employee</option>
@@ -323,7 +323,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Start Date *
                 </label>
                 <input
@@ -331,8 +331,8 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="start_date"
                   value={formData.start_date}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.start_date ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.start_date ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                 />
                 {errors.start_date && (
@@ -341,7 +341,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Hourly Rate ($)
                 </label>
                 <input
@@ -351,8 +351,8 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   onChange={handleChange}
                   step="0.01"
                   min="0"
-                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50 ${
-                    errors.salary_compensation ? 'border-accent-red/30' : 'border-input-border'
+                  className={`w-full px-3 py-2 border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                    errors.salary_compensation ? 'border-accent-red/20' : 'border-input-border'
                   }`}
                   placeholder="25.00"
                 />
@@ -362,14 +362,14 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Pay Frequency
                 </label>
                 <select
                   name="pay_frequency"
                   value={formData.pay_frequency}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                 >
                   <option value="weekly">Weekly</option>
                   <option value="biweekly">Bi-weekly</option>
@@ -384,7 +384,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
             <h3 className="text-lg font-medium text-white mb-4">Technical Setup</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Internet Speed Up (Mbps)
                 </label>
                 <input
@@ -393,13 +393,13 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   value={formData.internet_speed_up}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="50"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Internet Speed Down (Mbps)
                 </label>
                 <input
@@ -408,13 +408,13 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   value={formData.internet_speed_down}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="100"
                 />
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Computer Specifications
                 </label>
                 <textarea
@@ -422,13 +422,13 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   value={formData.computer_specs}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="MacBook Pro M1, 16GB RAM, 512GB SSD..."
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Work Location
                 </label>
                 <input
@@ -436,13 +436,13 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="work_location"
                   value={formData.work_location}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="Remote - Mexico City"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Time Zone
                 </label>
                 <input
@@ -450,13 +450,13 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="time_zone"
                   value={formData.time_zone}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="CST (UTC-6)"
                 />
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                   Preferred Work Hours
                 </label>
                 <input
@@ -464,7 +464,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
                   name="preferred_work_hours"
                   value={formData.preferred_work_hours}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="9:00 AM - 5:00 PM CST"
                 />
               </div>
@@ -484,7 +484,7 @@ export function EmployeeForm({ employee, onSave, onCancel, isOpen }: EmployeeFor
             <Button
               type="submit"
               disabled={loading}
-              className="bg-accent-blue hover:bg-accent-blue/90"
+              className="bg-primary hover:bg-primary-hover"
             >
               {loading ? (
                 'Saving...'

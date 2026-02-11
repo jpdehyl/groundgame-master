@@ -61,10 +61,10 @@ const activityIcons: Record<string, typeof Users> = {
 };
 
 const activityColors: Record<string, string> = {
-  employee_added: 'bg-accent-blue',
+  employee_added: 'bg-primary',
   document_uploaded: 'bg-purple-500',
   time_off_request: 'bg-accent-yellow',
-  audit: 'bg-white/20',
+  audit: 'bg-muted',
 };
 
 export default function Dashboard() {
@@ -114,12 +114,12 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
           <p className="text-muted-foreground">Welcome to GroundGame Master</p>
         </div>
-        <div className="bg-accent-yellow/10 border border-accent-yellow/30 rounded-xl p-6">
+        <div className="bg-accent-yellow/10 border border-accent-yellow/20 rounded-xl p-6">
           <div className="flex items-start space-x-3">
             <AlertCircle className="h-5 w-5 text-accent-yellow mt-0.5" />
             <div>
               <h3 className="text-sm font-medium text-accent-yellow">Could not load dashboard data</h3>
-              <p className="text-sm text-accent-yellow/80 mt-1">Check your Supabase connection and make sure the database schema has been applied.</p>
+              <p className="text-sm text-accent-yellow mt-1">Check your Supabase connection and make sure the database schema has been applied.</p>
               <a href="/dashboard/import" className="inline-block mt-3 text-sm font-medium text-accent-yellow underline hover:text-accent-yellow">
                 Import your data from Google Sheets
               </a>
@@ -137,7 +137,7 @@ export default function Dashboard() {
       change: `${stats.activeEmployees} active`,
       changeType: 'neutral' as const,
       icon: Users,
-      color: 'bg-blue-500'
+      color: 'bg-accent-blue/100'
     },
     {
       name: 'Active Clients',
@@ -145,7 +145,7 @@ export default function Dashboard() {
       change: `${stats.totalClients} total`,
       changeType: 'neutral' as const,
       icon: Building2,
-      color: 'bg-green-500'
+      color: 'bg-accent-green/100'
     },
     {
       name: 'Monthly Payroll',
@@ -161,7 +161,7 @@ export default function Dashboard() {
       change: stats.pendingDocuments > 0 ? 'Expiring within 30 days' : 'All up to date',
       changeType: stats.pendingDocuments > 0 ? 'decrease' as const : 'increase' as const,
       icon: FileCheck,
-      color: 'bg-red-500'
+      color: 'bg-accent-red/100'
     }
   ];
 
@@ -178,12 +178,12 @@ export default function Dashboard() {
 
       {/* DB Error Banner */}
       {stats.dbError && (
-        <div className="bg-accent-yellow/10 border border-accent-yellow/30 rounded-xl p-4">
+        <div className="bg-accent-yellow/10 border border-accent-yellow/20 rounded-xl p-4">
           <div className="flex items-start space-x-3">
             <AlertCircle className="h-5 w-5 text-accent-yellow mt-0.5" />
             <div>
               <h3 className="text-sm font-medium text-accent-yellow">Database Issue</h3>
-              <p className="text-sm text-accent-yellow/80 mt-1">{stats.dbError}</p>
+              <p className="text-sm text-accent-yellow mt-1">{stats.dbError}</p>
             </div>
           </div>
         </div>
@@ -191,14 +191,14 @@ export default function Dashboard() {
 
       {/* Getting Started - show when no data */}
       {stats.totalEmployees === 0 && stats.totalClients === 0 && (
-        <div className="bg-accent-blue/10 border border-accent-blue/30 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-accent-blue mb-2">Get Started</h3>
-          <p className="text-sm text-accent-blue mb-4">Your system is ready. Import your existing data from Google Sheets or start adding employees manually.</p>
+        <div className="bg-accent-blue/10 border border-blue-500/20 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-primary mb-2">Get Started</h3>
+          <p className="text-sm text-primary mb-4">Your system is ready. Import your existing data from Google Sheets or start adding employees manually.</p>
           <div className="flex gap-3 flex-wrap">
-            <a href="/dashboard/import" className="inline-flex items-center px-4 py-2 bg-accent-blue text-white text-sm font-medium rounded-md hover:bg-accent-blue/90">
+            <a href="/dashboard/import" className="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary-hover">
               Import from Google Sheets
             </a>
-            <a href="/dashboard/employees" className="inline-flex items-center px-4 py-2 border border-accent-blue/30 text-accent-blue text-sm font-medium rounded-md hover:bg-accent-blue/15">
+            <a href="/dashboard/employees" className="inline-flex items-center px-4 py-2 border border-blue-500/20 text-primary text-sm font-medium rounded-md hover:bg-accent-blue/20">
               Add Employees Manually
             </a>
           </div>
@@ -232,14 +232,14 @@ export default function Dashboard() {
       {(expiredDocs.length > 0 || soonExpiringDocs.length > 0) && (
         <div className="space-y-3">
           {expiredDocs.length > 0 && (
-            <div className="bg-accent-red/10 border border-accent-red/30 rounded-xl p-4">
+            <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4">
               <div className="flex items-start space-x-3">
                 <AlertTriangle className="h-5 w-5 text-accent-red mt-0.5 shrink-0" />
                 <div className="flex-1">
                   <p className="font-medium text-accent-red">{expiredDocs.length} W-8BEN document{expiredDocs.length !== 1 ? 's' : ''} expired</p>
                   <div className="mt-2 space-y-1">
                     {expiredDocs.map(doc => (
-                      <p key={doc.id} className="text-sm text-accent-red/80">
+                      <p key={doc.id} className="text-sm text-accent-red">
                         {doc.employee_name} — expired {formatDate(doc.expiry_date)}
                       </p>
                     ))}
@@ -252,14 +252,14 @@ export default function Dashboard() {
             </div>
           )}
           {soonExpiringDocs.length > 0 && (
-            <div className="bg-accent-yellow/10 border border-accent-yellow/30 rounded-xl p-4">
+            <div className="bg-accent-yellow/10 border border-accent-yellow/20 rounded-xl p-4">
               <div className="flex items-start space-x-3">
                 <Clock className="h-5 w-5 text-accent-yellow mt-0.5 shrink-0" />
                 <div className="flex-1">
                   <p className="font-medium text-accent-yellow">{soonExpiringDocs.length} document{soonExpiringDocs.length !== 1 ? 's' : ''} expiring soon</p>
                   <div className="mt-2 space-y-1">
                     {soonExpiringDocs.slice(0, 5).map(doc => (
-                      <p key={doc.id} className="text-sm text-accent-yellow/80">
+                      <p key={doc.id} className="text-sm text-accent-yellow">
                         {doc.employee_name} — {doc.days_until} day{doc.days_until !== 1 ? 's' : ''} left (expires {formatDate(doc.expiry_date)})
                       </p>
                     ))}
@@ -280,15 +280,15 @@ export default function Dashboard() {
           {(stats.payrollAlerts ?? []).map(alert => (
             <div key={alert.id} className={`rounded-xl p-4 flex items-center justify-between ${
               alert.days_until_end <= 0
-                ? 'bg-accent-red/10 border border-accent-red/30'
+                ? 'bg-accent-red/10 border border-accent-red/20'
                 : alert.days_until_end <= 3
-                ? 'bg-accent-yellow/10 border border-accent-yellow/30'
-                : 'bg-accent-blue/10 border border-accent-blue/30'
+                ? 'bg-accent-yellow/10 border border-accent-yellow/20'
+                : 'bg-accent-blue/10 border border-blue-500/20'
             }`}>
               <div>
                 <p className={`text-sm font-medium ${
                   alert.days_until_end <= 0 ? 'text-accent-red' :
-                  alert.days_until_end <= 3 ? 'text-accent-yellow' : 'text-accent-blue'
+                  alert.days_until_end <= 3 ? 'text-accent-yellow' : 'text-primary'
                 }`}>
                   Pay period {formatDate(alert.period_start)} – {formatDate(alert.period_end)}
                   {alert.days_until_end <= 0 ? ' — past due' :
@@ -296,8 +296,8 @@ export default function Dashboard() {
                    ` — ${alert.days_until_end} days remaining`}
                 </p>
                 <p className={`text-xs mt-0.5 ${
-                  alert.days_until_end <= 0 ? 'text-accent-red/70' :
-                  alert.days_until_end <= 3 ? 'text-accent-yellow/70' : 'text-accent-blue/70'
+                  alert.days_until_end <= 0 ? 'text-accent-red' :
+                  alert.days_until_end <= 3 ? 'text-accent-yellow' : 'text-accent-blue'
                 }`}>
                   Status: {alert.status}{alert.status === 'closed' && !alert.has_run ? ' — ready for payroll processing' : ''}
                   {alert.has_run ? ' — payroll run created' : ''}
@@ -305,7 +305,7 @@ export default function Dashboard() {
               </div>
               <a href="/dashboard/payroll" className={`text-sm font-medium ${
                 alert.days_until_end <= 0 ? 'text-accent-red' :
-                alert.days_until_end <= 3 ? 'text-accent-yellow' : 'text-accent-blue'
+                alert.days_until_end <= 3 ? 'text-accent-yellow' : 'text-primary'
               }`}>
                 {alert.status === 'closed' && !alert.has_run ? 'Process' : 'View'} →
               </a>
@@ -327,7 +327,7 @@ export default function Dashboard() {
             <div className="space-y-4">
               {stats.recentActivities.map((activity) => {
                 const Icon = activityIcons[activity.type] || Clock;
-                const color = activityColors[activity.type] || 'bg-white/20';
+                const color = activityColors[activity.type] || 'bg-muted';
                 return (
                   <div key={activity.id} className="flex items-start space-x-3">
                     <div className={`flex-shrink-0 h-6 w-6 ${color} rounded-full flex items-center justify-center mt-0.5`}>
@@ -380,7 +380,7 @@ export default function Dashboard() {
             </a>
             <a
               href="/dashboard/import"
-              className="flex items-center justify-between p-3 bg-accent-green/10 rounded-md hover:bg-accent-green/15 transition-colors border border-accent-green/30"
+              className="flex items-center justify-between p-3 bg-accent-green/10 rounded-md hover:bg-accent-green/20 transition-colors border border-accent-green/20"
             >
               <div className="flex items-center">
                 <TrendingUp className="h-5 w-5 text-accent-green mr-3" />

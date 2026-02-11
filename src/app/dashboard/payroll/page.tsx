@@ -106,12 +106,12 @@ function getNestedField<T>(val: T | T[] | null | undefined): T | undefined {
 
 function statusColor(status: string) {
   switch (status) {
-    case 'open': return 'bg-accent-blue/15 text-accent-blue';
-    case 'closed': return 'bg-accent-yellow/15 text-accent-yellow';
-    case 'processed': return 'bg-accent-green/15 text-accent-green';
-    case 'draft': return 'bg-white/10 text-gray-300';
-    case 'sent': return 'bg-accent-green/15 text-accent-green';
-    default: return 'bg-white/10 text-gray-300';
+    case 'open': return 'bg-accent-blue/10 text-primary';
+    case 'closed': return 'bg-accent-yellow/10 text-accent-yellow';
+    case 'processed': return 'bg-accent-green/10 text-accent-green';
+    case 'draft': return 'bg-muted text-text-secondary';
+    case 'sent': return 'bg-accent-green/10 text-accent-green';
+    default: return 'bg-muted text-text-secondary';
   }
 }
 
@@ -394,7 +394,7 @@ export default function PayrollPage() {
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
           </Button>
-          <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowCreatePeriod(true)}>
+          <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowCreatePeriod(true)}>
             <Plus className="h-4 w-4 mr-2" />
             New Pay Period
           </Button>
@@ -403,19 +403,19 @@ export default function PayrollPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/30 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/20 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
           </div>
-          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red/80 text-sm">Dismiss</button>
+          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red text-sm">Dismiss</button>
         </div>
       )}
 
       {/* Create Pay Period Modal */}
       {showCreatePeriod && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-md w-full p-6">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold text-white">Create Pay Period</h2>
               <button onClick={() => { setShowCreatePeriod(false); setError(null); }} className="p-1 hover:bg-white/5 rounded">
@@ -424,22 +424,22 @@ export default function PayrollPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Period Start</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Period Start</label>
                 <input type="date" value={newPeriod.period_start}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_start: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-primary/40" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Period End</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Period End</label>
                 <input type="date" value={newPeriod.period_end}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_end: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-primary/40" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Type</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Type</label>
                 <select value={newPeriod.period_type}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/50">
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white focus:outline-none focus:ring-2 focus:ring-primary/40">
                   <option value="weekly">Weekly</option>
                   <option value="biweekly">Bi-weekly</option>
                   <option value="monthly">Monthly</option>
@@ -448,7 +448,7 @@ export default function PayrollPage() {
             </div>
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="outline" onClick={() => { setShowCreatePeriod(false); setError(null); }}>Cancel</Button>
-              <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={createPayPeriod}
+              <Button className="bg-primary hover:bg-primary-hover" onClick={createPayPeriod}
                 disabled={actionLoading === 'create-period'}>
                 {actionLoading === 'create-period' ? 'Creating...' : 'Create'}
               </Button>
@@ -460,7 +460,7 @@ export default function PayrollPage() {
       {/* Work Entry Modal */}
       {workEntryPeriod && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h2 className="text-lg font-semibold text-white">Log Work Hours</h2>
@@ -475,12 +475,12 @@ export default function PayrollPage() {
 
             {/* Add entry form */}
             <div className="bg-muted p-4 rounded-lg mb-4">
-              <h4 className="text-sm font-medium text-gray-300 mb-3">Add Entry</h4>
+              <h4 className="text-sm font-medium text-text-secondary mb-3">Add Entry</h4>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 <div className="col-span-2 md:col-span-1">
                   <select value={workEntryForm.employee_id}
                     onChange={(e) => setWorkEntryForm(f => ({ ...f, employee_id: e.target.value }))}
-                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/50">
+                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/40">
                     <option value="">Select Employee</option>
                     {employees.map(emp => (
                       <option key={emp.id} value={emp.id}>{emp.first_name} {emp.last_name}</option>
@@ -491,28 +491,28 @@ export default function PayrollPage() {
                   <input type="date" placeholder="Date" value={workEntryForm.work_date}
                     min={workEntryPeriod.period_start} max={workEntryPeriod.period_end}
                     onChange={(e) => setWorkEntryForm(f => ({ ...f, work_date: e.target.value }))}
-                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/40" />
                 </div>
                 <div>
                   <input type="number" step="0.5" min="0" max="24" placeholder="Hours"
                     value={workEntryForm.hours_worked}
                     onChange={(e) => setWorkEntryForm(f => ({ ...f, hours_worked: e.target.value }))}
-                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40" />
                 </div>
                 <div>
                   <input type="number" min="0" placeholder="Leads"
                     value={workEntryForm.leads_processed}
                     onChange={(e) => setWorkEntryForm(f => ({ ...f, leads_processed: e.target.value }))}
-                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40" />
                 </div>
                 <div>
                   <input type="number" step="0.01" min="0" placeholder="SPIFs ($)"
                     value={workEntryForm.spifs}
                     onChange={(e) => setWorkEntryForm(f => ({ ...f, spifs: e.target.value }))}
-                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50" />
+                    className="w-full px-2 py-2 border border-input-border bg-input-bg rounded-md text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40" />
                 </div>
                 <div>
-                  <Button className="w-full bg-accent-blue hover:bg-accent-blue/90" size="sm" onClick={addWorkEntry}
+                  <Button className="w-full bg-primary hover:bg-primary-hover" size="sm" onClick={addWorkEntry}
                     disabled={workEntryLoading}>
                     <Plus className="h-4 w-4 mr-1" />
                     {workEntryLoading ? 'Adding...' : 'Add Entry'}
@@ -550,7 +550,7 @@ export default function PayrollPage() {
                           <td className="py-2 pr-3 text-right">{entry.leads_processed}</td>
                           <td className="py-2 pr-3 text-right">{formatCurrency(Number(entry.spifs))}</td>
                           <td className="py-2">
-                            <button onClick={() => deleteWorkEntry(entry.id)} className="text-accent-red hover:text-accent-red/80">
+                            <button onClick={() => deleteWorkEntry(entry.id)} className="text-accent-red hover:text-accent-red">
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </td>
@@ -583,7 +583,7 @@ export default function PayrollPage() {
               <div className="text-sm text-muted-foreground">Open Periods</div>
               <div className="text-2xl font-bold text-white">{openPeriods.length}</div>
             </div>
-            <Calendar className="h-8 w-8 text-accent-blue" />
+            <Calendar className="h-8 w-8 text-primary" />
           </div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border">
@@ -628,7 +628,7 @@ export default function PayrollPage() {
                     <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 ${
                       period.status === 'open' ? 'bg-accent-blue/10' : 'bg-accent-yellow/10'
                     }`}>
-                      {period.status === 'open' ? <Clock className="h-5 w-5 text-accent-blue" /> : <Lock className="h-5 w-5 text-accent-yellow" />}
+                      {period.status === 'open' ? <Clock className="h-5 w-5 text-primary" /> : <Lock className="h-5 w-5 text-accent-yellow" />}
                     </div>
                     <div>
                       <div className="font-medium text-white">
@@ -658,7 +658,7 @@ export default function PayrollPage() {
                     )}
 
                     {period.status === 'closed' && !existingRun && (
-                      <Button size="sm" className="bg-accent-blue hover:bg-accent-blue/90"
+                      <Button size="sm" className="bg-primary hover:bg-primary-hover"
                         onClick={() => createPayrollRun(period.id)}
                         disabled={actionLoading === `run-${period.id}`}>
                         <Calculator className="h-4 w-4 mr-1" />
@@ -683,7 +683,7 @@ export default function PayrollPage() {
           <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-white mb-2">No pay periods yet</h3>
           <p className="text-muted-foreground mb-4">Create your first pay period to start processing payroll.</p>
-          <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowCreatePeriod(true)}>
+          <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowCreatePeriod(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Create Pay Period
           </Button>
@@ -707,10 +707,10 @@ export default function PayrollPage() {
                     <div className="flex items-center space-x-4">
                       <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 ${
                         run.status === 'sent' ? 'bg-accent-green/10' :
-                        run.status === 'processed' ? 'bg-accent-blue/10' : 'bg-white/10'
+                        run.status === 'processed' ? 'bg-accent-blue/10' : 'bg-muted'
                       }`}>
                         {run.status === 'sent' ? <CheckCircle className="h-5 w-5 text-accent-green" /> :
-                         run.status === 'processed' ? <FileText className="h-5 w-5 text-accent-blue" /> :
+                         run.status === 'processed' ? <FileText className="h-5 w-5 text-primary" /> :
                          <Calculator className="h-5 w-5 text-muted-foreground" />}
                       </div>
                       <div>
@@ -730,7 +730,7 @@ export default function PayrollPage() {
 
                       <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
                         {run.status === 'draft' && (
-                          <Button size="sm" className="bg-accent-blue hover:bg-accent-blue/90"
+                          <Button size="sm" className="bg-primary hover:bg-primary-hover"
                             onClick={() => updateRunStatus(run.id, 'processed')}
                             disabled={actionLoading === `run-status-${run.id}`}>
                             <CheckCircle className="h-4 w-4 mr-1" />
@@ -745,7 +745,7 @@ export default function PayrollPage() {
                               <Download className="h-4 w-4 mr-1" />
                               Veem CSV
                             </Button>
-                            <Button size="sm" className="bg-accent-green hover:bg-accent-green/90"
+                            <Button size="sm" className="bg-accent-green hover:bg-green-600"
                               onClick={() => updateRunStatus(run.id, 'sent')}
                               disabled={actionLoading === `run-status-${run.id}`}>
                               <Send className="h-4 w-4 mr-1" />

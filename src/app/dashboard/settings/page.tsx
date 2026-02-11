@@ -68,7 +68,7 @@ const settingsSections = [
   { id: 'integrations', title: 'Integrations', icon: Database },
 ];
 
-const inputClass = 'w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50';
+const inputClass = 'w-full px-3 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40';
 
 export default function SettingsPage() {
   const { toast } = useToast();
@@ -319,7 +319,7 @@ export default function SettingsPage() {
           <h1 className="text-2xl font-bold text-white">Settings</h1>
           <p className="text-muted-foreground">Configure your GroundGame system</p>
         </div>
-        <Button onClick={handleSave} disabled={saving || !hasChanges} className="bg-accent-blue hover:bg-accent-blue/90">
+        <Button onClick={handleSave} disabled={saving || !hasChanges} className="bg-primary hover:bg-primary-hover">
           {saved ? <CheckCircle className="h-4 w-4 mr-2" /> : <Save className="h-4 w-4 mr-2" />}
           {saving ? 'Saving...' : saved ? 'Saved' : 'Save Changes'}
         </Button>
@@ -333,7 +333,7 @@ export default function SettingsPage() {
             onClick={() => scrollToSection(section.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
               activeSection === section.id
-                ? 'bg-accent-blue text-white'
+                ? 'bg-primary text-white'
                 : 'bg-card text-muted-foreground hover:text-white hover:bg-card/80 border border-border'
             }`}
           >
@@ -346,18 +346,18 @@ export default function SettingsPage() {
       {/* Company Information */}
       <div ref={el => { sectionRefs.current['company'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <Globe className="h-5 w-5 text-accent-blue mr-2" />
+          <Globe className="h-5 w-5 text-primary mr-2" />
           <h3 className="text-lg font-semibold text-white">Company Information</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Company Name</label>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Company Name</label>
             <input type="text" value={companySettings.companyName}
               onChange={(e) => handleCompanyChange('companyName', e.target.value)}
               className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Time Zone</label>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Time Zone</label>
             <select value={companySettings.timeZone}
               onChange={(e) => handleCompanyChange('timeZone', e.target.value)}
               className={inputClass}>
@@ -368,7 +368,7 @@ export default function SettingsPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Default Currency</label>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Default Currency</label>
             <select value={companySettings.currency}
               onChange={(e) => handleCompanyChange('currency', e.target.value)}
               className={inputClass}>
@@ -378,7 +378,7 @@ export default function SettingsPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Default Pay Period</label>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Default Pay Period</label>
             <select value={companySettings.payPeriod}
               onChange={(e) => handleCompanyChange('payPeriod', e.target.value)}
               className={inputClass}>
@@ -393,12 +393,12 @@ export default function SettingsPage() {
       {/* Payroll Configuration */}
       <div ref={el => { sectionRefs.current['payroll'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <DollarSign className="h-5 w-5 text-accent-blue mr-2" />
+          <DollarSign className="h-5 w-5 text-primary mr-2" />
           <h3 className="text-lg font-semibold text-white">Payroll Configuration</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Default SPIF Rate (per lead)</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Default SPIF Rate (per lead)</label>
             <p className="text-xs text-muted-foreground mb-2">Default bonus amount per lead processed</p>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">$</span>
@@ -409,7 +409,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">W-8BEN Warning Threshold</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">W-8BEN Warning Threshold</label>
             <p className="text-xs text-muted-foreground mb-2">Days before expiry to show dashboard alerts</p>
             <div className="relative">
               <input type="number" step="1" min="1" max="365"
@@ -420,7 +420,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Overtime Multiplier</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Overtime Multiplier</label>
             <p className="text-xs text-muted-foreground mb-2">Rate multiplier for overtime hours (e.g. 1.5x)</p>
             <div className="relative">
               <input type="number" step="0.1" min="1"
@@ -431,7 +431,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Overtime Threshold</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Overtime Threshold</label>
             <p className="text-xs text-muted-foreground mb-2">Hours per period before overtime kicks in</p>
             <div className="relative">
               <input type="number" step="1" min="0"
@@ -448,11 +448,11 @@ export default function SettingsPage() {
       <div ref={el => { sectionRefs.current['roles'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <Briefcase className="h-5 w-5 text-accent-blue mr-2" />
+            <Briefcase className="h-5 w-5 text-primary mr-2" />
             <h3 className="text-lg font-semibold text-white">Roles & Hourly Rates</h3>
           </div>
           {!showAddRole && (
-            <Button size="sm" onClick={() => setShowAddRole(true)} className="bg-accent-blue hover:bg-accent-blue/90">
+            <Button size="sm" onClick={() => setShowAddRole(true)} className="bg-primary hover:bg-primary-hover">
               <Plus className="h-4 w-4 mr-1" /> Add Role
             </Button>
           )}
@@ -485,7 +485,7 @@ export default function SettingsPage() {
                     className={`${inputClass} pl-7`} />
                 </div>
                 <Button size="sm" onClick={handleAddRole} disabled={roleLoading === 'add'}
-                  className="bg-accent-green hover:bg-accent-green/90 shrink-0">
+                  className="bg-accent-green hover:bg-green-600 shrink-0">
                   {roleLoading === 'add' ? '...' : <Check className="h-4 w-4" />}
                 </Button>
               </div>
@@ -537,11 +537,11 @@ export default function SettingsPage() {
                           <div className="flex gap-1 justify-end">
                             <button onClick={() => handleUpdateRole(role.id)}
                               disabled={roleLoading === role.id}
-                              className="p-1.5 rounded bg-accent-green/15 text-accent-green hover:bg-accent-green/25">
+                              className="p-1.5 rounded bg-accent-green/10 text-accent-green hover:bg-accent-green/25">
                               <Check className="h-3.5 w-3.5" />
                             </button>
                             <button onClick={() => setEditingRole(null)}
-                              className="p-1.5 rounded bg-white/5 text-muted-foreground hover:bg-white/10">
+                              className="p-1.5 rounded bg-muted text-muted-foreground hover:bg-white/5">
                               <X className="h-3.5 w-3.5" />
                             </button>
                           </div>
@@ -557,12 +557,12 @@ export default function SettingsPage() {
                         <td className="py-3 text-right">
                           <div className="flex gap-1 justify-end">
                             <button onClick={() => startEditRole(role)}
-                              className="p-1.5 rounded text-muted-foreground hover:text-white hover:bg-white/10">
+                              className="p-1.5 rounded text-muted-foreground hover:text-white hover:bg-white/5">
                               <Pencil className="h-3.5 w-3.5" />
                             </button>
                             <button onClick={() => handleDeleteRole(role.id, role.name)}
                               disabled={roleLoading === role.id}
-                              className="p-1.5 rounded text-muted-foreground hover:text-accent-red hover:bg-accent-red/10">
+                              className="p-1.5 rounded text-muted-foreground hover:text-accent-red hover:bg-accent-red/20">
                               <Trash2 className="h-3.5 w-3.5" />
                             </button>
                           </div>
@@ -584,7 +584,7 @@ export default function SettingsPage() {
       {/* Notification Preferences */}
       <div ref={el => { sectionRefs.current['notifications'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
-          <Bell className="h-5 w-5 text-accent-blue mr-2" />
+          <Bell className="h-5 w-5 text-primary mr-2" />
           <h3 className="text-lg font-semibold text-white">Notification Preferences</h3>
         </div>
         <div className="space-y-4">
@@ -602,10 +602,10 @@ export default function SettingsPage() {
               <button
                 onClick={() => handleNotificationToggle(item.key)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ml-4 ${
-                  notifications[item.key as keyof NotificationSettings] ? 'bg-accent-blue' : 'bg-white/20'
+                  notifications[item.key as keyof NotificationSettings] ? 'bg-primary' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   notifications[item.key as keyof NotificationSettings] ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -618,7 +618,7 @@ export default function SettingsPage() {
       <div ref={el => { sectionRefs.current['integrations'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <Database className="h-5 w-5 text-accent-blue mr-2" />
+            <Database className="h-5 w-5 text-primary mr-2" />
             <h3 className="text-lg font-semibold text-white">Integrations</h3>
           </div>
           <button
@@ -651,7 +651,7 @@ export default function SettingsPage() {
                     <div className="text-sm font-medium text-white">{item.label}</div>
                     <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
                     {detail && (
-                      <div className={`text-xs mt-1 ${connected ? 'text-accent-green/70' : 'text-accent-yellow/70'}`}>
+                      <div className={`text-xs mt-1 ${connected ? 'text-accent-green/70' : 'text-accent-yellow'}`}>
                         {detail}
                       </div>
                     )}
@@ -659,10 +659,10 @@ export default function SettingsPage() {
                 </div>
                 <span className={`px-2.5 py-1 text-xs rounded-full whitespace-nowrap ml-3 shrink-0 ${
                   connected
-                    ? 'bg-accent-green/15 text-accent-green'
+                    ? 'bg-accent-green/10 text-accent-green'
                     : statusText === 'Checking...'
-                      ? 'bg-white/10 text-muted-foreground'
-                      : 'bg-accent-yellow/15 text-accent-yellow'
+                      ? 'bg-muted text-muted-foreground'
+                      : 'bg-accent-yellow/10 text-accent-yellow'
                 }`}>
                   {statusText}
                 </span>
@@ -678,7 +678,7 @@ export default function SettingsPage() {
           <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-lg shadow-black/40 flex items-center gap-3">
             <AlertTriangle className="h-4 w-4 text-accent-yellow" />
             <span className="text-sm text-muted-foreground">You have unsaved changes</span>
-            <Button onClick={handleSave} disabled={saving} size="sm" className="bg-accent-blue hover:bg-accent-blue/90">
+            <Button onClick={handleSave} disabled={saving} size="sm" className="bg-primary hover:bg-primary-hover">
               {saving ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>
