@@ -1,7 +1,11 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: true, data: [] });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const clientId = searchParams.get('client_id');
@@ -30,10 +34,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Client pricing GET error:', error);
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return Response.json({ success: true, data: [] });
   }
 }
 

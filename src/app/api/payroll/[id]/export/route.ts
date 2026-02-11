@@ -1,4 +1,4 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 import { NextRequest } from 'next/server';
 
 /**
@@ -14,6 +14,10 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: false, error: 'Database not configured' }, { status: 503 });
+  }
+
   try {
     const { id } = await params;
 

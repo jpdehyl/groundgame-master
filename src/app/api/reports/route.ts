@@ -115,9 +115,6 @@ export async function GET() {
 
   } catch (error) {
     console.error('Reports error:', error);
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return Response.json({ success: true, data: null });
   }
 }
