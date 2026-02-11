@@ -14,6 +14,12 @@ const DEFAULT_SETTINGS = {
   timeZone: 'Pacific Time (PT)',
   currency: 'USD ($)',
   payPeriod: 'Bi-weekly',
+  payroll: {
+    defaultSpifRate: 0,
+    w8benWarningDays: 90,
+    overtimeMultiplier: 1.5,
+    overtimeThresholdHours: 40,
+  },
   notifications: {
     payrollReminders: true,
     documentExpiry: true,
