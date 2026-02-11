@@ -38,15 +38,15 @@ function formatDate(d: string) {
 }
 
 const leaveColors: Record<string, string> = {
-  pto: 'bg-blue-100 text-blue-800',
-  sick: 'bg-orange-100 text-orange-800',
-  unpaid: 'bg-gray-100 text-gray-800'
+  pto: 'bg-accent-blue/15 text-accent-blue',
+  sick: 'bg-accent-yellow/15 text-accent-yellow',
+  unpaid: 'bg-white/10 text-muted-foreground'
 };
 
 const statusColors: Record<string, string> = {
-  pending: 'bg-yellow-100 text-yellow-800',
-  approved: 'bg-green-100 text-green-800',
-  denied: 'bg-red-100 text-red-800'
+  pending: 'bg-accent-yellow/15 text-accent-yellow',
+  approved: 'bg-accent-green/15 text-accent-green',
+  denied: 'bg-accent-red/15 text-accent-red'
 };
 
 export default function TimeOffPage() {
@@ -130,8 +130,8 @@ export default function TimeOffPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Time Off</h1>
-        <p className="text-gray-600">Loading...</p>
+        <h1 className="text-2xl font-bold text-white">Time Off</h1>
+        <p className="text-muted-foreground">Loading...</p>
       </div>
     );
   }
@@ -141,42 +141,42 @@ export default function TimeOffPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Time Off</h1>
-          <p className="text-gray-600">Manage PTO, sick leave, and unpaid time off requests</p>
+          <h1 className="text-2xl font-bold text-white">Time Off</h1>
+          <p className="text-muted-foreground">Manage PTO, sick leave, and unpaid time off requests</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setShowForm(true)}>
+        <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowForm(true)}>
           <Plus className="h-4 w-4 mr-2" />
           New Request
         </Button>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/30 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
-            <AlertCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
+            <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
+            <p className="text-sm text-accent-red">{error}</p>
           </div>
-          <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700 text-sm">Dismiss</button>
+          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red text-sm">Dismiss</button>
         </div>
       )}
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600">Total Requests</div>
-          <div className="text-2xl font-bold text-gray-900">{requests.length}</div>
+        <div className="bg-card p-5 rounded-xl border border-border">
+          <div className="text-sm text-muted-foreground">Total Requests</div>
+          <div className="text-2xl font-bold text-white">{requests.length}</div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600">Pending</div>
-          <div className="text-2xl font-bold text-yellow-600">{pendingCount}</div>
+        <div className="bg-card p-5 rounded-xl border border-border">
+          <div className="text-sm text-muted-foreground">Pending</div>
+          <div className="text-2xl font-bold text-accent-yellow">{pendingCount}</div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600">Approved</div>
-          <div className="text-2xl font-bold text-green-600">{requests.filter(r => r.status === 'approved').length}</div>
+        <div className="bg-card p-5 rounded-xl border border-border">
+          <div className="text-sm text-muted-foreground">Approved</div>
+          <div className="text-2xl font-bold text-accent-green">{requests.filter(r => r.status === 'approved').length}</div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-          <div className="text-sm text-gray-600">Total Days Off</div>
-          <div className="text-2xl font-bold text-blue-600">
+        <div className="bg-card p-5 rounded-xl border border-border">
+          <div className="text-sm text-muted-foreground">Total Days Off</div>
+          <div className="text-2xl font-bold text-accent-blue">
             {requests.filter(r => r.status === 'approved').reduce((s, r) => s + Number(r.days_count), 0)}
           </div>
         </div>
@@ -189,27 +189,27 @@ export default function TimeOffPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-              filter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              filter === f ? 'bg-accent-blue text-white' : 'bg-white/10 text-gray-300 hover:bg-white/10'
             }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
             {f === 'pending' && pendingCount > 0 && (
-              <span className="ml-1.5 bg-yellow-400 text-yellow-900 rounded-full px-1.5 text-xs">{pendingCount}</span>
+              <span className="ml-1.5 bg-accent-yellow text-accent-yellow rounded-full px-1.5 text-xs">{pendingCount}</span>
             )}
           </button>
         ))}
       </div>
 
       {/* Requests List */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card rounded-xl border border-border">
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
-            <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No requests</h3>
-            <p className="text-gray-600">No time-off requests to show.</p>
+            <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-white mb-2">No requests</h3>
+            <p className="text-muted-foreground">No time-off requests to show.</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-border">
             {filtered.map(req => {
               const emp = req.employee;
               const empName = emp ? `${emp.first_name} ${emp.last_name}` : 'Unknown';
@@ -217,16 +217,16 @@ export default function TimeOffPage() {
               return (
                 <div key={req.id} className="p-4 flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center">
-                      <Clock className="h-5 w-5 text-gray-500" />
+                    <div className="h-10 w-10 bg-white/10 rounded-full flex items-center justify-center">
+                      <Clock className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">{empName}</div>
-                      <div className="text-sm text-gray-600">
+                      <div className="font-medium text-white">{empName}</div>
+                      <div className="text-sm text-muted-foreground">
                         {client?.name && <span>{client.name} · </span>}
                         {formatDate(req.start_date)} – {formatDate(req.end_date)} · {req.days_count} day{Number(req.days_count) !== 1 ? 's' : ''}
                       </div>
-                      {req.reason && <div className="text-sm text-gray-500 mt-0.5">{req.reason}</div>}
+                      {req.reason && <div className="text-sm text-muted-foreground mt-0.5">{req.reason}</div>}
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -240,7 +240,7 @@ export default function TimeOffPage() {
                       <div className="flex space-x-1">
                         <Button
                           size="sm"
-                          className="bg-green-600 hover:bg-green-700 h-8"
+                          className="bg-accent-green hover:bg-accent-green/90 h-8"
                           onClick={() => updateStatus(req.id, 'approved')}
                           disabled={actionLoading === `approved-${req.id}`}
                         >
@@ -249,7 +249,7 @@ export default function TimeOffPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-red-600 border-red-300 hover:bg-red-50 h-8"
+                          className="text-accent-red border-accent-red/30 hover:bg-accent-red/10 h-8"
                           onClick={() => updateStatus(req.id, 'denied')}
                           disabled={actionLoading === `denied-${req.id}`}
                         >
@@ -258,23 +258,6 @@ export default function TimeOffPage() {
                       </div>
                     )}
                   </div>
-                  {request.reason && (
-                    <div className="text-sm text-muted-foreground mb-3">
-                      <strong>Reason:</strong> {request.reason}
-                    </div>
-                  )}
-                  {request.status === 'Pending' && (
-                    <div className="flex space-x-2">
-                      <Button variant="outline" size="sm" className="text-accent-green border-accent-green/30" onClick={() => handleApprove(request.id)}>
-                        <CheckCircle className="h-4 w-4 mr-1" />
-                        Approve
-                      </Button>
-                      <Button variant="outline" size="sm" className="text-accent-red border-accent-red/30" onClick={() => handleDeny(request.id)}>
-                        <XCircle className="h-4 w-4 mr-1" />
-                        Decline
-                      </Button>
-                    </div>
-                  )}
                 </div>
               );
             })}
@@ -284,32 +267,32 @@ export default function TimeOffPage() {
 
       {/* New Request Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">New Time-Off Request</h2>
-              <button onClick={() => setShowForm(false)} className="p-2 hover:bg-gray-100 rounded-md">
-                <X className="h-5 w-5 text-gray-500" />
+              <h2 className="text-lg font-semibold text-white">New Time-Off Request</h2>
+              <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-md">
+                <X className="h-5 w-5 text-muted-foreground" />
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Employee *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Employee *</label>
                 <select
                   value={formData.employee_id}
                   onChange={e => setFormData(f => ({ ...f, employee_id: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                 >
                   <option value="">Select employee</option>
                   {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Leave Type *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Leave Type *</label>
                 <select
                   value={formData.leave_type}
                   onChange={e => setFormData(f => ({ ...f, leave_type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                 >
                   <option value="pto">PTO</option>
                   <option value="sick">Sick</option>
@@ -318,32 +301,32 @@ export default function TimeOffPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Start Date *</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Start Date *</label>
                   <input type="date" value={formData.start_date}
                     onChange={e => setFormData(f => ({ ...f, start_date: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">End Date *</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">End Date *</label>
                   <input type="date" value={formData.end_date}
                     onChange={e => setFormData(f => ({ ...f, end_date: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Reason</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Reason</label>
                 <textarea value={formData.reason} rows={2}
                   onChange={e => setFormData(f => ({ ...f, reason: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                   placeholder="Optional reason..."
                 />
               </div>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button className="bg-blue-600 hover:bg-blue-700" onClick={submitRequest}
+              <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={submitRequest}
                 disabled={actionLoading === 'submit'}>
                 {actionLoading === 'submit' ? 'Submitting...' : 'Submit Request'}
               </Button>

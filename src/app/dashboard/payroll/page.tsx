@@ -85,12 +85,12 @@ function getNestedField<T>(val: T | T[] | null | undefined): T | undefined {
 
 function statusColor(status: string) {
   switch (status) {
-    case 'open': return 'bg-blue-100 text-blue-800';
-    case 'closed': return 'bg-yellow-100 text-yellow-800';
-    case 'processed': return 'bg-green-100 text-green-800';
-    case 'draft': return 'bg-gray-100 text-gray-800';
-    case 'sent': return 'bg-green-100 text-green-800';
-    default: return 'bg-gray-100 text-gray-800';
+    case 'open': return 'bg-accent-blue/15 text-accent-blue';
+    case 'closed': return 'bg-accent-yellow/15 text-accent-yellow';
+    case 'processed': return 'bg-accent-green/15 text-accent-green';
+    case 'draft': return 'bg-white/10 text-gray-300';
+    case 'sent': return 'bg-accent-green/15 text-accent-green';
+    default: return 'bg-white/10 text-gray-300';
   }
 }
 
@@ -301,8 +301,8 @@ export default function PayrollPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Payroll</h1>
-          <p className="text-gray-600">Loading payroll data...</p>
+          <h1 className="text-2xl font-bold text-white">Payroll</h1>
+          <p className="text-muted-foreground">Loading payroll data...</p>
         </div>
       </div>
     );
@@ -313,8 +313,8 @@ export default function PayrollPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Payroll</h1>
-          <p className="text-gray-600">Manage pay periods, process payroll, and export to Veem</p>
+          <h1 className="text-2xl font-bold text-white">Payroll</h1>
+          <p className="text-muted-foreground">Manage pay periods, process payroll, and export to Veem</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" onClick={() => fetchData()}>
@@ -322,7 +322,7 @@ export default function PayrollPage() {
             Refresh
           </Button>
           <Button
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-accent-blue hover:bg-accent-blue/90"
             onClick={() => setShowCreatePeriod(true)}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -333,12 +333,12 @@ export default function PayrollPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/10 border border-accent-red/30 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
-            <AlertCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
+            <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
+            <p className="text-sm text-accent-red">{error}</p>
           </div>
-          <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700 text-sm">
+          <button onClick={() => setError(null)} className="text-accent-red hover:text-accent-red text-sm">
             Dismiss
           </button>
         </div>
@@ -346,34 +346,34 @@ export default function PayrollPage() {
 
       {/* Create Pay Period Modal */}
       {showCreatePeriod && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Create Pay Period</h2>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-xl shadow-lg shadow-black/50 max-w-md w-full p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">Create Pay Period</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Period Start</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Period Start</label>
                 <input
                   type="date"
                   value={newPeriod.period_start}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_start: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Period End</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Period End</label>
                 <input
                   type="date"
                   value={newPeriod.period_end}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_end: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Type</label>
                 <select
                   value={newPeriod.period_type}
                   onChange={(e) => setNewPeriod(p => ({ ...p, period_type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-input-border rounded-md text-sm bg-input-bg text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent-blue/50"
                 >
                   <option value="weekly">Weekly</option>
                   <option value="biweekly">Bi-weekly</option>
@@ -386,7 +386,7 @@ export default function PayrollPage() {
                 Cancel
               </Button>
               <Button
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-accent-blue hover:bg-accent-blue/90"
                 onClick={createPayPeriod}
                 disabled={actionLoading === 'create-period'}
               >
@@ -399,68 +399,68 @@ export default function PayrollPage() {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-5 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Open Periods</div>
-              <div className="text-2xl font-bold text-gray-900">{openPeriods.length}</div>
+              <div className="text-sm text-muted-foreground">Open Periods</div>
+              <div className="text-2xl font-bold text-white">{openPeriods.length}</div>
             </div>
-            <Calendar className="h-8 w-8 text-blue-400" />
+            <Calendar className="h-8 w-8 text-accent-blue" />
           </div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-5 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Ready to Process</div>
-              <div className="text-2xl font-bold text-yellow-600">{closedPeriods.filter(p => !runsByPeriod.has(p.id)).length}</div>
+              <div className="text-sm text-muted-foreground">Ready to Process</div>
+              <div className="text-2xl font-bold text-accent-yellow">{closedPeriods.filter(p => !runsByPeriod.has(p.id)).length}</div>
             </div>
-            <Calculator className="h-8 w-8 text-yellow-400" />
+            <Calculator className="h-8 w-8 text-accent-yellow" />
           </div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-5 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Latest Run</div>
-              <div className="text-2xl font-bold text-gray-900">{totalEmployeesInLatest} employees</div>
+              <div className="text-sm text-muted-foreground">Latest Run</div>
+              <div className="text-2xl font-bold text-white">{totalEmployeesInLatest} employees</div>
             </div>
-            <Users className="h-8 w-8 text-green-400" />
+            <Users className="h-8 w-8 text-accent-green" />
           </div>
         </div>
-        <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-5 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Total Paid (All Runs)</div>
-              <div className="text-2xl font-bold text-green-600">{formatCurrency(totalPayrollYtd)}</div>
+              <div className="text-sm text-muted-foreground">Total Paid (All Runs)</div>
+              <div className="text-2xl font-bold text-accent-green">{formatCurrency(totalPayrollYtd)}</div>
             </div>
-            <DollarSign className="h-8 w-8 text-green-400" />
+            <DollarSign className="h-8 w-8 text-accent-green" />
           </div>
         </div>
       </div>
 
       {/* Active Pay Periods */}
       {(openPeriods.length > 0 || closedPeriods.length > 0) && (
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Active Pay Periods</h3>
+        <div className="bg-card p-6 rounded-xl border border-border">
+          <h3 className="text-lg font-semibold text-white mb-4">Active Pay Periods</h3>
           <div className="space-y-3">
             {[...openPeriods, ...closedPeriods].map((period) => {
               const existingRun = runsByPeriod.get(period.id);
               return (
-                <div key={period.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div key={period.id} className="flex items-center justify-between p-4 bg-muted rounded-lg">
                   <div className="flex items-center space-x-4">
                     <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                      period.status === 'open' ? 'bg-blue-100' : 'bg-yellow-100'
+                      period.status === 'open' ? 'bg-accent-blue/10' : 'bg-accent-yellow/10'
                     }`}>
                       {period.status === 'open' ? (
-                        <Clock className="h-5 w-5 text-blue-600" />
+                        <Clock className="h-5 w-5 text-accent-blue" />
                       ) : (
-                        <Lock className="h-5 w-5 text-yellow-600" />
+                        <Lock className="h-5 w-5 text-accent-yellow" />
                       )}
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-white">
                         {formatDate(period.period_start)} – {formatDate(period.period_end)}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         {period.period_type} period
                       </div>
                     </div>
@@ -485,7 +485,7 @@ export default function PayrollPage() {
                     {period.status === 'closed' && !existingRun && (
                       <Button
                         size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="bg-accent-blue hover:bg-accent-blue/90"
                         onClick={() => createPayrollRun(period.id)}
                         disabled={actionLoading === `run-${period.id}`}
                       >
@@ -495,7 +495,7 @@ export default function PayrollPage() {
                     )}
 
                     {period.status === 'closed' && existingRun && (
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         Run: {existingRun.status}
                       </span>
                     )}
@@ -509,11 +509,11 @@ export default function PayrollPage() {
 
       {/* Empty state for periods */}
       {periods.length === 0 && (
-        <div className="bg-white p-12 rounded-lg shadow-sm border border-gray-200 text-center">
-          <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No pay periods yet</h3>
-          <p className="text-gray-600 mb-4">Create your first pay period to start processing payroll.</p>
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setShowCreatePeriod(true)}>
+        <div className="bg-card p-12 rounded-xl border border-border text-center">
+          <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-white mb-2">No pay periods yet</h3>
+          <p className="text-muted-foreground mb-4">Create your first pay period to start processing payroll.</p>
+          <Button className="bg-accent-blue hover:bg-accent-blue/90" onClick={() => setShowCreatePeriod(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Create Pay Period
           </Button>
@@ -522,8 +522,8 @@ export default function PayrollPage() {
 
       {/* Payroll Runs */}
       {runs.length > 0 && (
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Payroll Runs</h3>
+        <div className="bg-card p-6 rounded-xl border border-border">
+          <h3 className="text-lg font-semibold text-white mb-4">Payroll Runs</h3>
           <div className="space-y-3">
             {runs.map((run) => {
               const payPeriod = getNestedField(run.pay_period);
@@ -531,40 +531,40 @@ export default function PayrollPage() {
               const details = runDetails[run.id];
 
               return (
-                <div key={run.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                <div key={run.id} className="border border-border rounded-lg overflow-hidden">
                   {/* Run Header */}
                   <div
-                    className="flex items-center justify-between p-4 bg-gray-50 cursor-pointer hover:bg-gray-100"
+                    className="flex items-center justify-between p-4 bg-muted cursor-pointer hover:bg-white/5"
                     onClick={() => toggleRunDetails(run.id)}
                   >
                     <div className="flex items-center space-x-4">
                       <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                        run.status === 'sent' ? 'bg-green-100' :
-                        run.status === 'processed' ? 'bg-blue-100' : 'bg-gray-100'
+                        run.status === 'sent' ? 'bg-accent-green/10' :
+                        run.status === 'processed' ? 'bg-accent-blue/10' : 'bg-white/10'
                       }`}>
                         {run.status === 'sent' ? (
-                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <CheckCircle className="h-5 w-5 text-accent-green" />
                         ) : run.status === 'processed' ? (
-                          <FileText className="h-5 w-5 text-blue-600" />
+                          <FileText className="h-5 w-5 text-accent-blue" />
                         ) : (
-                          <Calculator className="h-5 w-5 text-gray-600" />
+                          <Calculator className="h-5 w-5 text-muted-foreground" />
                         )}
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900">
+                        <div className="font-medium text-white">
                           {payPeriod
                             ? `${formatDate(payPeriod.period_start)} – ${formatDate(payPeriod.period_end)}`
                             : `Run ${run.id.slice(0, 8)}`
                           }
                         </div>
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-muted-foreground">
                           {run.employee_count} employees · Run date: {formatDate(run.run_date)}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="text-right mr-2">
-                        <div className="font-semibold text-gray-900">{formatCurrency(run.total_amount || 0)}</div>
+                        <div className="font-semibold text-white">{formatCurrency(run.total_amount || 0)}</div>
                         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColor(run.status)}`}>
                           {run.status}
                         </span>
@@ -575,7 +575,7 @@ export default function PayrollPage() {
                         {run.status === 'draft' && (
                           <Button
                             size="sm"
-                            className="bg-blue-600 hover:bg-blue-700"
+                            className="bg-accent-blue hover:bg-accent-blue/90"
                             onClick={() => updateRunStatus(run.id, 'processed')}
                             disabled={actionLoading === `run-status-${run.id}`}
                           >
@@ -610,25 +610,25 @@ export default function PayrollPage() {
                       </div>
 
                       {isExpanded ? (
-                        <ChevronUp className="h-5 w-5 text-gray-400" />
+                        <ChevronUp className="h-5 w-5 text-muted-foreground" />
                       ) : (
-                        <ChevronDown className="h-5 w-5 text-gray-400" />
+                        <ChevronDown className="h-5 w-5 text-muted-foreground" />
                       )}
                     </div>
                   </div>
 
                   {/* Expanded Details */}
                   {isExpanded && (
-                    <div className="p-4 border-t border-gray-200">
+                    <div className="p-4 border-t border-border">
                       {!details ? (
-                        <p className="text-sm text-gray-500">Loading details...</p>
+                        <p className="text-sm text-muted-foreground">Loading details...</p>
                       ) : (details.entries?.length ?? 0) === 0 ? (
-                        <p className="text-sm text-gray-500">No entries in this payroll run.</p>
+                        <p className="text-sm text-muted-foreground">No entries in this payroll run.</p>
                       ) : (
                         <div className="overflow-x-auto">
                           <table className="w-full text-sm">
                             <thead>
-                              <tr className="text-left text-gray-600 border-b border-gray-200">
+                              <tr className="text-left text-muted-foreground border-b border-border">
                                 <th className="pb-2 pr-4">Employee</th>
                                 <th className="pb-2 pr-4">Client</th>
                                 <th className="pb-2 pr-4">Role</th>
@@ -645,15 +645,15 @@ export default function PayrollPage() {
                                 const client = emp ? getNestedField(emp.client) : undefined;
                                 const role = emp ? getNestedField(emp.role) : undefined;
                                 return (
-                                  <tr key={entry.id} className="border-b border-gray-100">
+                                  <tr key={entry.id} className="border-b border-border hover:bg-white/5">
                                     <td className="py-2 pr-4">
-                                      <div className="font-medium text-gray-900">
+                                      <div className="font-medium text-white">
                                         {emp ? `${emp.first_name} ${emp.last_name}` : 'Unknown'}
                                       </div>
-                                      <div className="text-xs text-gray-500">{emp?.email}</div>
+                                      <div className="text-xs text-muted-foreground">{emp?.email}</div>
                                     </td>
-                                    <td className="py-2 pr-4 text-gray-600">{client?.name ?? '—'}</td>
-                                    <td className="py-2 pr-4 text-gray-600">{role?.name ?? '—'}</td>
+                                    <td className="py-2 pr-4 text-muted-foreground">{client?.name ?? '—'}</td>
+                                    <td className="py-2 pr-4 text-muted-foreground">{role?.name ?? '—'}</td>
                                     <td className="py-2 pr-4 text-right">{Number(entry.base_hours).toFixed(1)}</td>
                                     <td className="py-2 pr-4 text-right">{formatCurrency(entry.hourly_rate)}</td>
                                     <td className="py-2 pr-4 text-right">{formatCurrency(entry.base_pay)}</td>
@@ -665,14 +665,14 @@ export default function PayrollPage() {
                             </tbody>
                             <tfoot>
                               <tr className="border-t-2 border-gray-300">
-                                <td colSpan={5} className="py-2 pr-4 font-semibold text-gray-900">Total</td>
+                                <td colSpan={5} className="py-2 pr-4 font-semibold text-white">Total</td>
                                 <td className="py-2 pr-4 text-right font-semibold">
                                   {formatCurrency(details.entries!.reduce((s, e) => s + Number(e.base_pay), 0))}
                                 </td>
                                 <td className="py-2 pr-4 text-right font-semibold">
                                   {formatCurrency(details.entries!.reduce((s, e) => s + Number(e.spifs_bonus), 0))}
                                 </td>
-                                <td className="py-2 text-right font-bold text-gray-900">
+                                <td className="py-2 text-right font-bold text-white">
                                   {formatCurrency(details.entries!.reduce((s, e) => s + Number(e.net_pay), 0))}
                                 </td>
                               </tr>
@@ -691,35 +691,35 @@ export default function PayrollPage() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Total Payroll Runs</div>
-              <div className="text-2xl font-bold text-gray-900">{runs.length}</div>
+              <div className="text-sm text-muted-foreground">Total Payroll Runs</div>
+              <div className="text-2xl font-bold text-white">{runs.length}</div>
             </div>
-            <FileText className="h-8 w-8 text-blue-500" />
+            <FileText className="h-8 w-8 text-accent-blue" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Completed & Sent</div>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-sm text-muted-foreground">Completed & Sent</div>
+              <div className="text-2xl font-bold text-accent-green">
                 {runs.filter(r => r.status === 'sent').length}
               </div>
             </div>
-            <Send className="h-8 w-8 text-green-500" />
+            <Send className="h-8 w-8 text-accent-green" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Pending Action</div>
-              <div className="text-2xl font-bold text-yellow-600">
+              <div className="text-sm text-muted-foreground">Pending Action</div>
+              <div className="text-2xl font-bold text-accent-yellow">
                 {runs.filter(r => r.status === 'draft' || r.status === 'processed').length}
               </div>
             </div>
-            <AlertCircle className="h-8 w-8 text-yellow-500" />
+            <AlertCircle className="h-8 w-8 text-accent-yellow" />
           </div>
         </div>
       </div>
