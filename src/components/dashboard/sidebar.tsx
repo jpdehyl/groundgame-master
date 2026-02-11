@@ -31,14 +31,21 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="w-64 bg-white shadow-sm border-r border-gray-200">
+    <div className="w-64 bg-sidebar border-r border-border flex flex-col">
       {/* Logo */}
-      <div className="h-16 flex items-center px-6 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-gray-900">GroundGame</h1>
+      <div className="h-16 flex items-center px-6 border-b border-border">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-0.5">
+            <div className="w-2 h-2 rounded-sm bg-accent-blue"></div>
+            <div className="w-2 h-2 rounded-sm bg-accent-green"></div>
+            <div className="w-2 h-2 rounded-sm bg-accent-yellow"></div>
+          </div>
+          <h1 className="text-lg font-bold text-white tracking-tight">GroundGame</h1>
+        </div>
       </div>
 
       {/* Navigation */}
-      <nav className="mt-6 px-3">
+      <nav className="flex-1 mt-4 px-3 overflow-y-auto">
         <ul className="space-y-1">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
@@ -47,16 +54,16 @@ export function Sidebar() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                    'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all',
                     isActive
-                      ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'bg-accent-blue/15 text-accent-blue'
+                      : 'text-muted-foreground hover:text-white hover:bg-white/5'
                   )}
                 >
                   <item.icon
                     className={cn(
-                      'mr-3 h-5 w-5 flex-shrink-0',
-                      isActive ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'
+                      'mr-3 h-4 w-4 flex-shrink-0 transition-colors',
+                      isActive ? 'text-accent-blue' : 'text-muted-foreground group-hover:text-white'
                     )}
                   />
                   {item.name}
@@ -68,9 +75,9 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom Section */}
-      <div className="absolute bottom-0 w-64 p-4 border-t border-gray-200">
-        <div className="text-xs text-gray-500 text-center">
-          GroundGame Master v1.0
+      <div className="p-4 border-t border-border">
+        <div className="text-xs text-muted-foreground text-center">
+          GroundGame v1.0
         </div>
       </div>
     </div>

@@ -59,8 +59,8 @@ export default function ClientsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clients</h1>
-          <p className="text-gray-600">Loading clients...</p>
+          <h1 className="text-2xl font-bold text-white">Clients</h1>
+          <p className="text-muted-foreground">Loading clients...</p>
         </div>
       </div>
     );
@@ -71,26 +71,26 @@ export default function ClientsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clients</h1>
-          <p className="text-gray-600">Manage client relationships and pricing</p>
+          <h1 className="text-2xl font-bold text-white">Clients</h1>
+          <p className="text-muted-foreground">Manage client relationships and pricing</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-accent-blue hover:bg-accent-blue/90">
           <Plus className="h-4 w-4 mr-2" />
           Add Client
         </Button>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card p-4 rounded-xl border border-border">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search clients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-input-border bg-input-bg rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-blue/50 placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex gap-2">
@@ -109,40 +109,40 @@ export default function ClientsPage() {
       {/* Clients Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {filteredClients.map((client) => (
-          <div key={client.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+          <div key={client.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg hover:shadow-black/20 transition-shadow card-hover">
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-blue-600" />
+                <div className="h-12 w-12 bg-accent-blue/15 rounded-lg flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-accent-blue" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{client.name}</h3>
+                  <h3 className="text-lg font-semibold text-white">{client.name}</h3>
                   {client.billing_address && (
-                    <p className="text-sm text-gray-600">{client.billing_address}</p>
+                    <p className="text-sm text-muted-foreground">{client.billing_address}</p>
                   )}
                 </div>
               </div>
-              <div className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              <div className="px-3 py-1 rounded-full text-xs font-medium bg-accent-green/15 text-accent-green">
                 {client.status}
               </div>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="bg-muted p-3 rounded-lg">
                 <div className="flex items-center">
-                  <Users className="h-4 w-4 text-gray-600 mr-2" />
-                  <span className="text-sm text-gray-600">Employees</span>
+                  <Users className="h-4 w-4 text-muted-foreground mr-2" />
+                  <span className="text-sm text-muted-foreground">Employees</span>
                 </div>
-                <div className="text-lg font-semibold text-gray-900">{client.employee_count}</div>
+                <div className="text-lg font-semibold text-white">{client.employee_count}</div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="bg-muted p-3 rounded-lg">
                 <div className="flex items-center">
-                  <Calendar className="h-4 w-4 text-gray-600 mr-2" />
-                  <span className="text-sm text-gray-600">Since</span>
+                  <Calendar className="h-4 w-4 text-muted-foreground mr-2" />
+                  <span className="text-sm text-muted-foreground">Since</span>
                 </div>
-                <div className="text-lg font-semibold text-gray-900">
+                <div className="text-lg font-semibold text-white">
                   {new Date(client.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </div>
               </div>
@@ -152,14 +152,14 @@ export default function ClientsPage() {
             <div className="space-y-2 mb-4">
               {client.contact_person && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">Primary Contact:</span>
-                  <span className="text-sm text-gray-600">{client.contact_person}</span>
+                  <span className="text-sm font-medium text-gray-300">Primary Contact:</span>
+                  <span className="text-sm text-muted-foreground">{client.contact_person}</span>
                 </div>
               )}
               {client.email && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">Email:</span>
-                  <a href={`mailto:${client.email}`} className="text-sm text-blue-600 hover:text-blue-800">
+                  <span className="text-sm font-medium text-gray-300">Email:</span>
+                  <a href={`mailto:${client.email}`} className="text-sm text-accent-blue hover:text-accent-blue">
                     {client.email}
                   </a>
                 </div>
@@ -167,7 +167,7 @@ export default function ClientsPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex space-x-2 pt-4 border-t border-gray-200">
+            <div className="flex space-x-2 pt-4 border-t border-border">
               <Button variant="outline" size="sm" className="flex-1">
                 View Details
               </Button>
@@ -186,11 +186,11 @@ export default function ClientsPage() {
       {/* Empty State */}
       {filteredClients.length === 0 && (
         <div className="text-center py-12">
-          <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-white mb-2">
             {searchTerm ? 'No clients found' : 'No clients yet'}
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             {searchTerm
               ? `No clients match "${searchTerm}". Try adjusting your search.`
               : 'Get started by adding your first client.'
@@ -200,22 +200,22 @@ export default function ClientsPage() {
       )}
 
       {/* Summary Stats */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Client Overview</h3>
+      <div className="bg-card p-6 rounded-xl border border-border">
+        <h3 className="text-lg font-semibold text-white mb-4">Client Overview</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">{clients.length}</div>
-            <div className="text-sm text-gray-600">Total Clients</div>
+            <div className="text-2xl font-bold text-white">{clients.length}</div>
+            <div className="text-sm text-muted-foreground">Total Clients</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-accent-green">
               {clients.filter(c => c.status === 'active').length}
             </div>
-            <div className="text-sm text-gray-600">Active</div>
+            <div className="text-sm text-muted-foreground">Active</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{totalEmployees}</div>
-            <div className="text-sm text-gray-600">Assigned Employees</div>
+            <div className="text-2xl font-bold text-accent-blue">{totalEmployees}</div>
+            <div className="text-sm text-muted-foreground">Assigned Employees</div>
           </div>
         </div>
       </div>

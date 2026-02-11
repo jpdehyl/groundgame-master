@@ -84,8 +84,8 @@ export default function TimeOffPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Time Off</h1>
-          <p className="text-gray-600">Loading time-off requests...</p>
+          <h1 className="text-2xl font-bold text-white">Time Off</h1>
+          <p className="text-muted-foreground">Loading time-off requests...</p>
         </div>
       </div>
     );
@@ -95,93 +95,93 @@ export default function TimeOffPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Time Off</h1>
-          <p className="text-gray-600">Manage employee time-off requests and schedules</p>
+          <h1 className="text-2xl font-bold text-white">Time Off</h1>
+          <p className="text-muted-foreground">Manage employee time-off requests and schedules</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-accent-blue hover:bg-accent-blue/90">
           <Plus className="h-4 w-4 mr-2" />
           New Request
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Pending Requests</div>
-              <div className="text-2xl font-bold text-yellow-600">{pendingCount}</div>
+              <div className="text-sm text-muted-foreground">Pending Requests</div>
+              <div className="text-2xl font-bold text-accent-yellow">{pendingCount}</div>
             </div>
-            <Clock3 className="h-8 w-8 text-yellow-500" />
+            <Clock3 className="h-8 w-8 text-accent-yellow" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Approved</div>
-              <div className="text-2xl font-bold text-green-600">{approvedCount}</div>
+              <div className="text-sm text-muted-foreground">Approved</div>
+              <div className="text-2xl font-bold text-accent-green">{approvedCount}</div>
             </div>
-            <CheckCircle className="h-8 w-8 text-green-500" />
+            <CheckCircle className="h-8 w-8 text-accent-green" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Days Off Total</div>
-              <div className="text-2xl font-bold text-blue-600">{totalDays}</div>
+              <div className="text-sm text-muted-foreground">Days Off Total</div>
+              <div className="text-2xl font-bold text-accent-blue">{totalDays}</div>
             </div>
-            <Calendar className="h-8 w-8 text-blue-500" />
+            <Calendar className="h-8 w-8 text-accent-blue" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600">Total Requests</div>
-              <div className="text-2xl font-bold text-gray-900">{requests.length}</div>
+              <div className="text-sm text-muted-foreground">Total Requests</div>
+              <div className="text-2xl font-bold text-white">{requests.length}</div>
             </div>
-            <User className="h-8 w-8 text-gray-400" />
+            <User className="h-8 w-8 text-muted-foreground" />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">All Requests</h3>
+        <div className="bg-card p-6 rounded-xl border border-border">
+          <h3 className="text-lg font-semibold text-white mb-4">All Requests</h3>
           {requests.length === 0 ? (
             <div className="text-center py-8">
-              <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">No time-off requests yet.</p>
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No time-off requests yet.</p>
             </div>
           ) : (
             <div className="space-y-4">
               {requests.map((request) => (
-                <div key={request.id} className="p-4 border border-gray-200 rounded-lg">
+                <div key={request.id} className="p-4 border border-border rounded-lg">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <div className="font-medium text-gray-900">{request.employee}</div>
-                      <div className="text-sm text-gray-600">{request.type}</div>
+                      <div className="font-medium text-white">{request.employee}</div>
+                      <div className="text-sm text-muted-foreground">{request.type}</div>
                     </div>
                     <div className={`px-2 py-1 rounded text-xs font-medium ${
-                      request.status === 'Pending' ? 'bg-yellow-100 text-yellow-800'
-                        : request.status === 'Approved' ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                      request.status === 'Pending' ? 'bg-accent-yellow/15 text-accent-yellow'
+                        : request.status === 'Approved' ? 'bg-accent-green/15 text-accent-green'
+                        : 'bg-accent-red/15 text-accent-red'
                     }`}>{request.status}</div>
                   </div>
-                  <div className="text-sm text-gray-600 mb-2">
+                  <div className="text-sm text-muted-foreground mb-2">
                     {new Date(request.startDate).toLocaleDateString()} - {new Date(request.endDate).toLocaleDateString()}
-                    <span className="ml-2 text-gray-500">({request.days} day{request.days > 1 ? 's' : ''})</span>
+                    <span className="ml-2 text-muted-foreground">({request.days} day{request.days > 1 ? 's' : ''})</span>
                   </div>
                   {request.reason && (
-                    <div className="text-sm text-gray-600 mb-3">
+                    <div className="text-sm text-muted-foreground mb-3">
                       <strong>Reason:</strong> {request.reason}
                     </div>
                   )}
                   {request.status === 'Pending' && (
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="sm" className="text-green-600 border-green-300" onClick={() => handleApprove(request.id)}>
+                      <Button variant="outline" size="sm" className="text-accent-green border-accent-green/30" onClick={() => handleApprove(request.id)}>
                         <CheckCircle className="h-4 w-4 mr-1" />
                         Approve
                       </Button>
-                      <Button variant="outline" size="sm" className="text-red-600 border-red-300" onClick={() => handleDeny(request.id)}>
+                      <Button variant="outline" size="sm" className="text-accent-red border-accent-red/30" onClick={() => handleDeny(request.id)}>
                         <XCircle className="h-4 w-4 mr-1" />
                         Decline
                       </Button>
@@ -193,29 +193,29 @@ export default function TimeOffPage() {
           )}
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Time Off</h3>
+        <div className="bg-card p-6 rounded-xl border border-border">
+          <h3 className="text-lg font-semibold text-white mb-4">Upcoming Time Off</h3>
           {upcoming.length === 0 ? (
             <div className="text-center py-8">
-              <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">No upcoming time off scheduled.</p>
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No upcoming time off scheduled.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {upcoming.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={item.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
+                    <div className="h-2 w-2 bg-accent-blue rounded-full"></div>
                     <div>
-                      <div className="font-medium text-gray-900">{item.employee}</div>
-                      <div className="text-sm text-gray-600">{item.type}</div>
+                      <div className="font-medium text-white">{item.employee}</div>
+                      <div className="text-sm text-muted-foreground">{item.type}</div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-white">
                       {new Date(item.startDate).toLocaleDateString()}
                     </div>
-                    <div className="text-xs text-gray-500">{item.days} day{item.days > 1 ? 's' : ''}</div>
+                    <div className="text-xs text-muted-foreground">{item.days} day{item.days > 1 ? 's' : ''}</div>
                   </div>
                 </div>
               ))}
