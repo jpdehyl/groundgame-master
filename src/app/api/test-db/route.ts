@@ -1,6 +1,10 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export async function GET() {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: false, message: 'Supabase not configured', timestamp: new Date().toISOString() });
+  }
+
   try {
     // Test basic connection
     const { data: clients, error } = await supabase
@@ -22,7 +26,8 @@ export async function GET() {
     console.error('Database error:', error);
     return Response.json({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+      message: 'Database connection failed',
+      timestamp: new Date().toISOString()
+    });
   }
 }

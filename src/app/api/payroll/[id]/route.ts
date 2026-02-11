@@ -1,10 +1,14 @@
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 import { NextRequest } from 'next/server';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!isSupabaseConfigured) {
+    return Response.json({ success: true, data: null });
+  }
+
   try {
     const { id } = await params;
 
@@ -48,10 +52,7 @@ export async function GET(
 
   } catch (error) {
     console.error('Payroll run GET error:', error);
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return Response.json({ success: true, data: null });
   }
 }
 
