@@ -20,7 +20,10 @@ import {
   X,
   Briefcase,
   AlertTriangle,
-  Check
+  Check,
+  RefreshCw,
+  Shield,
+  LucideIcon
 } from 'lucide-react';
 
 interface Role {
@@ -42,6 +45,19 @@ interface NotificationSettings {
   documentExpiry: boolean;
   timeOffRequests: boolean;
   weeklyReports: boolean;
+}
+
+interface IntegrationStatus {
+  connected: boolean;
+  status: string;
+  detail?: string;
+}
+
+interface IntegrationItem {
+  key: string;
+  icon: LucideIcon;
+  label: string;
+  desc: string;
 }
 
 const settingsSections = [
@@ -97,16 +113,29 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
-  // DB connection status
-  const [dbConnected, setDbConnected] = useState<boolean | null>(null);
+  // Integration statuses
+  const [integrations, setIntegrations] = useState<Record<string, IntegrationStatus>>({});
+  const [integrationsLoading, setIntegrationsLoading] = useState(true);
+
+  const fetchIntegrations = async () => {
+    setIntegrationsLoading(true);
+    try {
+      const res = await fetch('/api/integrations/status');
+      const data = await res.json();
+      if (data.success) setIntegrations(data.data);
+    } catch {
+      // Leave empty
+    } finally {
+      setIntegrationsLoading(false);
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [settingsRes, rolesRes, dbRes] = await Promise.all([
+        const [settingsRes, rolesRes] = await Promise.all([
           fetch('/api/settings'),
           fetch('/api/roles'),
-          fetch('/api/test-db'),
         ]);
 
         const settingsData = await settingsRes.json();
@@ -129,9 +158,6 @@ export default function SettingsPage() {
 
         const rolesData = await rolesRes.json();
         if (rolesData.success) setRoles(rolesData.data || []);
-
-        const dbData = await dbRes.json();
-        setDbConnected(dbData.success);
       } catch {
         // Use defaults
       } finally {
@@ -139,6 +165,7 @@ export default function SettingsPage() {
       }
     }
     fetchData();
+    fetchIntegrations();
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -589,65 +616,59 @@ export default function SettingsPage() {
 
       {/* Integrations */}
       <div ref={el => { sectionRefs.current['integrations'] = el; }} className="bg-card p-6 rounded-xl border border-border">
-        <div className="flex items-center mb-6">
-          <Database className="h-5 w-5 text-accent-blue mr-2" />
-          <h3 className="text-lg font-semibold text-white">Integrations</h3>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center">
+            <Database className="h-5 w-5 text-accent-blue mr-2" />
+            <h3 className="text-lg font-semibold text-white">Integrations</h3>
+          </div>
+          <button
+            onClick={fetchIntegrations}
+            disabled={integrationsLoading}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-white transition-colors"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${integrationsLoading ? 'animate-spin' : ''}`} />
+            {integrationsLoading ? 'Checking...' : 'Refresh'}
+          </button>
         </div>
         <div className="space-y-3">
-          {[
-            {
-              icon: Database,
-              label: 'Supabase Database',
-              desc: 'PostgreSQL database for all app data',
-              connected: dbConnected === true,
-              status: dbConnected === null ? 'Checking...' : dbConnected ? 'Connected' : 'Not Connected',
-            },
-            {
-              icon: DollarSign,
-              label: 'Veem Payments',
-              desc: 'Export payroll as Veem-compatible CSV for payments',
-              connected: true,
-              status: 'Ready (CSV Export)',
-            },
-            {
-              icon: Users,
-              label: 'Clerk Authentication',
-              desc: 'OAuth-based user authentication',
-              connected: true,
-              status: 'Connected',
-            },
-            {
-              icon: Mail,
-              label: 'Email Notifications',
-              desc: 'Send automated alerts and reminders',
-              connected: false,
-              status: 'Not Configured',
-            },
-            {
-              icon: Calendar,
-              label: 'Calendar Sync',
-              desc: 'Sync time-off with Google Calendar',
-              connected: false,
-              status: 'Not Configured',
-            },
-          ].map(item => (
-            <div key={item.label} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-              <div className="flex items-center space-x-3">
-                <item.icon className="h-5 w-5 text-muted-foreground shrink-0" />
-                <div>
-                  <div className="text-sm font-medium text-white">{item.label}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
+          {([
+            { key: 'supabase', icon: Database, label: 'Supabase Database', desc: 'PostgreSQL database for all app data' },
+            { key: 'clerk', icon: Shield, label: 'Clerk Authentication', desc: 'OAuth-based user authentication' },
+            { key: 'veem', icon: DollarSign, label: 'Veem Payments', desc: 'Export payroll as Veem-compatible CSV for payments' },
+            { key: 'email', icon: Mail, label: 'Email Notifications', desc: 'Send automated alerts and reminders' },
+            { key: 'calendar', icon: Calendar, label: 'Calendar Sync', desc: 'Sync time-off with Google Calendar' },
+          ] as IntegrationItem[]).map(item => {
+            const status = integrations[item.key];
+            const connected = status?.connected ?? false;
+            const statusText = integrationsLoading && !status ? 'Checking...' : status?.status || 'Unknown';
+            const detail = status?.detail;
+
+            return (
+              <div key={item.key} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <item.icon className={`h-5 w-5 shrink-0 ${connected ? 'text-accent-green' : 'text-muted-foreground'}`} />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-white">{item.label}</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
+                    {detail && (
+                      <div className={`text-xs mt-1 ${connected ? 'text-accent-green/70' : 'text-accent-yellow/70'}`}>
+                        {detail}
+                      </div>
+                    )}
+                  </div>
                 </div>
+                <span className={`px-2.5 py-1 text-xs rounded-full whitespace-nowrap ml-3 shrink-0 ${
+                  connected
+                    ? 'bg-accent-green/15 text-accent-green'
+                    : statusText === 'Checking...'
+                      ? 'bg-white/10 text-muted-foreground'
+                      : 'bg-accent-yellow/15 text-accent-yellow'
+                }`}>
+                  {statusText}
+                </span>
               </div>
-              <span className={`px-2.5 py-1 text-xs rounded-full whitespace-nowrap ml-3 ${
-                item.connected
-                  ? 'bg-accent-green/15 text-accent-green'
-                  : 'bg-accent-yellow/15 text-accent-yellow'
-              }`}>
-                {item.status}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
