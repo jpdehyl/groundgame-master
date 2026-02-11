@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/toast';
 import {
   Plus, Search, Download, Building2, Users, Calendar,
-  Edit, Trash2, X, Save, DollarSign, AlertCircle
+  Edit, Trash2, X, Save, DollarSign, AlertCircle, FileText
 } from 'lucide-react';
 
 interface Client {
@@ -40,11 +41,13 @@ function getNestedField<T>(val: T | T[] | null | undefined): T | undefined {
 }
 
 export default function ClientsPage() {
+  const { toast } = useToast();
   const [clients, setClients] = useState<Client[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [invoiceLoading, setInvoiceLoading] = useState<string | null>(null);
 
   // Client form
   const [showForm, setShowForm] = useState(false);
@@ -180,6 +183,29 @@ export default function ClientsPage() {
       await openPricing(pricingClient);
     } catch {
       console.error('Failed to delete pricing');
+    }
+  }
+
+  // --- Invoice Generation ---
+
+  async function generateInvoice(client: Client) {
+    setInvoiceLoading(client.id);
+    try {
+      const res = await fetch('/api/invoices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client_id: client.id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast(`Invoice generated for ${client.name}`, 'success');
+      } else {
+        toast(data.error || 'Failed to generate invoice', 'error');
+      }
+    } catch {
+      toast('Failed to generate invoice', 'error');
+    } finally {
+      setInvoiceLoading(null);
     }
   }
 
@@ -323,7 +349,7 @@ export default function ClientsPage() {
               )}
             </div>
 
-            <div className="flex space-x-2 pt-4 border-t border-border">
+            <div className="flex space-x-2 pt-4 border-t border-border flex-wrap gap-y-2">
               <Button variant="outline" size="sm" className="flex-1" onClick={() => openEditForm(client)}>
                 <Edit className="h-4 w-4 mr-1" />
                 Edit
@@ -331,6 +357,12 @@ export default function ClientsPage() {
               <Button variant="outline" size="sm" className="flex-1" onClick={() => openPricing(client)}>
                 <DollarSign className="h-4 w-4 mr-1" />
                 Pricing
+              </Button>
+              <Button variant="outline" size="sm" className="flex-1"
+                onClick={() => generateInvoice(client)}
+                disabled={invoiceLoading === client.id}>
+                <FileText className="h-4 w-4 mr-1" />
+                {invoiceLoading === client.id ? '...' : 'Invoice'}
               </Button>
               <Button
                 variant="outline"

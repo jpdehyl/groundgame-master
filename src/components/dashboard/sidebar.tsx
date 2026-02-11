@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -12,7 +13,9 @@ import {
   Settings,
   BarChart3,
   Home,
-  Upload
+  Upload,
+  Menu,
+  X
 } from 'lucide-react';
 
 const navigation = [
@@ -29,11 +32,17 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  return (
-    <div className="w-64 bg-sidebar border-r border-border flex flex-col">
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const sidebarContent = (
+    <>
       {/* Logo */}
-      <div className="h-16 flex items-center px-6 border-b border-border">
+      <div className="h-16 flex items-center px-6 border-b border-border justify-between">
         <div className="flex items-center gap-2">
           <div className="flex gap-0.5">
             <div className="w-2 h-2 rounded-sm bg-accent-blue"></div>
@@ -42,6 +51,9 @@ export function Sidebar() {
           </div>
           <h1 className="text-lg font-bold text-white tracking-tight">GroundGame</h1>
         </div>
+        <button className="md:hidden p-1 hover:bg-white/5 rounded" onClick={() => setMobileOpen(false)}>
+          <X className="h-5 w-5 text-muted-foreground" />
+        </button>
       </div>
 
       {/* Navigation */}
@@ -80,6 +92,33 @@ export function Sidebar() {
           GroundGame v1.0
         </div>
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile toggle button */}
+      <button
+        className="md:hidden fixed top-3 left-3 z-50 p-2 bg-card border border-border rounded-lg shadow-lg"
+        onClick={() => setMobileOpen(true)}
+      >
+        <Menu className="h-5 w-5 text-white" />
+      </button>
+
+      {/* Desktop sidebar */}
+      <div className="hidden md:flex w-64 bg-sidebar border-r border-border flex-col shrink-0">
+        {sidebarContent}
+      </div>
+
+      {/* Mobile sidebar overlay */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
+          <div className="relative w-64 bg-sidebar flex flex-col h-full">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

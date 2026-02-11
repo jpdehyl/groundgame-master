@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/toast';
 import { EmployeeForm } from '@/components/forms/employee-form';
+import { StatSkeleton, CardSkeleton } from '@/components/ui/skeleton';
 import {
   Plus,
   Search,
@@ -31,6 +33,7 @@ interface Employee {
 }
 
 export default function EmployeesPage() {
+  const { toast } = useToast();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -87,13 +90,14 @@ export default function EmployeesPage() {
       const result = await response.json();
 
       if (result.success) {
-        await fetchEmployees(); // Refresh the list
+        toast('Employee deactivated', 'success');
+        await fetchEmployees();
       } else {
-        alert('Failed to deactivate employee: ' + result.error);
+        toast('Failed to deactivate employee: ' + result.error, 'error');
       }
     } catch (error) {
       console.error('Failed to delete employee:', error);
-      alert('Failed to deactivate employee');
+      toast('Failed to deactivate employee', 'error');
     } finally {
       setDeleting(null);
     }
@@ -120,9 +124,10 @@ export default function EmployeesPage() {
       if (result.success) {
         setShowForm(false);
         setEditingEmployee(null);
-        await fetchEmployees(); // Refresh the list
+        toast(editingEmployee ? 'Employee updated' : 'Employee added', 'success');
+        await fetchEmployees();
       } else {
-        alert('Failed to save employee: ' + result.error);
+        toast('Failed to save employee: ' + result.error, 'error');
       }
     } catch (error) {
       console.error('Failed to save employee:', error);
@@ -148,6 +153,12 @@ export default function EmployeesPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Employees</h1>
           <p className="text-muted-foreground">Loading employees...</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />)}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
         </div>
       </div>
     );
