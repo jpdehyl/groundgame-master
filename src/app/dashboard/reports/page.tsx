@@ -98,8 +98,8 @@ export default function ReportsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Reports</h1>
-          <p className="text-muted-foreground">No data available. Import data to generate reports.</p>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Reports</h1>
+          <p className="text-text-secondary mt-1">No data available yet. Import data to generate reports.</p>
         </div>
       </div>
     );
@@ -108,12 +108,12 @@ export default function ReportsPage() {
   const maxBarAmount = Math.max(...data.payrollHistory.map(p => p.amount), 1);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Reports</h1>
-          <p className="text-muted-foreground">Real-time business analytics from your data</p>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Reports</h1>
+          <p className="text-text-secondary mt-1">Real-time business analytics from your data</p>
         </div>
         <Button className="bg-primary hover:bg-primary-hover" onClick={() => exportReportCsv(data)}>
           <Download className="h-4 w-4 mr-2" />
@@ -122,7 +122,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
         {[
           { title: 'Total Billed', value: formatCurrency(data.totalBilled), icon: DollarSign, color: 'text-accent-green' },
           { title: 'Employee Costs', value: formatCurrency(data.employeeCosts), icon: Users, color: 'text-primary' },
@@ -133,7 +133,7 @@ export default function ReportsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-muted-foreground">{stat.title}</div>
-                <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                <div className={`text-2xl font-semibold font-mono ${stat.color}`}>{stat.value}</div>
               </div>
               <stat.icon className="h-8 w-8 text-muted-foreground" />
             </div>
@@ -142,13 +142,13 @@ export default function ReportsPage() {
       </div>
 
       {/* Work Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center mb-3">
             <Clock className="h-5 w-5 text-primary mr-2" />
             <h4 className="font-semibold text-white">Total Hours Logged</h4>
           </div>
-          <div className="text-3xl font-bold text-white">{data.totalHours.toLocaleString()}</div>
+          <div className="text-3xl font-semibold text-heading font-mono">{data.totalHours.toLocaleString()}</div>
           <div className="text-sm text-muted-foreground mt-1">
             {data.activeEmployeeCount > 0 ? `${Math.round(data.totalHours / data.activeEmployeeCount)} avg per employee` : 'No employees'}
           </div>
@@ -158,7 +158,7 @@ export default function ReportsPage() {
             <TrendingUp className="h-5 w-5 text-accent-green mr-2" />
             <h4 className="font-semibold text-white">Total Leads</h4>
           </div>
-          <div className="text-3xl font-bold text-white">{data.totalLeads.toLocaleString()}</div>
+          <div className="text-3xl font-semibold text-heading font-mono">{data.totalLeads.toLocaleString()}</div>
           <div className="text-sm text-muted-foreground mt-1">Across all work entries</div>
         </div>
         <div className="bg-card p-6 rounded-xl border border-border">
@@ -166,7 +166,7 @@ export default function ReportsPage() {
             <Calendar className="h-5 w-5 text-accent-yellow mr-2" />
             <h4 className="font-semibold text-white">Time Off (Approved)</h4>
           </div>
-          <div className="text-3xl font-bold text-white">{data.totalTimeOffDays}</div>
+          <div className="text-3xl font-semibold text-heading font-mono">{data.totalTimeOffDays}</div>
           <div className="text-sm text-muted-foreground mt-1">
             PTO: {data.timeOffByType.pto} · Sick: {data.timeOffByType.sick} · Unpaid: {data.timeOffByType.unpaid}
           </div>
@@ -178,7 +178,7 @@ export default function ReportsPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <Building2 className="h-5 w-5 text-primary mr-2" />
-            <h3 className="text-lg font-semibold text-white">Employees by Client</h3>
+            <h3 className="text-[15px] font-semibold text-heading">Employees by Client</h3>
           </div>
           <span className="text-sm text-muted-foreground">{data.activeClientCount} active clients</span>
         </div>
@@ -208,7 +208,7 @@ export default function ReportsPage() {
       {/* Payroll History Chart */}
       <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-white">Payroll History</h3>
+          <h3 className="text-[15px] font-semibold text-heading">Payroll History</h3>
           <span className="text-sm text-muted-foreground">{data.payrollHistory.length} periods</span>
         </div>
 
@@ -237,7 +237,7 @@ export default function ReportsPage() {
 
       {/* Export Options */}
       <div className="bg-card p-6 rounded-xl border border-border">
-        <h3 className="text-lg font-semibold text-white mb-4">Export Options</h3>
+        <h3 className="text-[15px] font-semibold text-heading mb-4">Export Options</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 border border-border rounded-lg text-center">
             <FileText className="h-8 w-8 text-muted-foreground mx-auto mb-2" />

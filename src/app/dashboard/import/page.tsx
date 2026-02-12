@@ -386,10 +386,10 @@ export default function ImportPage() {
   const stepKeys: Step[] = ['select', 'paste', 'mapping', 'preview', 'done'];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white">Import Data</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-3xl font-semibold text-heading tracking-tight">Import Data</h1>
+        <p className="text-text-secondary mt-1">
           Import your existing data from Google Sheets or CSV files
         </p>
       </div>
@@ -701,7 +701,7 @@ export default function ImportPage() {
         <div className="bg-card rounded-xl border border-border p-8">
           <div className="text-center mb-8">
             <CheckCircle className="h-16 w-16 text-accent-green mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-2">Import Complete</h3>
+            <h3 className="text-2xl font-semibold text-heading mb-2">Import Complete</h3>
             <p className="text-muted-foreground">Your data has been processed successfully</p>
           </div>
 

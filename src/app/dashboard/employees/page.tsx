@@ -149,26 +149,26 @@ export default function EmployeesPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Employees</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Employees</h1>
           <p className="text-muted-foreground">Loading employees...</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />)}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
         </div>
       </div>
     );
   }
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Employees</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Employees</h1>
           <p className="text-muted-foreground">Manage your team members and contractors</p>
         </div>
         <Button
@@ -207,11 +207,11 @@ export default function EmployeesPage() {
       </div>
 
       {/* Employee Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredEmployees.map((employee) => (
           <div key={employee.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg shadow-black/40 transition-shadow card-hover">
             <div className="flex items-center space-x-4 mb-4">
-              <div className="h-12 w-12 bg-accent-blue/10 rounded-full flex items-center justify-center">
+              <div className="h-12 w-12 bg-accent-blue/8 rounded-full flex items-center justify-center">
                 <User className="h-6 w-6 text-primary" />
               </div>
               <div className="flex-1">
@@ -221,7 +221,7 @@ export default function EmployeesPage() {
               <div className="flex items-center space-x-2">
                 <div className={`px-2 py-1 rounded-full text-xs font-medium ${
                   employee.status === 'active'
-                    ? 'bg-accent-green/10 text-accent-green'
+                    ? 'bg-accent-green/8 text-accent-green'
                     : 'bg-muted text-muted-foreground'
                 }`}>
                   {employee.status}
@@ -266,8 +266,8 @@ export default function EmployeesPage() {
                 <span className="text-sm text-muted-foreground">Documents:</span>
                 <span className={`text-xs font-medium px-2 py-1 rounded ${
                   employee.documentsStatus === 'Complete'
-                    ? 'bg-accent-green/10 text-accent-green'
-                    : 'bg-accent-yellow/10 text-accent-yellow'
+                    ? 'bg-accent-green/8 text-accent-green'
+                    : 'bg-accent-yellow/8 text-accent-yellow'
                 }`}>
                   {employee.documentsStatus}
                 </span>
@@ -287,7 +287,7 @@ export default function EmployeesPage() {
                   size="sm"
                   onClick={() => handleDeleteEmployee(employee.id)}
                   disabled={deleting === employee.id}
-                  className="text-accent-red border-accent-red/20 hover:bg-accent-red/20"
+                  className="text-accent-red border-accent-red/15 hover:bg-accent-red/15"
                 >
                   {deleting === employee.id ? (
                     'Deleting...'
@@ -309,12 +309,12 @@ export default function EmployeesPage() {
         <div className="text-center py-12">
           <User className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-white mb-2">
-            {searchTerm ? 'No employees found' : 'No employees yet'}
+            {searchTerm ? 'No employees found' : 'Your team starts here'}
           </h3>
           <p className="text-muted-foreground mb-4">
             {searchTerm
               ? `No employees match "${searchTerm}". Try adjusting your search.`
-              : 'Get started by adding your first employee.'
+              : 'Add your first team member to get things rolling.'
             }
           </p>
           {!searchTerm && (
@@ -338,23 +338,23 @@ export default function EmployeesPage() {
       <div className="bg-card p-4 rounded-xl border border-border">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
-            <div className="text-2xl font-bold text-white">{employees.length}</div>
+            <div className="text-2xl font-semibold text-heading font-mono">{employees.length}</div>
             <div className="text-sm text-muted-foreground">Total Employees</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-accent-green">
+            <div className="text-2xl font-semibold text-accent-green font-mono">
               {employees.filter(e => e.status === 'active').length}
             </div>
             <div className="text-sm text-muted-foreground">Active</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-accent-yellow">
+            <div className="text-2xl font-semibold text-accent-yellow font-mono">
               {employees.filter(e => e.documentsStatus !== 'Complete').length}
             </div>
             <div className="text-sm text-muted-foreground">Documents Due</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-semibold text-primary font-mono">
               {employees.filter(e => {
                 const startDate = new Date(e.startDate);
                 const oneMonthAgo = new Date();

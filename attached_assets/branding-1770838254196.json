@@ -2,6 +2,14 @@
   "colorScheme": "dark",
   "fonts": [
     {
+      "family": "Geist Sans",
+      "count": 61
+    },
+    {
+      "family": "Geist Mono",
+      "count": 12
+    },
+    {
       "family": "ui-sans-serif",
       "count": 61
     },
@@ -12,100 +20,103 @@
     {
       "family": "sans-serif",
       "count": 61
-    },
-    {
-      "family": "Apple Color Emoji",
-      "count": 61
-    },
-    {
-      "family": "Segoe UI Emoji",
-      "count": 61
-    },
-    {
-      "family": "Segoe UI Symbol",
-      "count": 61
-    },
-    {
-      "family": "Noto Color Emoji",
-      "count": 61
     }
   ],
   "colors": {
-    "primary": "#FFFFFF",
-    "accent": "#FFFFFF",
+    "primary": "#D97706",
+    "primaryHover": "#B45309",
+    "accent": "#3B82F6",
     "background": "#0A0A0A",
-    "textPrimary": "#0A0A0A",
-    "link": "#FFFFFF"
+    "backgroundWarm": "#0C0B09",
+    "card": "#111111",
+    "cardElevated": "#141413",
+    "textPrimary": "#E5E5E5",
+    "textHeading": "#FFFFFF",
+    "textSecondary": "#A3A3A3",
+    "textTertiary": "#666666",
+    "textMuted": "#737373",
+    "border": "#1E1E1E",
+    "borderStrong": "#2A2A2A",
+    "borderWarm": "#28231C",
+    "accentBlue": "#3B82F6",
+    "accentGreen": "#22C55E",
+    "accentYellow": "#EAB308",
+    "accentRed": "#EF4444",
+    "accentPurple": "#8B5CF6"
   },
   "typography": {
     "fontFamilies": {
-      "primary": "ui-sans-serif",
-      "heading": "ui-sans-serif"
+      "primary": "Geist Sans",
+      "heading": "Geist Sans",
+      "mono": "Geist Mono"
     },
     "fontStacks": {
       "body": [
+        "Geist Sans",
         "ui-sans-serif",
         "system-ui",
-        "sans-serif",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji"
+        "sans-serif"
       ],
       "heading": [
+        "Geist Sans",
         "ui-sans-serif",
         "system-ui",
-        "sans-serif",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji"
+        "sans-serif"
       ],
-      "paragraph": [
-        "ui-sans-serif",
-        "system-ui",
-        "sans-serif",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji"
+      "mono": [
+        "Geist Mono",
+        "ui-monospace",
+        "monospace"
       ]
     },
     "fontSizes": {
-      "h1": "64px",
-      "h2": "40px",
-      "body": "17.6px"
+      "h1": "30px",
+      "h2": "24px",
+      "h3": "20px",
+      "body": "14px",
+      "small": "13px",
+      "caption": "11px"
+    },
+    "letterSpacing": {
+      "headings": "-0.025em",
+      "body": "-0.011em",
+      "labels": "0.12em"
+    },
+    "lineHeight": {
+      "headings": "1.2",
+      "body": "1.6"
     }
   },
   "spacing": {
     "baseUnit": 4,
-    "borderRadius": "0px"
+    "borderRadius": "8px",
+    "borderRadiusLg": "12px"
   },
   "components": {
     "buttonPrimary": {
-      "background": "#0A0A0A",
+      "background": "#D97706",
       "textColor": "#FFFFFF",
-      "borderRadius": "0px",
-      "borderRadiusCorners": {
-        "topLeft": "0px",
-        "topRight": "0px",
-        "bottomRight": "0px",
-        "bottomLeft": "0px"
-      },
+      "borderRadius": "8px",
+      "hoverBackground": "#B45309",
       "shadow": "none"
     },
     "buttonSecondary": {
-      "background": "#111111",
-      "textColor": "#FFFFFF",
-      "borderColor": "#333333",
+      "background": "#171717",
+      "textColor": "#E5E5E5",
+      "borderColor": "#2A2A2A",
       "borderRadius": "8px",
-      "borderRadiusCorners": {
-        "topLeft": "8px",
-        "topRight": "8px",
-        "bottomRight": "0px",
-        "bottomLeft": "0px"
-      },
       "shadow": "none"
+    },
+    "card": {
+      "background": "#111111",
+      "borderColor": "#1E1E1E",
+      "borderRadius": "12px",
+      "hoverShadow": "0 0 0 1px rgba(255,255,255,0.02), 0 4px 20px rgba(0,0,0,0.35)"
+    },
+    "cardElevated": {
+      "background": "#141413",
+      "borderColor": "#28231C",
+      "borderRadius": "12px"
     }
   },
   "images": {
@@ -113,43 +124,25 @@
     "favicon": "File saved at: attached_assets/favicon.ico",
     "ogImage": "File saved at: attached_assets/ogImage.jpg"
   },
-  "__framework_hints": [],
-  "__llm_button_reasoning": {
-    "primary": {
-      "index": 0,
-      "text": "See the Platform",
-      "reasoning": "The button 'See the Platform' is likely the primary CTA due to its action-oriented text, encouraging users to explore the platform. It stands out as a key action for potential users."
-    },
-    "secondary": {
-      "index": 2,
-      "text": "Lead Intel",
-      "reasoning": "The 'Lead Intel' button is selected as secondary because it has a different background color (#111111) and serves as a navigation option within the platform, indicating a secondary action."
-    },
-    "confidence": 0.9
-  },
   "personality": {
-    "tone": "modern",
+    "tone": "modern, warm",
     "energy": "medium",
-    "targetAudience": "sales professionals and teams"
+    "targetAudience": "sales professionals and teams",
+    "designPhilosophy": "functional minimalism with human warmth"
   },
   "designSystem": {
     "framework": "tailwind",
-    "componentLibrary": ""
+    "version": "4",
+    "componentLibrary": "custom",
+    "animations": {
+      "slideUp": "0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+      "fadeIn": "0.3s ease-out",
+      "hover": "0.2s ease"
+    }
   },
   "confidence": {
-    "buttons": 0.9,
-    "colors": 0.85,
-    "overall": 0.875
-  },
-  "__llm_metadata": {
-    "logoSelection": {
-      "llmCalled": false,
-      "llmSucceeded": false,
-      "finalSource": "none"
-    },
-    "buttonClassification": {
-      "llmCalled": true,
-      "llmSucceeded": true
-    }
+    "buttons": 0.95,
+    "colors": 0.95,
+    "overall": 0.95
   }
 }

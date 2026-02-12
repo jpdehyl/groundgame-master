@@ -312,12 +312,12 @@ export default function SettingsPage() {
   if (loading) return <PageSkeleton />;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Settings</h1>
-          <p className="text-muted-foreground">Configure your GroundGame system</p>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Settings</h1>
+          <p className="text-text-secondary mt-1">Configure your GroundGame system</p>
         </div>
         <Button onClick={handleSave} disabled={saving || !hasChanges} className="bg-primary hover:bg-primary-hover">
           {saved ? <CheckCircle className="h-4 w-4 mr-2" /> : <Save className="h-4 w-4 mr-2" />}
@@ -347,7 +347,7 @@ export default function SettingsPage() {
       <div ref={el => { sectionRefs.current['company'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
           <Globe className="h-5 w-5 text-primary mr-2" />
-          <h3 className="text-lg font-semibold text-white">Company Information</h3>
+          <h3 className="text-[15px] font-semibold text-heading">Company Information</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -394,7 +394,7 @@ export default function SettingsPage() {
       <div ref={el => { sectionRefs.current['payroll'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
           <DollarSign className="h-5 w-5 text-primary mr-2" />
-          <h3 className="text-lg font-semibold text-white">Payroll Configuration</h3>
+          <h3 className="text-[15px] font-semibold text-heading">Payroll Configuration</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -449,7 +449,7 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Briefcase className="h-5 w-5 text-primary mr-2" />
-            <h3 className="text-lg font-semibold text-white">Roles & Hourly Rates</h3>
+            <h3 className="text-[15px] font-semibold text-heading">Roles & Hourly Rates</h3>
           </div>
           {!showAddRole && (
             <Button size="sm" onClick={() => setShowAddRole(true)} className="bg-primary hover:bg-primary-hover">
@@ -585,7 +585,7 @@ export default function SettingsPage() {
       <div ref={el => { sectionRefs.current['notifications'] = el; }} className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center mb-6">
           <Bell className="h-5 w-5 text-primary mr-2" />
-          <h3 className="text-lg font-semibold text-white">Notification Preferences</h3>
+          <h3 className="text-[15px] font-semibold text-heading">Notification Preferences</h3>
         </div>
         <div className="space-y-4">
           {[
@@ -619,7 +619,7 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Database className="h-5 w-5 text-primary mr-2" />
-            <h3 className="text-lg font-semibold text-white">Integrations</h3>
+            <h3 className="text-[15px] font-semibold text-heading">Integrations</h3>
           </div>
           <button
             onClick={fetchIntegrations}

@@ -106,7 +106,7 @@ function getNestedField<T>(val: T | T[] | null | undefined): T | undefined {
 
 function statusColor(status: string) {
   switch (status) {
-    case 'open': return 'bg-accent-blue/10 text-primary';
+    case 'open': return 'bg-accent-blue/10 text-accent-blue';
     case 'closed': return 'bg-accent-yellow/10 text-accent-yellow';
     case 'processed': return 'bg-accent-green/10 text-accent-green';
     case 'draft': return 'bg-muted text-text-secondary';
@@ -369,9 +369,9 @@ export default function PayrollPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Payroll</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Payroll</h1>
           <p className="text-muted-foreground">Loading payroll data...</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -382,11 +382,11 @@ export default function PayrollPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Payroll</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Payroll</h1>
           <p className="text-muted-foreground">Manage pay periods, log hours, process payroll, and export to Veem</p>
         </div>
         <div className="flex space-x-2">
@@ -403,7 +403,7 @@ export default function PayrollPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/20 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/8 border border-accent-red/15 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
@@ -417,7 +417,7 @@ export default function PayrollPage() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-white">Create Pay Period</h2>
+              <h2 className="text-[15px] font-semibold text-heading">Create Pay Period</h2>
               <button onClick={() => { setShowCreatePeriod(false); setError(null); }} className="p-1 hover:bg-white/5 rounded">
                 <X className="h-5 w-5 text-muted-foreground" />
               </button>
@@ -463,7 +463,7 @@ export default function PayrollPage() {
           <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h2 className="text-lg font-semibold text-white">Log Work Hours</h2>
+                <h2 className="text-[15px] font-semibold text-heading">Log Work Hours</h2>
                 <p className="text-sm text-muted-foreground">
                   {formatDate(workEntryPeriod.period_start)} – {formatDate(workEntryPeriod.period_end)}
                 </p>
@@ -581,7 +581,7 @@ export default function PayrollPage() {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm text-muted-foreground">Open Periods</div>
-              <div className="text-2xl font-bold text-white">{openPeriods.length}</div>
+              <div className="text-2xl font-semibold text-heading font-mono">{openPeriods.length}</div>
             </div>
             <Calendar className="h-8 w-8 text-primary" />
           </div>
@@ -590,7 +590,7 @@ export default function PayrollPage() {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm text-muted-foreground">Ready to Process</div>
-              <div className="text-2xl font-bold text-accent-yellow">{closedPeriods.filter(p => !runsByPeriod.has(p.id)).length}</div>
+              <div className="text-2xl font-semibold text-accent-yellow font-mono">{closedPeriods.filter(p => !runsByPeriod.has(p.id)).length}</div>
             </div>
             <Calculator className="h-8 w-8 text-accent-yellow" />
           </div>
@@ -599,7 +599,7 @@ export default function PayrollPage() {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm text-muted-foreground">Latest Run</div>
-              <div className="text-2xl font-bold text-white">{totalEmployeesInLatest} employees</div>
+              <div className="text-2xl font-semibold text-heading font-mono">{totalEmployeesInLatest} employees</div>
             </div>
             <Users className="h-8 w-8 text-accent-green" />
           </div>
@@ -608,7 +608,7 @@ export default function PayrollPage() {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm text-muted-foreground">Total Paid (Sent)</div>
-              <div className="text-2xl font-bold text-accent-green">{formatCurrency(totalPayrollYtd)}</div>
+              <div className="text-2xl font-semibold text-accent-green font-mono">{formatCurrency(totalPayrollYtd)}</div>
             </div>
             <DollarSign className="h-8 w-8 text-accent-green" />
           </div>
@@ -618,7 +618,7 @@ export default function PayrollPage() {
       {/* Active Pay Periods */}
       {(openPeriods.length > 0 || closedPeriods.length > 0) && (
         <div className="bg-card p-6 rounded-xl border border-border">
-          <h3 className="text-lg font-semibold text-white mb-4">Active Pay Periods</h3>
+          <h3 className="text-[15px] font-semibold text-heading mb-4">Active Pay Periods</h3>
           <div className="space-y-3">
             {[...openPeriods, ...closedPeriods].map((period) => {
               const existingRun = runsByPeriod.get(period.id);
@@ -681,8 +681,8 @@ export default function PayrollPage() {
       {periods.length === 0 && (
         <div className="bg-card p-12 rounded-xl border border-border text-center">
           <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-white mb-2">No pay periods yet</h3>
-          <p className="text-muted-foreground mb-4">Create your first pay period to start processing payroll.</p>
+          <h3 className="text-lg font-medium text-white mb-2">Time to set up payroll</h3>
+          <p className="text-muted-foreground mb-4">Create a pay period to start tracking hours and processing payments.</p>
           <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowCreatePeriod(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Create Pay Period
@@ -693,7 +693,7 @@ export default function PayrollPage() {
       {/* Payroll Runs */}
       {runs.length > 0 && (
         <div className="bg-card p-6 rounded-xl border border-border">
-          <h3 className="text-lg font-semibold text-white mb-4">Payroll Runs</h3>
+          <h3 className="text-[15px] font-semibold text-heading mb-4">Payroll Runs</h3>
           <div className="space-y-3">
             {runs.map((run) => {
               const payPeriod = getNestedField(run.pay_period);

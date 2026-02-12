@@ -38,7 +38,7 @@ function formatDate(d: string) {
 }
 
 const leaveColors: Record<string, string> = {
-  pto: 'bg-accent-blue/10 text-primary',
+  pto: 'bg-accent-blue/10 text-accent-blue',
   sick: 'bg-accent-yellow/10 text-accent-yellow',
   unpaid: 'bg-muted text-muted-foreground'
 };
@@ -129,20 +129,20 @@ export default function TimeOffPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-white">Time Off</h1>
-        <p className="text-muted-foreground">Loading...</p>
+      <div className="space-y-8">
+        <h1 className="text-3xl font-semibold text-heading tracking-tight">Time Off</h1>
+        <p className="text-text-secondary mt-1">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Time Off</h1>
-          <p className="text-muted-foreground">Manage PTO, sick leave, and unpaid time off requests</p>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Time Off</h1>
+          <p className="text-text-secondary mt-1">Manage PTO, sick leave, and unpaid time off requests</p>
         </div>
         <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowForm(true)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -151,7 +151,7 @@ export default function TimeOffPage() {
       </div>
 
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/20 rounded-lg p-4 flex items-start justify-between">
+        <div className="bg-accent-red/8 border border-accent-red/15 rounded-lg p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
@@ -164,19 +164,19 @@ export default function TimeOffPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-card p-5 rounded-xl border border-border">
           <div className="text-sm text-muted-foreground">Total Requests</div>
-          <div className="text-2xl font-bold text-white">{requests.length}</div>
+          <div className="text-2xl font-semibold text-heading font-mono">{requests.length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border">
           <div className="text-sm text-muted-foreground">Pending</div>
-          <div className="text-2xl font-bold text-accent-yellow">{pendingCount}</div>
+          <div className="text-2xl font-semibold text-accent-yellow font-mono">{pendingCount}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border">
           <div className="text-sm text-muted-foreground">Approved</div>
-          <div className="text-2xl font-bold text-accent-green">{requests.filter(r => r.status === 'approved').length}</div>
+          <div className="text-2xl font-semibold text-accent-green font-mono">{requests.filter(r => r.status === 'approved').length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border">
           <div className="text-sm text-muted-foreground">Total Days Off</div>
-          <div className="text-2xl font-bold text-primary">
+          <div className="text-2xl font-semibold text-primary font-mono">
             {requests.filter(r => r.status === 'approved').reduce((s, r) => s + Number(r.days_count), 0)}
           </div>
         </div>
@@ -205,8 +205,8 @@ export default function TimeOffPage() {
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-white mb-2">No requests</h3>
-            <p className="text-muted-foreground">No time-off requests to show.</p>
+            <h3 className="text-lg font-medium text-heading mb-2">No requests yet</h3>
+            <p className="text-muted-foreground">Time-off requests will appear here once submitted.</p>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -270,7 +270,7 @@ export default function TimeOffPage() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white">New Time-Off Request</h2>
+              <h2 className="text-lg font-semibold text-heading">New Time-Off Request</h2>
               <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-md">
                 <X className="h-5 w-5 text-muted-foreground" />
               </button>
