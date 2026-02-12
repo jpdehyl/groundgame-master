@@ -48,19 +48,19 @@ export function Sidebar() {
         <Link
           href={item.href}
           className={cn(
-            'group flex items-center gap-3 px-3 py-2 text-[13px] font-medium rounded-md transition-all duration-150 relative',
+            'group flex items-center gap-3 px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 relative',
             isActive
               ? 'bg-sidebar-active-bg text-white'
               : 'text-sidebar-text hover:text-white hover:bg-sidebar-hover'
           )}
         >
           {isActive && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-sidebar-active-border" />
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 rounded-r-full bg-primary" />
           )}
           <item.icon
             className={cn(
-              'h-[18px] w-[18px] flex-shrink-0 transition-colors',
-              isActive ? 'text-accent-blue' : 'text-sidebar-text group-hover:text-white'
+              'h-[18px] w-[18px] flex-shrink-0 transition-colors duration-200',
+              isActive ? 'text-primary' : 'text-sidebar-text group-hover:text-white'
             )}
           />
           {item.name}
@@ -72,8 +72,8 @@ export function Sidebar() {
   const sidebarContent = (
     <div className="flex flex-col h-full">
       <div className="h-14 flex items-center px-5 border-b border-sidebar-border justify-between shrink-0">
-        <Link href="/dashboard" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
+        <Link href="/dashboard" className="flex items-center gap-2.5 group">
+          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center group-hover:shadow-[0_0_12px_rgba(217,119,6,0.3)] transition-shadow duration-300">
             <span className="text-white font-bold text-xs">G</span>
           </div>
           <span className="text-[15px] font-semibold text-white tracking-tight">GroundGame</span>
@@ -83,15 +83,15 @@ export function Sidebar() {
         </button>
       </div>
 
-      <nav className="flex-1 mt-4 px-3 overflow-y-auto">
+      <nav className="flex-1 mt-5 px-3 overflow-y-auto">
         <div className="mb-2 px-3">
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-sidebar-text/50">Main Menu</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-text/40">Main</span>
         </div>
         <ul className="space-y-0.5">
           {mainNav.map(navLink)}
         </ul>
-        <div className="mt-6 mb-2 px-3">
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-sidebar-text/50">Preferences</span>
+        <div className="mt-8 mb-2 px-3">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-text/40">Tools</span>
         </div>
         <ul className="space-y-0.5">
           {secondaryNav.map(navLink)}
@@ -100,7 +100,7 @@ export function Sidebar() {
 
       <div className="p-4 border-t border-sidebar-border shrink-0">
         <div className="flex items-center gap-3 px-1">
-          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
             <span className="text-xs font-semibold text-primary">GG</span>
           </div>
           <div className="flex-1 min-w-0">
@@ -127,8 +127,8 @@ export function Sidebar() {
 
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
-          <div className="relative w-56 bg-sidebar-bg flex flex-col h-full">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" onClick={() => setMobileOpen(false)} />
+          <div className="relative w-56 bg-sidebar-bg flex flex-col h-full animate-slide-in-left">
             {sidebarContent}
           </div>
         </div>

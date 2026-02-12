@@ -43,9 +43,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   };
 
   const colors = {
-    success: 'bg-accent-green/10 border-accent-green/20 text-accent-green',
-    error: 'bg-accent-red/10 border-accent-red/20 text-accent-red',
-    info: 'bg-accent-blue/10 border-accent-blue/20 text-accent-blue',
+    success: 'bg-accent-green/8 border-accent-green/15 text-accent-green',
+    error: 'bg-accent-red/8 border-accent-red/15 text-accent-red',
+    info: 'bg-accent-blue/8 border-accent-blue/15 text-accent-blue',
   };
 
   return (
@@ -57,11 +57,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           return (
             <div
               key={t.id}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg shadow-black/40 animate-in slide-in-from-right ${colors[t.type]}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg shadow-black/40 animate-slide-up ${colors[t.type]}`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <p className="text-sm flex-1">{t.message}</p>
-              <button onClick={() => removeToast(t.id)} className="shrink-0 hover:opacity-70">
+              <button onClick={() => removeToast(t.id)} className="shrink-0 hover:opacity-70 transition-opacity">
                 <X className="h-3.5 w-3.5" />
               </button>
             </div>

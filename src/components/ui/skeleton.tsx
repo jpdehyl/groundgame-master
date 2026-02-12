@@ -1,5 +1,5 @@
 export function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse bg-white/5 rounded ${className}`} />;
+  return <div className={`animate-pulse bg-white/[0.04] rounded ${className}`} />;
 }
 
 export function CardSkeleton() {
@@ -20,15 +20,15 @@ export function CardSkeleton() {
 
 export function StatSkeleton() {
   return (
-    <div className="bg-card p-6 rounded-xl border border-border">
-      <div className="flex items-center">
-        <Skeleton className="h-9 w-9 rounded-md" />
-        <div className="ml-4 flex-1 space-y-2">
+    <div className="bg-card p-5 rounded-xl border border-border">
+      <div className="flex items-start justify-between">
+        <div className="space-y-2">
           <Skeleton className="h-3 w-20" />
-          <Skeleton className="h-6 w-12" />
-          <Skeleton className="h-3 w-16" />
+          <Skeleton className="h-7 w-14" />
         </div>
+        <Skeleton className="h-8 w-8 rounded-lg" />
       </div>
+      <Skeleton className="h-3 w-16 mt-3" />
     </div>
   );
 }
@@ -49,12 +49,12 @@ export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 
 export function PageSkeleton() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="space-y-2">
-        <Skeleton className="h-7 w-48" />
+        <Skeleton className="h-8 w-48" />
         <Skeleton className="h-4 w-72" />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {Array.from({ length: 4 }).map((_, i) => (
           <StatSkeleton key={i} />
         ))}

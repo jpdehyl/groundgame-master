@@ -238,9 +238,9 @@ export default function ClientsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Clients</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Clients</h1>
           <p className="text-muted-foreground">Loading clients...</p>
         </div>
       </div>
@@ -248,11 +248,11 @@ export default function ClientsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Clients</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Clients</h1>
           <p className="text-muted-foreground">Manage client relationships and pricing</p>
         </div>
         <Button className="bg-primary hover:bg-primary-hover" onClick={openAddForm}>
@@ -263,7 +263,7 @@ export default function ClientsPage() {
 
       {/* Error */}
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start justify-between">
+        <div className="bg-accent-red/8 border border-accent-red/15 rounded-xl p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
@@ -293,16 +293,16 @@ export default function ClientsPage() {
       </div>
 
       {/* Client Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {filteredClients.map((client) => (
           <div key={client.id} className="bg-card p-6 rounded-xl border border-border hover:shadow-lg shadow-black/40 transition-shadow card-hover">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
                 <div className="h-12 w-12 bg-accent-blue/10 rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-primary" />
+                  <Building2 className="h-6 w-6 text-accent-blue" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">{client.name}</h3>
+                  <h3 className="text-[15px] font-semibold text-heading">{client.name}</h3>
                   {client.billing_address && (
                     <p className="text-sm text-muted-foreground">{client.billing_address}</p>
                   )}
@@ -321,7 +321,7 @@ export default function ClientsPage() {
                   <Users className="h-4 w-4 text-muted-foreground mr-2" />
                   <span className="text-sm text-muted-foreground">Employees</span>
                 </div>
-                <div className="text-lg font-semibold text-white">{client.employee_count}</div>
+                <div className="text-lg font-semibold text-heading font-mono">{client.employee_count}</div>
               </div>
               <div className="bg-muted p-3 rounded-lg">
                 <div className="flex items-center">
@@ -398,20 +398,20 @@ export default function ClientsPage() {
 
       {/* Stats */}
       <div className="bg-card p-6 rounded-xl border border-border">
-        <h3 className="text-lg font-semibold text-white mb-4">Client Overview</h3>
+        <h3 className="text-[15px] font-semibold text-heading mb-4">Client Overview</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-white">{clients.length}</div>
+            <div className="text-2xl font-semibold text-heading font-mono">{clients.length}</div>
             <div className="text-sm text-muted-foreground">Total Clients</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-accent-green">
+            <div className="text-2xl font-semibold text-accent-green font-mono">
               {clients.filter(c => c.status === 'active').length}
             </div>
             <div className="text-sm text-muted-foreground">Active</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">{totalEmployees}</div>
+            <div className="text-2xl font-semibold text-primary font-mono">{totalEmployees}</div>
             <div className="text-sm text-muted-foreground">Assigned Employees</div>
           </div>
         </div>

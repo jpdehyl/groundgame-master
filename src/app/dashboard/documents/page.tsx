@@ -45,7 +45,7 @@ function daysUntil(dateStr: string): number {
 
 const typeLabels: Record<string, string> = { contract: 'Contract', w8ben: 'W-8BEN', other: 'Other' };
 const typeColors: Record<string, string> = {
-  contract: 'bg-accent-blue/10 text-primary',
+  contract: 'bg-accent-blue/10 text-accent-blue',
   w8ben: 'bg-accent-purple/10 text-accent-purple',
   other: 'bg-muted text-text-secondary'
 };
@@ -125,18 +125,18 @@ export default function DocumentsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-white">Documents</h1>
+      <div className="space-y-8">
+        <h1 className="text-3xl font-semibold text-heading tracking-tight">Documents</h1>
         <p className="text-muted-foreground">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Documents</h1>
+          <h1 className="text-3xl font-semibold text-heading tracking-tight">Documents</h1>
           <p className="text-muted-foreground">Manage contracts, W-8BEN forms, and compliance documents</p>
         </div>
         <Button className="bg-primary hover:bg-primary-hover" onClick={() => setShowForm(true)}>
@@ -146,7 +146,7 @@ export default function DocumentsPage() {
       </div>
 
       {error && (
-        <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start justify-between">
+        <div className="bg-accent-red/8 border border-accent-red/15 rounded-xl p-4 flex items-start justify-between">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-accent-red mr-2 mt-0.5" />
             <p className="text-sm text-accent-red">{error}</p>
@@ -158,7 +158,7 @@ export default function DocumentsPage() {
       {(expiredW8.length > 0 || expiringW8.length > 0) && (
         <div className="space-y-3">
           {expiredW8.length > 0 && (
-            <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl p-4 flex items-start">
+            <div className="bg-accent-red/8 border border-accent-red/15 rounded-xl p-4 flex items-start">
               <AlertTriangle className="h-5 w-5 text-accent-red mr-3 mt-0.5" />
               <div>
                 <p className="font-medium text-accent-red">{expiredW8.length} W-8BEN form{expiredW8.length !== 1 ? 's' : ''} expired</p>
@@ -172,7 +172,7 @@ export default function DocumentsPage() {
             </div>
           )}
           {expiringW8.length > 0 && (
-            <div className="bg-accent-yellow/10 border border-accent-yellow/20 rounded-xl p-4 flex items-start">
+            <div className="bg-accent-yellow/8 border border-accent-yellow/15 rounded-xl p-4 flex items-start">
               <Clock className="h-5 w-5 text-accent-yellow mr-3 mt-0.5" />
               <div>
                 <p className="font-medium text-accent-yellow">{expiringW8.length} W-8BEN form{expiringW8.length !== 1 ? 's' : ''} expiring within 90 days</p>
@@ -192,19 +192,19 @@ export default function DocumentsPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">Active Documents</div>
-          <div className="text-2xl font-bold text-white">{activeDocs.length}</div>
+          <div className="text-2xl font-semibold text-heading font-mono">{activeDocs.length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">Contracts</div>
-          <div className="text-2xl font-bold text-primary">{activeDocs.filter(d => d.document_type === 'contract').length}</div>
+          <div className="text-2xl font-semibold text-primary font-mono">{activeDocs.filter(d => d.document_type === 'contract').length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">W-8BEN Active</div>
-          <div className="text-2xl font-bold text-purple-600">{w8benDocs.length}</div>
+          <div className="text-2xl font-semibold text-accent-purple font-mono">{w8benDocs.length}</div>
         </div>
         <div className="bg-card p-5 rounded-xl border border-border card-hover">
           <div className="text-sm text-muted-foreground">Expiring/Expired</div>
-          <div className="text-2xl font-bold text-accent-red">{expiringW8.length + expiredW8.length}</div>
+          <div className="text-2xl font-semibold text-accent-red font-mono">{expiringW8.length + expiredW8.length}</div>
         </div>
       </div>
 
@@ -233,8 +233,8 @@ export default function DocumentsPage() {
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-white mb-2">No documents</h3>
-            <p className="text-muted-foreground">No documents match your filters.</p>
+            <h3 className="text-lg font-medium text-white mb-2">No documents found</h3>
+            <p className="text-muted-foreground">No documents match your current search or filter criteria. Try adjusting your filters or add a new document.</p>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -246,10 +246,10 @@ export default function DocumentsPage() {
               const isExpired = doc.document_type === 'w8ben' && doc.expiry_date && daysUntil(doc.expiry_date) <= 0;
 
               return (
-                <div key={doc.id} className={`p-4 flex items-center justify-between hover:bg-white/5 ${isExpired ? 'bg-accent-red/10' : isExpiring ? 'bg-accent-yellow/10' : ''}`}>
+                <div key={doc.id} className={`p-4 flex items-center justify-between hover:bg-white/5 ${isExpired ? 'bg-accent-red/8' : isExpiring ? 'bg-accent-yellow/8' : ''}`}>
                   <div className="flex items-center space-x-4">
                     <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                      isExpired ? 'bg-accent-red/10' : isExpiring ? 'bg-accent-yellow/10' : 'bg-muted'
+                      isExpired ? 'bg-accent-red/8' : isExpiring ? 'bg-accent-yellow/8' : 'bg-muted'
                     }`}>
                       {isExpired ? <AlertTriangle className="h-5 w-5 text-accent-red" /> :
                        isExpiring ? <Clock className="h-5 w-5 text-accent-yellow" /> :
@@ -275,7 +275,7 @@ export default function DocumentsPage() {
                       {typeLabels[doc.document_type]}
                     </span>
                     {isExpired ? (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-red/10 text-accent-red">Expired</span>
+                      <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-red/8 text-accent-red">Expired</span>
                     ) : doc.status === 'active' ? (
                       <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-accent-green/10 text-accent-green">
                         <CheckCircle className="h-3 w-3 inline mr-1" />Active
@@ -299,7 +299,7 @@ export default function DocumentsPage() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-card rounded-xl shadow-lg shadow-black/40 max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white">Add Document</h2>
+              <h2 className="text-lg font-semibold text-heading">Add Document</h2>
               <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/5 rounded-md">
                 <X className="h-5 w-5 text-muted-foreground" />
               </button>
